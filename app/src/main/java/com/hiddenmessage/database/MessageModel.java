@@ -17,13 +17,17 @@ public class MessageModel extends ParseObject {
     }
 
     // Constructor that contains core properties
-    public MessageModel(String title, String content, MessageType type) {
+    public MessageModel(String name, String title, String content, MessageType type) {
         super();
+        setName(name);
         setTitle(title);
         setContent(content);
         setType(type);
         // No user accounts yet
         //setOwner(ParseUser.getCurrentUser());
+    }
+    public  void setName(String name) {
+        put("name", name);
     }
 
     // Get name
