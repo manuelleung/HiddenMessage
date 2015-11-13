@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.manuel.testsql.R;
 import com.example.manuel.testsql.database.UserFunctions;
 
 import org.json.JSONException;
@@ -29,6 +30,7 @@ import java.net.URL;
 public class SaveMessage extends AppCompatActivity {
     private String title;
     private String content;
+    private String name = "issac";
 
     private static final String KEY_SUCCESS = "success";
 
@@ -41,7 +43,12 @@ public class SaveMessage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
+        setContentView(R.layout.save_message);
 
+        input_title = (EditText) findViewById(R.id.title);
+        input_content = (EditText) findViewById(R.id.content);
+
+        button_post = (Button) findViewById(R.id.button_post);
 
         button_post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,13 +56,13 @@ public class SaveMessage extends AppCompatActivity {
                 title = input_title.getText().toString();
                 content = input_content.getText().toString();
 
-                if(! (title == "") || ! (content == "")){
+                //if(! (title == "") || ! (content == "")){
                     NetAsync(v);
 
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "One or more fields are empty.", Toast.LENGTH_SHORT).show();
-                }
+                //}
+                //else{
+                  //  Toast.makeText(getApplicationContext(), "One or more fields are empty.", Toast.LENGTH_SHORT).show();
+                //}
             }
         });
     }
@@ -140,21 +147,24 @@ public class SaveMessage extends AppCompatActivity {
         @Override
         protected JSONObject doInBackground(String... params) {
             UserFunctions userFunction = new UserFunctions();
-            JSONObject jsonObject = userFunction.postMessage(title, content);
-            return jsonObject;
+            JSONObject json = userFunction.postMessage(name, title, content);
+            return json;
         }
 
         @Override
-        protected void onPostExecute(JSONObject jsonObject){
+        protected void onPostExecute(JSONObject json){
             try {
-                if (KEY_SUCCESS != null) {
-                    String result = jsonObject.getString(KEY_SUCCESS);
-                }
-                if(KEY_SUCCESS == "1"){
-                    Toast.makeText(SaveMessage.this,"Message Posted",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(SaveMessage.this, "Error", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SaveMessage.this, "HEREEEE", Toast.LENGTH_SHORT).show();
+                if (json.getString(KEY_SUCCESS) != null) {
+                    //String result = json.getString(KEY_SUCCESS);
+
+                    if (Integer.parseInt(json.getString(KEY_SUCCESS)) == 1) {
+                        pDialog.dismiss();
+                        Toast.makeText(SaveMessage.this, "Message Posted", Toast.LENGTH_SHORT).show();
+                    } else {
+                        pDialog.dismiss();
+                        Toast.makeText(SaveMessage.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
             catch(JSONException ex){

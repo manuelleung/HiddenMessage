@@ -22,6 +22,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.hiddenmessage.database.HandleMessagePost;
 
 /**
  * Created by Manuel on 10/29/2015.
@@ -30,6 +31,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private FloatingActionButton plusButton;
+    private HandleMessagePost messagePost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        messagePost = new HandleMessagePost();
         //final Intent messageIntent = new Intent(this, MessageActivity.class);
         plusButton = (FloatingActionButton) findViewById(R.id.fab);
         plusButton.setTranslationX(plusButton.getTranslationX()+500);
@@ -46,8 +49,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MapsActivity.this, MessageActivity.class);
-                startActivity(intent);
+
+                messagePost.insertMark();
+               // Intent intent = new Intent(MapsActivity.this, MessageActivity.class);
+                //startActivity(intent);
 //        /*        Toast.makeText(getApplicationContext(), "this is my Toast message!!! =)",
 //                        Toast.LENGTH_LONG).show();*/
             }
@@ -73,15 +78,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         LatLng sydney = new LatLng(-34, 151);
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+  //      mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        messagePost.setTitle("Lenny");
+        messagePost.setMessage("Hello World!");
+        messagePost.setGoogleMap(mMap);
     }
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
             LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-
+            messagePost.setLocation(loc);
             if(mMap != null){
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
             }

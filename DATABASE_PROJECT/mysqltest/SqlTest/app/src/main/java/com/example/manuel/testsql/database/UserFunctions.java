@@ -25,12 +25,14 @@ public class UserFunctions {
     private static String URL_REGISTER = "http://hidden-message.me/webservice/index.php";
     private static String URL_FORGOT = "http://hidden-message.me/webservice/index.php";
     private static String URL_CHANGE = "http://hidden-message.me/webservice/index.php";
-    private static final String URL_POST = "";
+    private static String URL_POST = "http://hidden-message.me/webservice/index.php";
 
     private static String TAG_LOGIN = "login";
     private static String TAG_REGISTER = "register";
     private static String TAG_FORGOT = "forgotpass";
     private static String TAG_CHANGE = "changepass";
+
+    private static String TAG_NEWMESSAGE = "newmessage";
 
     public UserFunctions() {
         jsonParser = new JSONParser();
@@ -80,11 +82,13 @@ public class UserFunctions {
         return true;
     }
 
-    public JSONObject postMessage(String title, String content){
+    public JSONObject postMessage(String name, String title, String content){
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("messageTitle", title);
-        params.put("messageContent", content);
-        JSONObject jsonObject = jsonParser.makeHttpRequest(URL_POST, "POST", params);
-        return jsonObject;
+        params.put("tag", TAG_NEWMESSAGE);
+        params.put("name", name);
+        params.put("title", title);
+        params.put("content", content);
+        JSONObject json = jsonParser.makeHttpRequest(URL_POST, "POST", params);
+        return json;
     }
 }
