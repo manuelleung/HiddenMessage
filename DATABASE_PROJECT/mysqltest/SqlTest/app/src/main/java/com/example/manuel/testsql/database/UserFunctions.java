@@ -25,6 +25,7 @@ public class UserFunctions {
     private static String URL_REGISTER = "http://hidden-message.me/webservice/index.php";
     private static String URL_FORGOT = "http://hidden-message.me/webservice/index.php";
     private static String URL_CHANGE = "http://hidden-message.me/webservice/index.php";
+    private static final String URL_POST = "";
 
     private static String TAG_LOGIN = "login";
     private static String TAG_REGISTER = "register";
@@ -77,5 +78,13 @@ public class UserFunctions {
         DatabaseHandler db = new DatabaseHandler(context);
         db.resetTables();
         return true;
+    }
+
+    public JSONObject postMessage(String title, String content){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("messageTitle", title);
+        params.put("messageContent", content);
+        JSONObject jsonObject = jsonParser.makeHttpRequest(URL_POST, "POST", params);
+        return jsonObject;
     }
 }
