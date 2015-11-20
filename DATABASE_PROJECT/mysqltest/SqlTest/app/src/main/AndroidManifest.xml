@@ -30,6 +30,7 @@
         <activity android:name=".users.Register" />
         <activity android:name=".users.Registered"/>
         <activity android:name=".users.SaveMessage"/>
+        <activity android:name=".users.RetrieveAllMessages"/>
     </application>
 
 </manifest>

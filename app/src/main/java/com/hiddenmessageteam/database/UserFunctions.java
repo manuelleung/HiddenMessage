@@ -1,49 +1,48 @@
-package com.example.manuel.testsql.database;
+package com.hiddenmessageteam.database;
 
-/**
- * Created by Manuel on 10/30/2015.
- */
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import org.json.JSONObject;
 import android.content.Context;
 
+import org.json.JSONObject;
 
+import java.util.HashMap;
+
+/**
+ * Created by Manuel on 11/18/2015.
+ */
 public class UserFunctions {
     private JSONParser jsonParser;
 
     /* LOCAL SERVER */
-
+    /*
     private static String URL_LOGIN = "http://10.0.2.2:8080/hiddendb/";
-    private static String URL_REGISTER = "http://10.0.2.2:8080/hiddendb/";
+    //private static String URL_REGISTER = "http://10.0.2.2:8080/hiddendb/";
     private static String URL_FORGOT = "http://10.0.2.2:8080/hiddendb/";
     private static String URL_CHANGE = "http://10.0.2.2:8080/hiddendb/";
     private static String URL_POST = "http://10.0.2.2:8080/hiddendb/";
     private static String URL_RETRIEVE_MESSAGE = "http://10.0.2.2:8080/hiddendb/";
-    /*
+    */
+    /* REMOTE SERVER */
+
     private static String URL_LOGIN = "http://hidden-message.me/webservice/index.php";
     private static String URL_REGISTER = "http://hidden-message.me/webservice/index.php";
     private static String URL_FORGOT = "http://hidden-message.me/webservice/index.php";
     private static String URL_CHANGE = "http://hidden-message.me/webservice/index.php";
     private static String URL_POST = "http://hidden-message.me/webservice/index.php";
     private static String URL_RETRIEVE_MESSAGE = "http://hidden-message.me/webservice/index.php";
-    */
+
 
     private static String TAG_LOGIN = "login";
     private static String TAG_REGISTER = "register";
     private static String TAG_FORGOT = "forgotpass";
     private static String TAG_CHANGE = "changepass";
-
-    private static String TAG_NEW_MESSAGE = "newmessage";
+    private static String TAG_NEWMESSAGE = "newmessage";
     private static String TAG_RETRIEVE_ALL_MESSAGES = "allmessages";
 
     public UserFunctions() {
         jsonParser = new JSONParser();
     }
 
-    public JSONObject loginUser(String email, String password) {
+    public JSONObject userLogin(String email, String password) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_LOGIN);
         params.put("email", email);
@@ -69,7 +68,7 @@ public class UserFunctions {
         return json;
     }
 
-    public JSONObject registerUser(String fname, String lname, String email, String uname, String password) {
+    public JSONObject userRegister(String fname, String lname, String email, String uname, String password) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_REGISTER);
         params.put("fname", fname);
@@ -81,18 +80,20 @@ public class UserFunctions {
         return json;
     }
 
-    public boolean logoutUser(Context context) {
+    public boolean userLogout(Context context) {
         DatabaseHandler db = new DatabaseHandler(context);
         db.resetTables();
         return true;
     }
 
-    public JSONObject postMessage(String name, String title, String content){
+    public JSONObject postMessage(String name, String title, String content, String latitude, String longitude){
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("tag", TAG_NEW_MESSAGE);
+        params.put("tag", TAG_NEWMESSAGE);
         params.put("name", name);
         params.put("title", title);
         params.put("content", content);
+        params.put("latitude", latitude);
+        params.put("longitude", longitude);
         JSONObject json = jsonParser.makeHttpRequest(URL_POST, "POST", params);
         return json;
     }

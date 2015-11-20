@@ -8,42 +8,29 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Created by Leibniz H. Berihuete on 11/12/2015.
  */
 public class HandleMessagePost {
-    /***************************
-     * Data Fields
-     ***************************/
+/***************************
+        Data Fields
+***************************/
     private String title;
     private String message;
     private GoogleMap googleMap;
     private LatLng location;
 
 
-    /**************************
-     * Default Constructor
-     **************************/
+/**************************
+     Default Constructor
+ **************************/
     public HandleMessagePost() {
         setTitle("");
         setMessage("");
     }
 
-
-    /**************************
-     * Constructor
-     **************************/
-    public HandleMessagePost(String title, String message, GoogleMap googleMap, LatLng location) {
-        setMessage(message);
-        setGoogleMap(googleMap);
-        setLocation(location);
-
-    }
-
-
-    /**************************
-     * Mutators
-     **************************/
+/**************************
+       Mutators
+**************************/
     public void setTitle(String title) {
         this.title = title;
     }
-
     public void setMessage(String message) {
         this.message = message;
     }
@@ -52,14 +39,17 @@ public class HandleMessagePost {
         this.googleMap = googleMap;
     }
 
-    public void setLocation(LatLng location) {
-        this.location = location;
+    public void setLocation(String latitude, String longitude) {
+        location = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
     }
 
 
-    /**************************
-     * Accessors
-     **************************/
+
+
+
+/**************************
+         Accessors
+ **************************/
     public String getTitle() {
         return this.title;
     }
@@ -68,8 +58,8 @@ public class HandleMessagePost {
         return this.message;
     }
 
-    public GoogleMap getGoogleMap() {
-        return this.googleMap;
+    public GoogleMap getGoogleMap(){
+        return  this.googleMap;
     }
 
     public LatLng getLocation() {
@@ -77,9 +67,10 @@ public class HandleMessagePost {
     }
 
 
-    /**************************
-     * insertMark Method
-     **************************/
+
+/**************************
+      insertMark Method
+ **************************/
     public void insertMark() {
         googleMap.addMarker(new MarkerOptions().position(location).title(title).snippet(message));
     }

@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.example.manuel.testsql.users.Login;
 import com.example.manuel.testsql.users.Register;
+import com.example.manuel.testsql.users.RetrieveAllMessages;
 import com.example.manuel.testsql.users.SaveMessage;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), SaveMessage.class);
+                startActivity(intent);
+            }
+        });
+
+        Button retrieveMessageButton = (Button) findViewById(R.id.button_view_message);
+        retrieveMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RetrieveAllMessages.class);
                 startActivity(intent);
             }
         });

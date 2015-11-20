@@ -6,11 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.manuel.testsql.R;
 import com.example.manuel.testsql.database.DatabaseHandler;
-import com.example.manuel.testsql.users.Login;
-
 import java.util.HashMap;
 
 /**

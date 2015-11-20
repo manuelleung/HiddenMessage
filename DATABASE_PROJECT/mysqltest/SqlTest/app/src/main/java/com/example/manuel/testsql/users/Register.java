@@ -1,10 +1,6 @@
 package com.example.manuel.testsql.users;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,20 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.manuel.testsql.R;
 import com.example.manuel.testsql.database.DatabaseHandler;
+import com.example.manuel.testsql.database.NetworkCheck;
 import com.example.manuel.testsql.database.UserFunctions;
-
 import org.json.JSONObject;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  * Created by Manuel on 10/29/2015.
  */
-public class Register extends AppCompatActivity {
+public class Register extends AppCompatActivity implements NetworkCheck.OnTaskCompleted{
 
     private static String KEY_SUCCESS = "success";
     private static String KEY_UID = "uid";
@@ -78,17 +71,18 @@ public class Register extends AppCompatActivity {
                 password = input_password.getText().toString();
                 //confirmpassword = input_confirmpassword.getText().toString();
 
-                if( (!firstname.equals("")) && (!lastname.equals(""))
+                NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), Register.this);
+
+                if ((!firstname.equals("")) && (!lastname.equals(""))
                         && (!email.equals("")) && (!password.equals(""))
-                         ) {
+                        ) {
                     //get username from email
                     String[] tokens = email.split("@");
                     username = tokens[0];
 
-                    NetAsync(v);
+                    checkConnection.netAsync(v);
 
-                }
-                else {
+                } else {
                     Toast.makeText(getApplicationContext(), "One or more fields are empty",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -96,57 +90,14 @@ public class Register extends AppCompatActivity {
         });
     }
 
-    public void NetAsync(View view) {
-        new NetCheck().execute();
-    }
-
-    private class NetCheck extends AsyncTask<String, String, Boolean> {
-
-        private ProgressDialog pDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(Register.this);
-            pDialog.setTitle("Checking Network");
-            pDialog.setMessage("Loading...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
+    @Override
+    public void onConnCompleted(boolean conn) {
+        if(conn) {
+            Toast.makeText(getApplicationContext(), "Connection Success!!!", Toast.LENGTH_SHORT).show();
+            new ProcessRegister().execute();
         }
-
-        @Override
-        protected Boolean doInBackground(String... args) {
-
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            if(netInfo!=null && netInfo.isConnected()) {
-                try {
-                    URL url = new URL("http://www.google.com");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setConnectTimeout(3000);
-                    conn.connect();
-
-                    if(conn.getResponseCode() == 200) {
-                        return true;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if(result==true) {
-                pDialog.dismiss();
-                new ProcessRegister().execute();
-            }
-            else {
-                pDialog.dismiss();
-                Toast.makeText(Register.this, "Error in Network Connection", Toast.LENGTH_SHORT).show();
-            }
+        else {
+            Toast.makeText(getApplicationContext(), "NOT !!!", Toast.LENGTH_SHORT).show();
         }
     }
 

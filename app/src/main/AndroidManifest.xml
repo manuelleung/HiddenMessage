@@ -5,8 +5,6 @@
     <!-- PARSE DB PERMISSIONS -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -20,14 +18,14 @@
     <uses-permission android:name="com.hiddenmessage.permission.C2D_MESSAGE" />
 
     <application
-        android:name="com.hiddenmessageteam.database.ParseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme.NoActionBar" >
         <activity
-            android:name="com.hiddenmessageteam.HomeActivity"
-            android:label="@string/app_name" >
+            android:name=".HomeActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,41 +35,14 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <activity
-            android:name="com.hiddenmessageteam.MapsActivity">
-        </activity>
-        <activity
-            android:name="com.hiddenmessageteam.MessageActivity">
-        </activity>
-        <activity
-            android:name="com.hiddenmessageteam.LoginActivity">
-        </activity>
-        <activity
-            android:name="com.hiddenmessageteam.CreateAccountActivity">
-        </activity>
 
-        <!-- PARSE DB PUSH NOTIFICATION REQUIREMENTS -->
-        <service android:name="com.parse.PushService" />
-        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.parse.push.intent.RECEIVE" />
-                <action android:name="com.parse.push.intent.DELETE" />
-                <action android:name="com.parse.push.intent.OPEN" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+        <activity android:name=".MapsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".SaveMessageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".RegisterActivity" android:screenOrientation="portrait"/>
 
-                <!--
-                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
-                -->
-                <category android:name="com.hiddenmessageteam" />
-            </intent-filter>
-        </receiver>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

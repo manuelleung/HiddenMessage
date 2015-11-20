@@ -5,7 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.hiddenmessageteam.database.DatabaseHandler;
+
+import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
     private TextView createAccountText;
@@ -16,6 +21,9 @@ public class HomeActivity extends AppCompatActivity {
     private Intent loginIntent;
     private Intent mapsIntent;
 
+    // RASHED
+    private Intent onProgressInterface;
+
     /***************************************/
 
 
@@ -24,15 +32,39 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
+        /*CHECK IF AN USER ALREADY LOGGED IN*/
+        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+        if(db.getRowCount()>0) {
+            Intent loggedin = new Intent(getApplicationContext(), MapsActivity.class);
+            loggedin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(loggedin);
+        }
+
         // Initialize Intents
-        createAccountIntent = new Intent(this, CreateAccountActivity.class);
+        createAccountIntent = new Intent(this, RegisterActivity.class);
         loginIntent = new Intent(this, LoginActivity.class);
         mapsIntent = new Intent(this, MapsActivity.class);
+
+        //RASHED
+        onProgressInterface = new Intent(this, MainActivity.class);
+
+        RelativeLayout backgroundLayout = (RelativeLayout) findViewById(R.id.home_activity_layout);
+        new BackgroundAnimation(backgroundLayout);
 
         // Initialize the views:
         createAccountText = (TextView) findViewById(R.id.createAccountText);
         loginButton = (Button) findViewById(R.id.loginButton);
         guestButton = (Button) findViewById(R.id.guestButton);
+
+        // RASHED
+        Button onProgressInt = (Button) findViewById(R.id.onProgressActivity);
+        onProgressInt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(onProgressInterface);
+            }
+        });
+
 
         buildCreateAccountFunctionality();
         buildLoginButtonFunctionality();
