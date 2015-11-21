@@ -9,11 +9,9 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,8 +23,6 @@ import com.hiddenmessageteam.database.HandleMessagePost;
 import com.hiddenmessageteam.database.MessageRequest;
 
 import org.json.JSONObject;
-
-import java.util.Iterator;
 
 /**
  * Created by Manuel on 10/29/2015.
@@ -43,6 +39,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String longi="";
 
     private FloatingActionButton refreshButton;
+
+    NavigationView navView;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +78,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        backgroundSync();
+
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 MessageRequest retrieve = new MessageRequest(getApplicationContext(), findViewById(R.id.map), MapsActivity.this);
+
             }
         });
 
+
+        navView = (NavigationView) findViewById(R.id.nav_view);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navView.setNavigationItemSelectedListener(this);
+
+    }
+
+    // Update messages in the background
+    public void backgroundSync() {
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MessageRequest retrieve = new MessageRequest(getApplicationContext(), findViewById(R.id.map), MapsActivity.this);
+                    }
+                });
+                try {
+                    Thread.sleep(15000); // 15 sec
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        th.start();
     }
 
     /**
@@ -104,6 +132,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         mMap.setMyLocationEnabled(true);
         messagePost.setGoogleMap(mMap);
+
+
 
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
@@ -187,13 +217,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_friends) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_my_messages) {
+
+        } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_share) {
 

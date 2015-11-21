@@ -4,8 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,6 +40,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
 
     private HandleMessagePost messagePost;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +50,9 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         inputTitle = (EditText) findViewById(R.id.edit_title);
         inputContent = (EditText) findViewById(R.id.edit_content);
 
-        latitude = getIntent().getExtras().getString("latitude");
-        longitude = getIntent().getExtras().getString("longitude");
+        //uncomment later
+        //latitude = getIntent().getExtras().getString("latitude");
+        //longitude = getIntent().getExtras().getString("longitude");
 
         messagePost = new HandleMessagePost();
 
@@ -60,10 +68,9 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
                 content = inputContent.getText().toString();
 
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), SaveMessageActivity.this);
-                if( (!displayName.equals("")) && (!title.equals("")) && (!content.equals("")) ) {
+                if ((!displayName.equals("")) && (!title.equals("")) && (!content.equals(""))) {
                     checkConnection.netAsync(v);
-                }
-                else {
+                } else {
                     Toast.makeText(getApplicationContext(), "One of the fields is empty", Toast.LENGTH_SHORT).show();
 
                 }

@@ -61,7 +61,9 @@ public class HomeActivity extends AppCompatActivity {
         onProgressInt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(onProgressInterface);
+                //startActivity(onProgressInterface);
+                startActivity(new Intent(getApplicationContext(), SaveMessageActivity.class));
+                //finish();
             }
         });
 
