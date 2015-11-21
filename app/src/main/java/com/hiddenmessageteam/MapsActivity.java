@@ -40,8 +40,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private FloatingActionButton refreshButton;
 
-    NavigationView navView;
-    DrawerLayout drawer;
+    private NavigationView navView;
+    private DrawerLayout drawer;
+
+
+    private Boolean paused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,32 +63,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         refreshButton = (FloatingActionButton) findViewById(R.id.button_refresh);
 
 
+
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( (!lati.equals("")) && (!longi.equals("")) ) {
+                if ((!lati.equals("")) && (!longi.equals(""))) {
                     Bundle bundle = new Bundle();
                     bundle.putString("latitude", "" + loc.latitude);
                     bundle.putString("longitude", "" + loc.longitude);
 
                     postMessageIntent.putExtras(bundle);
                     startActivityForResult(postMessageIntent, 1);
-                }
-                else {
+                } else {
                     Toast.makeText(getApplicationContext(), "Please wait a few seconds to find your location", Toast.LENGTH_SHORT).show();
                 }
-                //startActivityForResult(postMessageIntent, 1);
             }
         });
 
-        backgroundSync();
-
+        // sync on user request
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 MessageRequest retrieve = new MessageRequest(getApplicationContext(), findViewById(R.id.map), MapsActivity.this);
-
             }
         });
 
@@ -96,21 +95,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // if application is resumed. check for messages again
+        // keep syncing the messages
+        paused = false;
+        backgroundSync();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        // if application is paused. stop checking/updating for messages
+        paused = true;
+    }
+
     // Update messages in the background
     public void backgroundSync() {
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        MessageRequest retrieve = new MessageRequest(getApplicationContext(), findViewById(R.id.map), MapsActivity.this);
+                while (paused==false) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Toast.makeText(getApplicationContext(), "Updated messages", Toast.LENGTH_SHORT).show();
+                            MessageRequest retrieve = new MessageRequest(getApplicationContext(), findViewById(R.id.map), MapsActivity.this);
+                        }
+                    });
+                    try {
+                        Thread.sleep(20000); // 20 sec
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                });
-                try {
-                    Thread.sleep(15000); // 15 sec
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
         });
