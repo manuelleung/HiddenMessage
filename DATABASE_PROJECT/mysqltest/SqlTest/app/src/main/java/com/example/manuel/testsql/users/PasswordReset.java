@@ -60,12 +60,12 @@ public class PasswordReset extends AppCompatActivity implements NetworkCheck.OnT
 
         private ProgressDialog pDialog;
 
-        String forgotten_password;
+        String email;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            forgotten_password = email.getText().toString();
+            email = PasswordReset.this.email.getText().toString();
             pDialog = new ProgressDialog(PasswordReset.this);
             pDialog.setTitle("Contacting servers");
             pDialog.setMessage("Processing...");
@@ -77,7 +77,7 @@ public class PasswordReset extends AppCompatActivity implements NetworkCheck.OnT
         @Override
         protected JSONObject doInBackground(String... args) {
             UserFunctions userFunctions = new UserFunctions();
-            JSONObject json = userFunctions.forgotPassword(forgotten_password);
+            JSONObject json = userFunctions.forgotPassword(email);
             return json;
         }
 

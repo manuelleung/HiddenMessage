@@ -15,6 +15,9 @@ import com.hiddenmessageteam.database.UserFunctions;
 
 import org.json.JSONObject;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity implements NetworkCheck.OnTaskCompleted {
 
     private final static String KEY_SUCCESS = "success";
@@ -64,20 +67,27 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
                 password = inputPassword.getText().toString();
                 confirmPassword = inputConfirmPassword.getText().toString();
 
+                // Check internet connection
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), RegisterActivity.this);
-                if( (!firstname.equals("")) && (!lastname.equals(""))
+
+                if ((!firstname.equals("")) && (!lastname.equals(""))
                         && (!email.equals("")) && (!password.equals(""))
-                        && (!confirmPassword.equals("")) ) {
-                    String[] tokens = email.split("@");
-                    username = tokens[0];
-                    checkConnection.netAsync(v);
-                }
-                else {
+                        && (!confirmPassword.equals(""))) {
+                    //check password match
+                    if (password.equals(confirmPassword)) {
+                        String[] tokens = email.split("@");
+                        username = tokens[0];
+                        checkConnection.netAsync(v);
+                    } else {
+                    Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
                     Toast.makeText(getApplicationContext(), "Some fields are empty", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
         });
-
 
         Button cancelButton = (Button) findViewById(R.id.button_cancel);
 
@@ -87,7 +97,6 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
                 finish();
             }
         });
-
     }
 
     @Override
