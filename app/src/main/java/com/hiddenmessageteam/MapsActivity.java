@@ -108,7 +108,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navView.setNavigationItemSelectedListener(this);
 
-        //-------------------------------------------------------------------------------------------
         // SetUp User Tutorial -- Will run only once.
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
@@ -164,8 +163,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
         }
         count++;
-
-
     }
     @Override
     public void onResume() {

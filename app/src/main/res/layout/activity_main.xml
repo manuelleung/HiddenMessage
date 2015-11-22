@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:paddingTop="@dimen/activity_vertical_margin"
+
     tools:context="com.hiddenmessageteam.Firstonly"
     android:id="@+id/n"
-   android:background="@drawable/theback">
+    android:background="@drawable/momandher">
 
     <EditText
         android:layout_width="300dp"
@@ -14,11 +14,10 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/email"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="243dp"
         android:hint="  Enter your email"
-        android:textSize="16dp"
+        android:textSize="18dp"
         android:background="@drawable/back"
-        android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"/>
@@ -47,45 +46,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:singleLine="false"
-        android:textColor="#56ae0a"
+        android:textColor="#000000"
         android:textSize="16dp"
         android:background="@drawable/back"
         android:alpha=".3"
-        android:onClick="buttonclick" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="------------------------------ Or ------------------------------"
-        android:id="@+id/orline"
-        android:textSize="20dp"
-        android:layout_marginTop="45dp"
-        android:layout_centerHorizontal="true"
-        android:textColor="#77c9ced2"
-        android:layout_below="@+id/signinbutton" />
-
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="Sign in with Gmail"
-        android:id="@+id/gmailbutton"
-        android:layout_below="@+id/orline"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:background="#dd4b39"
-        android:textColor="#ffffff"
-        android:onClick="buttonclick" />
-
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="Sign in with Facebook"
-        android:id="@+id/facebookbutton"
-        android:layout_below="@+id/gmailbutton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:textColor="#ffffff"
-        android:background="#3b5998"
         android:onClick="buttonclick" />
 
     <TextView
@@ -117,7 +81,7 @@
         android:background="@drawable/backthree"
         android:allowUndo="false"
         android:onClick="buttonclick"
-        android:textColor="#f82020" />
+        android:textColor="#f3efef" />
 
     <Button
         android:layout_width="100dp"
@@ -125,22 +89,33 @@
         android:text="Skip Sign In"
         android:id="@+id/skip"
 
-        android:layout_alignTop="@+id/signup"
         android:singleLine="false"
         android:background="@drawable/backthree"
         android:onClick="buttonclick"
-        android:layout_alignRight="@+id/title"
-        android:layout_alignEnd="@+id/title"
-        android:textColor="#140000" />
+        android:textColor="#d1efd2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Hidden Message"
         android:id="@+id/title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:src="@drawable/cooltext14"/>
+        android:layout_marginTop="100dp"
+        android:textSize="40dp"
+        android:textColor="#ffffff" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/small_logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

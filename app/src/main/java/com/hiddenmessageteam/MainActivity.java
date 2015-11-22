@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView email;
     private TextView password;
     private Button signin;
-    private String valid_email;
     private static int emailcount=0;
     private static int passwordcount=0;
 
@@ -25,27 +24,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // TextView title = (TextView) findViewById(R.id.title);
+        // Set the Title to the want typeface.
+        TextView title = (TextView) findViewById(R.id.title);
         Typeface changetitle = Typeface.createFromAsset(getAssets(), "fonts/LucidaCalligraphyItalic.ttf");
-//       title.setTypeface(changetitle);
+        title.setTypeface(changetitle);
 
-        TextView or = (TextView) findViewById(R.id.orline);
-        changetitle = Typeface.createFromAsset(getAssets(), "fonts/font.ttf");
-        or.setTypeface(changetitle);
-
+        // This allows the TextView to have two different color and bold.
         TextView forgot = (TextView) findViewById(R.id.forgot);
-        forgot.setText(Html.fromHtml("<font color= '#00E000'> Forgot your sign in info? </font> <font color= '#0AFF0A'> <b>GET HELP</b> </font"));
+        forgot.setText(Html.fromHtml("<font color= '#8F8F8F'> Forgot your sign in info? </font> <font color= '#D6D6D6'> <b>GET HELP</b> </font"));
 
-        //------------------------------------------------------------------------------------------------------------------------------
+        // Initialize Id
         email = (TextView) findViewById(R.id.email);
         password = (TextView) findViewById(R.id.password);
-
         signin=(Button) findViewById(R.id.signinbutton);
-        signin.setEnabled(false);
-        checkifemailwritten();
-        checkifpasswordwritten();
-        //---------------------------------
 
+        signin.setEnabled(false); //Disabling the signin button - user can not sign in until the requirements have been meet.
+        checkifemailwritten(); // This method will check if the user enter an email.
+        checkifpasswordwritten(); // This method will check if the user enter an password.
+
+        // When the email textfield lose focus, it will check if the email has a valid.
         email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -54,21 +51,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-
-
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private void checkifemailwritten() {
 
         email.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
+            @Override
+            public void afterTextChanged(Editable s) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 emailcount=s.length();
                 if(s.length()>0&& passwordcount>0&& isEmailValid(s)){
@@ -79,27 +75,18 @@ public class MainActivity extends AppCompatActivity {
                     signin.setAlpha((float) 0.3);
                     signin.setEnabled(false);
                 }
-
-
             }
-
         });
-
-    }
-
-    boolean isEmailValid(CharSequence email) {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private void checkifpasswordwritten() {
 
         password.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
+            @Override
+            public void afterTextChanged(Editable s) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 passwordcount = s.length();
                 if (s.length() > 0 && emailcount > 0 && isEmailValid(email.getText())) {
@@ -110,11 +97,8 @@ public class MainActivity extends AppCompatActivity {
                     signin.setAlpha((float) 0.3);
                     signin.setEnabled(false);
                 }
-
             }
-
         });
-
     }
 
     public void buttonclick(View v){
