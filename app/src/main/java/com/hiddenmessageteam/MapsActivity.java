@@ -12,8 +12,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,7 +33,7 @@ import org.json.JSONObject;
 /**
  * Created by Manuel on 10/29/2015.
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener, MessageRequest.onMessageRequestCompleted {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener, MessageRequest.onMessageRequestCompleted, View.OnClickListener {
 
     private GoogleMap mMap;
     private FloatingActionButton plusButton;
@@ -45,6 +51,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private Boolean paused;
+
+
+
+    //----------------------------------------------------------------------------------------------
+    ShowcaseView showcase;
+    Target target_fab, target_mood,target_refresh ;
+    int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +106,57 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navView.setNavigationItemSelectedListener(this);
 
+        //-------------------------------------------------------------------------------------------
+        // SetUp User Tutorial
+        target_fab = new ViewTarget(R.id.fab,this);
+        target_mood=new ViewTarget(R.id.mood,this);
+        target_refresh=new ViewTarget(R.id.button_refresh,this);
+        showcase=new ShowcaseView.Builder(this)
+                .setTarget(Target.NONE)
+                .setContentTitle("Welcome to Hidden Message")
+                .setContentText("An exciting new world awaits. \nPress NEXT to get a quick overview")
+                .setOnClickListener(this)
+                .build();
+        showcase.setButtonText("Next");
+        //Aligning the showcase_button to the center.
+        RelativeLayout.LayoutParams scbuttonpos = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        scbuttonpos.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        scbuttonpos.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        scbuttonpos.setMargins(margin, margin, margin, 120);
+        showcase.setButtonPosition(scbuttonpos);
     }
 
+    @Override
+    public void onClick (View v){
+
+        switch(count){
+            case 0:
+                showcase.setTarget(target_fab);
+                showcase.setContentTitle("Add Message");
+                showcase.setContentText("TAPPING the PLUS ICON will allow you add a message to your current location");
+                break;
+            case 1:
+                showcase.setTarget(target_refresh);
+                showcase.setContentTitle("Refresh");
+                showcase.setContentText("Refresh (IDK)");
+                break;
+            case 2:
+                showcase.setTarget(target_mood);
+                showcase.setContentTitle("Changing Mood");
+                showcase.setContentText("Hold on to the mood will allow you to change your current mood");
+                showcase.setButtonText("Enjoy!!");
+                break;
+            case 3:
+                showcase.hide();
+                break;
+        }
+        count++;
+
+
+    }
     @Override
     public void onResume() {
         super.onResume();
