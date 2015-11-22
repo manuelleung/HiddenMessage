@@ -2,8 +2,10 @@ package com.hiddenmessageteam;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
@@ -107,26 +109,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         navView.setNavigationItemSelectedListener(this);
 
         //-------------------------------------------------------------------------------------------
-        // SetUp User Tutorial
-        target_fab = new ViewTarget(R.id.fab,this);
-        target_mood=new ViewTarget(R.id.mood,this);
-        target_refresh=new ViewTarget(R.id.button_refresh,this);
-        showcase=new ShowcaseView.Builder(this)
-                .setTarget(Target.NONE)
-                .setContentTitle("Welcome to Hidden Message")
-                .setContentText("An exciting new world awaits. \nPress NEXT to get a quick overview")
-                .setOnClickListener(this)
-                .build();
-        showcase.setButtonText("Next");
-        //Aligning the showcase_button to the center.
-        RelativeLayout.LayoutParams scbuttonpos = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        scbuttonpos.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        scbuttonpos.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        scbuttonpos.setMargins(margin, margin, margin, 120);
-        showcase.setButtonPosition(scbuttonpos);
+        // SetUp User Tutorial -- Will run only once.
+        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
+        if (isFirstRun)
+        {
+            target_fab = new ViewTarget(R.id.fab,this);
+            target_mood=new ViewTarget(R.id.mood,this);
+            target_refresh=new ViewTarget(R.id.button_refresh,this);
+            showcase=new ShowcaseView.Builder(this)
+                    .setTarget(Target.NONE)
+                    .setContentTitle("Welcome to Hidden Message")
+                    .setContentText("An exciting new world awaits. \nPress NEXT to get a quick overview")
+                    .setOnClickListener(this)
+                    .build();
+            showcase.setButtonText("Next");
+            //Aligning the showcase_button to the center.
+            RelativeLayout.LayoutParams scbuttonpos = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            scbuttonpos.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            scbuttonpos.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+            int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+            scbuttonpos.setMargins(margin, margin, margin, 120);
+            showcase.setButtonPosition(scbuttonpos);
+            SharedPreferences.Editor editor = wmbPreference.edit();
+            editor.putBoolean("FIRSTRUN", false);
+            editor.commit();
+        }
     }
 
     @Override
