@@ -120,6 +120,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .setTarget(Target.NONE)
                     .setContentTitle("Welcome to Hidden Message")
                     .setContentText("An exciting new world awaits. \nPress NEXT to get a quick overview")
+                    .setStyle(R.style.finalsc)
                     .setOnClickListener(this)
                     .build();
             showcase.setButtonText("Next");
