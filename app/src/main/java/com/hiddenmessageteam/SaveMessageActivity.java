@@ -50,9 +50,9 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         inputTitle = (EditText) findViewById(R.id.edit_title);
         inputContent = (EditText) findViewById(R.id.edit_content);
 
-        //uncomment later
-        //latitude = getIntent().getExtras().getString("latitude");
-        //longitude = getIntent().getExtras().getString("longitude");
+        
+        latitude = getIntent().getExtras().getString("latitude");
+        longitude = getIntent().getExtras().getString("longitude");
 
         messagePost = new HandleMessagePost();
 
