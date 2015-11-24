@@ -50,7 +50,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         inputTitle = (EditText) findViewById(R.id.edit_title);
         inputContent = (EditText) findViewById(R.id.edit_content);
 
-        
+
         latitude = getIntent().getExtras().getString("latitude");
         longitude = getIntent().getExtras().getString("longitude");
 
@@ -58,7 +58,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
 
         //Toast.makeText(getApplicationContext(), "latitude: "+latitude+" longitude: "+longitude, Toast.LENGTH_SHORT).show();
 
-        Button postButton = (Button) findViewById(R.id.button_post);
+        final Button postButton = (Button) findViewById(R.id.button_post);
 
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +69,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
 
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), SaveMessageActivity.this);
                 if ((!displayName.equals("")) && (!title.equals("")) && (!content.equals(""))) {
+                    postButton.setEnabled(false);
                     checkConnection.netAsync(v);
                 } else {
                     Toast.makeText(getApplicationContext(), "One of the fields is empty", Toast.LENGTH_SHORT).show();

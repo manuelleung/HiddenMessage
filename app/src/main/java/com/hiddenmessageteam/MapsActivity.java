@@ -312,7 +312,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else if (id == R.id.nav_my_messages) {
 
         } else if (id == R.id.nav_settings) {
-
+            Intent settingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+            settingIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(settingIntent);
+            finish();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

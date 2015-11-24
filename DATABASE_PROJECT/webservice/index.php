@@ -50,7 +50,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"];
         $subject = "Change Password Notification";
-        $message = "Hello user,nnYour Password has been sucessfully changed.";
+        $message = "Hello user, your Password has been sucessfully changed.";
         $from = "contact@gmail.com";
         $headers = "From:" . $from;
         if ($db->isUserExisted($email)) {
@@ -79,7 +79,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"];
         $subject = "Password Recovery";
-        $message = "Hello user,nnYour temporary Password is $randomcode . Login and change.";
+        $message = "Hello user, Your temporary Password is $randomcode . Please Login and change as soon as possible <3.";
         $from = "hiddenmessage.windcore@gmail.com";
         $headers = "From:" . $from;
         if ($db->isUserExisted($email)) {

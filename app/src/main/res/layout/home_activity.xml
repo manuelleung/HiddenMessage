@@ -79,4 +79,16 @@
         android:layout_marginTop="23dp"
         android:textColor="#51a0fc"
         android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password"
+        android:id="@+id/forgot_password_text"
+        android:layout_below="@+id/createAccountText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textColor="#51a0fc"
+        android:textSize="20sp" />
+
 </RelativeLayout>

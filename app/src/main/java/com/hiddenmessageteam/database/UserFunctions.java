@@ -60,10 +60,10 @@ public class UserFunctions {
         return json;
     }
 
-    public JSONObject forgotPassword(String forgotpassword) {
+    public JSONObject forgotPassword(String email) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_FORGOT);
-        params.put("forgotpassword", forgotpassword);
+        params.put("email", email);
         JSONObject json = jsonParser.makeHttpRequest(URL_FORGOT, "POST", params);
         return json;
     }

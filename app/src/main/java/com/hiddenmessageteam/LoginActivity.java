@@ -106,9 +106,12 @@ public class LoginActivity extends AppCompatActivity implements NetworkCheck.OnT
                         startActivity(mapIntent);
                         finish();
                     }
+                    else if(Integer.parseInt(json.getString("error")) == 1){
+                        Toast.makeText(getApplicationContext(), "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Error occured in login", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();

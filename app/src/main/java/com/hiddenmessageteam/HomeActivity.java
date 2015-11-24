@@ -17,9 +17,13 @@ public class HomeActivity extends AppCompatActivity {
     private Button loginButton;
     private Button guestButton;
 
+    private TextView forgotPasswordText;
+
     private Intent createAccountIntent;
     private Intent loginIntent;
     private Intent mapsIntent;
+
+    private Intent forgotPasswordIntent;
 
     // RASHED
     private Intent onProgressInterface;
@@ -45,6 +49,8 @@ public class HomeActivity extends AppCompatActivity {
         loginIntent = new Intent(this, LoginActivity.class);
         mapsIntent = new Intent(this, MapsActivity.class);
 
+        forgotPasswordIntent = new Intent(this, ForgotPasswordActivity.class);
+
         //RASHED
         onProgressInterface = new Intent(this, MainActivity.class);
 
@@ -56,6 +62,8 @@ public class HomeActivity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.loginButton);
         guestButton = (Button) findViewById(R.id.guestButton);
 
+        forgotPasswordText = (TextView) findViewById(R.id.forgot_password_text);
+
         // RASHED
         Button onProgressInt = (Button) findViewById(R.id.onProgressActivity);
         onProgressInt.setOnClickListener(new View.OnClickListener() {
@@ -65,12 +73,21 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        buildForgotPasswordFunctionality();
 
         buildCreateAccountFunctionality();
         buildLoginButtonFunctionality();
         buildGuestButtonFunctionality();
     }
 
+    public void buildForgotPasswordFunctionality() {
+        forgotPasswordText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(forgotPasswordIntent);
+            }
+        });
+    }
 
     public void buildCreateAccountFunctionality() {
         createAccountText.setOnClickListener(new View.OnClickListener() {

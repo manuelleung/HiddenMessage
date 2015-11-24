@@ -47,7 +47,7 @@ public class MessageRequest implements NetworkCheck.OnTaskCompleted {
             new ProcessRetrieveAllMessages().execute();
         }
         else {
-            Toast.makeText(context, "NOT !!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -71,11 +71,11 @@ public class MessageRequest implements NetworkCheck.OnTaskCompleted {
             try {
                 if(json.getString(KEY_SUCCESS)!=null) {
                     if(Integer.parseInt(json.getString(KEY_SUCCESS))==1) {
-                        Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "refreshed!", Toast.LENGTH_SHORT).show();
                         listener.onRequestCompleted(json);
                     }
                     else {
-                        Toast.makeText(context, "Error occured in retrieve all messages", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "Error occured in retrieving all messages", Toast.LENGTH_SHORT).show();
                     }
                 }
 

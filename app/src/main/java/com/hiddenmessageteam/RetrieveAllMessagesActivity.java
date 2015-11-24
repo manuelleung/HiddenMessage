@@ -55,11 +55,11 @@ public class RetrieveAllMessagesActivity extends AppCompatActivity implements Ne
     @Override
     public void onConnCompleted(boolean conn) {
         if(conn) {
-            Toast.makeText(getApplicationContext(), "Connection Success!!!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Connection Success!!!", Toast.LENGTH_SHORT).show();
             new ProcessRetrieveAllMessages().execute();
         }
         else {
-            Toast.makeText(getApplicationContext(), "NOT !!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -79,7 +79,7 @@ public class RetrieveAllMessagesActivity extends AppCompatActivity implements Ne
             try {
                 if(json.getString(KEY_SUCCESS)!=null) {
                     if(Integer.parseInt(json.getString(KEY_SUCCESS))==1) {
-                        Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
                         Iterator<String> keys = json.keys();
                         int count = 0;
                         while(keys.hasNext()) {
