@@ -104,4 +104,5 @@ public class UserFunctions {
         JSONObject json = jsonParser.makeHttpRequest(URL_RETRIEVE_MESSAGE, "POST", params);
         return json;
     }
+
 }

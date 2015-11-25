@@ -45,7 +45,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".SaveMessageActivity"
-            android:theme="@android:style/Theme.Dialog"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"

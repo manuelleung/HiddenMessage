@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hiddenmessageteam.database.DatabaseHandler;
 import com.hiddenmessageteam.database.NetworkCheck;
 import com.hiddenmessageteam.database.UserFunctions;
 
@@ -26,6 +27,7 @@ public class RetrieveAllMessagesActivity extends AppCompatActivity implements Ne
 
     private LinearLayout linearLayout;
     private LinearLayout.LayoutParams lparams;
+
 
 
     @Override
