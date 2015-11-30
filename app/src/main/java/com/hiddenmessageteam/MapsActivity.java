@@ -1,6 +1,7 @@
 package com.hiddenmessageteam;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -22,25 +23,34 @@ import android.widget.Toast;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.hiddenmessageteam.database.HandleMessagePost;
 import com.hiddenmessageteam.database.MessageRequest;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Manuel on 10/29/2015.
  */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener, MessageRequest.onMessageRequestCompleted, View.OnClickListener {
 
+
+    private GoogleApiClient mGoogleApiClient;
+    private boolean goingToMyLocation;
     private GoogleMap mMap;
     private FloatingActionButton plusButton;
     private Intent postMessageIntent;
     private HandleMessagePost messagePost;
+    private Intent mapIntent;
 
     private LatLng loc;
     private String lati="";
@@ -50,6 +60,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private NavigationView navView;
     private DrawerLayout drawer;
+    private  int countToDelete = 2;
+    private int countToDeleteRefresh = 2;
+
+    private final Context context = this;
 
 
     private Boolean paused;
@@ -65,6 +79,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        goingToMyLocation = true;
+        mapIntent = new Intent(this, MapsActivity.class);
+
+
+
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -82,6 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if ((!lati.equals("")) && (!longi.equals(""))) {
                     Bundle bundle = new Bundle();
                     bundle.putString("latitude", "" + loc.latitude);
@@ -99,8 +122,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Clear Messages
+                HandleMessagePost.clearAll();
+
                 MessageRequest retrieve = new MessageRequest(getApplicationContext(), findViewById(R.id.map), MapsActivity.this);
+
             }
+
         });
 
 
@@ -190,8 +218,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            //Clear Messages
+                            HandleMessagePost.clearAll();
+
                             //Toast.makeText(getApplicationContext(), "Updated messages", Toast.LENGTH_SHORT).show();
                             MessageRequest retrieve = new MessageRequest(getApplicationContext(), findViewById(R.id.map), MapsActivity.this);
+
+
                         }
                     });
                     try {
@@ -219,7 +252,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         mMap.setMyLocationEnabled(true);
+      //  mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                goingToMyLocation = true;
+                return false;
+            }
+        });
         messagePost.setGoogleMap(mMap);
+
 
 
 
@@ -232,12 +274,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
-            loc = new LatLng(location.getLatitude(), location.getLongitude());
-            lati = loc.latitude+"";
-            longi = loc.longitude+"";
-            //messagePost.setLocation(loc);
-            if (mMap != null) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
+
+            if(goingToMyLocation) {
+                loc = new LatLng(location.getLatitude(), location.getLongitude());
+                lati = loc.latitude + "";
+                longi = loc.longitude + "";
+                //messagePost.setLocation(loc);
+                if (mMap != null) {
+                    goingToMyLocation = false;
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 14.4f));
+
+                }
             }
         }
     };
@@ -336,11 +383,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String content = object.getString("content");
                 String latitude = object.getString("latitude");
                 String longitude = object.getString("longitude");
-
+                final int currentIndex = i;
                 messagePost.setTitle(title);
                 messagePost.setMessage(content);
                 messagePost.setLocation(latitude, longitude);
                 messagePost.insertMark();
+
 
                 //Log.e("title ", title);
             }catch (Exception e) {
@@ -349,4 +397,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+
 }
