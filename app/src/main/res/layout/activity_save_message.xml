@@ -19,7 +19,7 @@
         android:paddingBottom="10dp"
         android:textColor="#636363"/>
 
-    <EditText
+    <!--EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edit_displayname"
@@ -27,7 +27,7 @@
         android:layout_below="@+id/text_header"
         android:background="#64bbc0ff"
         android:padding="5dp"
-        />
+        /-->
 
     <EditText
         android:layout_width="match_parent"
