@@ -31,7 +31,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
     private EditText inputTitle;
     private EditText inputContent;
 
-    private String displayName;
+    private String uid;
     private String title;
     private String content;
 
@@ -46,7 +46,6 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_message);
 
-        inputDisplayName = (EditText) findViewById(R.id.edit_displayname);
         inputTitle = (EditText) findViewById(R.id.edit_title);
         inputContent = (EditText) findViewById(R.id.edit_content);
 
@@ -56,19 +55,18 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
 
         messagePost = new HandleMessagePost();
 
-        //Toast.makeText(getApplicationContext(), "latitude: "+latitude+" longitude: "+longitude, Toast.LENGTH_SHORT).show();
-
         final Button postButton = (Button) findViewById(R.id.button_post);
 
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayName = inputDisplayName.getText().toString();
+                /* do your stuff here issac */
+
                 title = inputTitle.getText().toString();
                 content = inputContent.getText().toString();
 
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), SaveMessageActivity.this);
-                if ((!displayName.equals("")) && (!title.equals("")) && (!content.equals(""))) {
+                if ((!uid.equals("")) && (!title.equals("")) && (!content.equals(""))) {
                     postButton.setEnabled(false);
                     checkConnection.netAsync(v);
                 } else {
@@ -98,7 +96,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         @Override
         protected JSONObject doInBackground(String... params) {
             UserFunctions userFunctions = new UserFunctions();
-            JSONObject json = userFunctions.postMessage(displayName, title, content, latitude, longitude);
+            JSONObject json = userFunctions.postMessage(uid, title, content, latitude, longitude);
             return json;
         }
 
