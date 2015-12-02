@@ -47,10 +47,10 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         inputContent = (EditText) findViewById(R.id.edit_content);
 
         DatabaseHandler db = new DatabaseHandler(this);
-        //HashMap user = new HashMap();
-        //user = db.getUserDetails();
-        //user_id = user.get("user_id").toString();
-        user_id = db.getUserId();
+        HashMap user = new HashMap();
+        user = db.getUserDetails();
+        user_id = user.get("user_id").toString();
+        //user_id = db.getUserId();
 
         latitude = getIntent().getExtras().getString("latitude");
         longitude = getIntent().getExtras().getString("longitude");

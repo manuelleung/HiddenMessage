@@ -15,6 +15,7 @@ import com.hiddenmessageteam.database.UserFunctions;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -35,7 +36,10 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         setContentView(R.layout.activity_my_messages);
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        user_id = db.getUserId();
+        HashMap user = new HashMap();
+        user = db.getUserDetails();
+        user_id = user.get("user_id").toString();
+        //user_id = db.getUserId();
 
         linearLayout = (LinearLayout) findViewById(R.id.list_my_messages);
         lparams = new LinearLayout.LayoutParams(
