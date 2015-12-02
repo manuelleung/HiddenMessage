@@ -26,6 +26,7 @@ public class HandleMessagePost {
     private LatLng location;
     private static ArrayList<Marker> markerList = new ArrayList<>();
     private int ID;
+    private String uid;
     private Marker marker;
 
 
@@ -42,6 +43,7 @@ public class HandleMessagePost {
 /**************************
        Mutators
 **************************/
+    public void setUid(String uid){this.uid = uid;}
     public void setTitle(String title) {
         this.title = title;
     }
@@ -64,6 +66,8 @@ public class HandleMessagePost {
 /**************************
          Accessors
  **************************/
+    public String getUid(){return uid;}
+
     public String getTitle() {
         return this.title;
     }

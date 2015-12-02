@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hiddenmessageteam.database.DatabaseHandler;
 import com.hiddenmessageteam.database.HandleMessagePost;
 import com.hiddenmessageteam.database.NetworkCheck;
 import com.hiddenmessageteam.database.UserFunctions;
@@ -39,6 +40,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
     private String longitude="";
 
     private HandleMessagePost messagePost;
+    private DatabaseHandler databaseHandler;
 
 
     @Override
@@ -61,7 +63,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
             @Override
             public void onClick(View v) {
                 /* do your stuff here issac */
-
+                uid = databaseHandler.getUid();
                 title = inputTitle.getText().toString();
                 content = inputContent.getText().toString();
 
@@ -107,6 +109,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
                     if(Integer.parseInt(json.getString(KEY_SUCCESS))==1) {
                         Toast.makeText(getApplicationContext(), "Message Posted", Toast.LENGTH_SHORT).show();
                         Bundle bundle = new Bundle();
+                        bundle.putString("uid", uid);
                         bundle.putString("title", title);
                         bundle.putString("content", content);
                         bundle.putString("latitude", latitude);

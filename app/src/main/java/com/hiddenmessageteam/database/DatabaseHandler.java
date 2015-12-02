@@ -27,6 +27,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_UID = "uid";
     private static final String KEY_CREATED_AT = "created_at";
 
+    private String uid;
+
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -55,6 +57,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void addUser(String fname, String lname, String email, String username, String uid, String created_at) {
+        this.uid = uid;
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -68,6 +72,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.insert(TABLE_LOGIN, null, values);
         db.close();
+    }
+
+    public String getUid(){
+        return uid;
     }
 
     // get data from db

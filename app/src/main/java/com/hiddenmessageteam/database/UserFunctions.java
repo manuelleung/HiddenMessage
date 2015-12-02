@@ -86,10 +86,10 @@ public class UserFunctions {
         return true;
     }
 
-    public JSONObject postMessage(String name, String title, String content, String latitude, String longitude){
+    public JSONObject postMessage(String uid, String title, String content, String latitude, String longitude){
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_NEWMESSAGE);
-        params.put("name", name);
+        params.put("uid", uid);
         params.put("title", title);
         params.put("content", content);
         params.put("latitude", latitude);

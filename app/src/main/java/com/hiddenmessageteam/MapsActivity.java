@@ -294,6 +294,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
+                messagePost.setUid(data.getExtras().get("uid").toString());
                 messagePost.setTitle(data.getExtras().get("title").toString());
                 messagePost.setMessage(data.getExtras().get("content").toString());
                 messagePost.setLocation(data.getExtras().get("latitude").toString(), data.getExtras().get("longitude").toString());
@@ -379,11 +380,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for(int i=0; i<json.length()-3; i++) {
             try {
                 JSONObject object = json.getJSONObject("" + i);
+                String uid = object.getString("uid");
                 String title = object.getString("title");
                 String content = object.getString("content");
                 String latitude = object.getString("latitude");
                 String longitude = object.getString("longitude");
                 final int currentIndex = i;
+                messagePost.setUid(uid);
                 messagePost.setTitle(title);
                 messagePost.setMessage(content);
                 messagePost.setLocation(latitude, longitude);
