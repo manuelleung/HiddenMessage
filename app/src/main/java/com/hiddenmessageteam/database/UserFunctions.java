@@ -30,13 +30,13 @@ public class UserFunctions {
     private static String URL_POST = "http://hidden-message.me/webservice/index.php";
     private static String URL_RETRIEVE_MESSAGE = "http://hidden-message.me/webservice/index.php";
 
-
     private static String TAG_LOGIN = "login";
     private static String TAG_REGISTER = "register";
     private static String TAG_FORGOT = "forgotpass";
     private static String TAG_CHANGE = "changepass";
     private static String TAG_NEWMESSAGE = "newmessage";
     private static String TAG_RETRIEVE_ALL_MESSAGES = "allmessages";
+    private static String TAG_RETRIEVE_MY_MESSAGES = "mymessages";
 
     public UserFunctions() {
         jsonParser = new JSONParser();
@@ -86,10 +86,10 @@ public class UserFunctions {
         return true;
     }
 
-    public JSONObject postMessage(String uid, String title, String content, String latitude, String longitude){
+    public JSONObject postMessage(String user_id, String title, String content, String latitude, String longitude){
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_NEWMESSAGE);
-        params.put("uid", uid);
+        params.put("user_id", user_id);
         params.put("title", title);
         params.put("content", content);
         params.put("latitude", latitude);
@@ -105,4 +105,11 @@ public class UserFunctions {
         return json;
     }
 
+    public JSONObject retrieveMyMessages(String user_id) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("tag", TAG_RETRIEVE_MY_MESSAGES);
+        params.put("user_id", user_id);
+        JSONObject json = jsonParser.makeHttpRequest(URL_RETRIEVE_MESSAGE, "POST", params);
+        return json;
+    }
 }

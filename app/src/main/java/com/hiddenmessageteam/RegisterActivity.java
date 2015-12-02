@@ -128,27 +128,26 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
             try {
                 if(json.getString(KEY_SUCCESS)!=null) {
                     String error = json.getString(KEY_ERROR);
-
-                    // BAD
-                    // FIX THIS
-                    if(Integer.parseInt(json.getString(KEY_SUCCESS))==0) {
-                        Toast.makeText(getApplicationContext(), "FIX: SUCCESSFULLY REGISTER", Toast.LENGTH_SHORT).show();
-                        Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(loginIntent);
-                        finish();
-                    }
-                    //////////////////////////////////////////////////////////////////////
+                    String result = json.getString(KEY_SUCCESS);
 
                     // GOOD
-                    if(Integer.parseInt(json.getString(KEY_SUCCESS))==1) {
-                        Toast.makeText(getApplicationContext(), "GOOD: Successfuly Registered", Toast.LENGTH_SHORT).show();
+                    if(Integer.parseInt(result)==1) {
+                        Toast.makeText(getApplicationContext(), "Successfuly Registered", Toast.LENGTH_SHORT).show();
 
-                        Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(loginIntent);
-                        finish();
+                        //Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                        //loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        //startActivity(loginIntent);
+                        //finish();
                     }
+                    else if(Integer.parseInt(error)==2) {
+                        //pDialog.dismiss();
+                        Toast.makeText(RegisterActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(Integer.parseInt(error)==3) {
+                        //pDialog.dismiss();
+                        Toast.makeText(RegisterActivity.this, "Invalid Email id", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Error occured in registration", Toast.LENGTH_SHORT).show();

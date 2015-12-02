@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity implements NetworkCheck.OnTaskCompleted {
 
     private static final String KEY_SUCCESS = "success";
-    private static final String KEY_UID = "uid";
+    private static final String KEY_UID = "user_id";
     private static final String KEY_USERNAME = "uname";
     private static final String KEY_FIRSTNAME = "fname";
     private static final String KEY_LASTNAME = "lname";

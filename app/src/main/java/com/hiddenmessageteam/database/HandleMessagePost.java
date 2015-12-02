@@ -1,9 +1,5 @@
 package com.hiddenmessageteam.database;
 
-import android.graphics.BitmapFactory;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -26,7 +22,10 @@ public class HandleMessagePost {
     private LatLng location;
     private static ArrayList<Marker> markerList = new ArrayList<>();
     private int ID;
-    private String uid;
+
+    private String user_id;
+    private String message_id;
+
     private Marker marker;
 
 
@@ -43,7 +42,13 @@ public class HandleMessagePost {
 /**************************
        Mutators
 **************************/
-    public void setUid(String uid){this.uid = uid;}
+    public void setUserId(String user_id) {
+        this.user_id = user_id;
+    }
+    public void setMessageId(String message_id) {
+        this.message_id = message_id;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -66,7 +71,9 @@ public class HandleMessagePost {
 /**************************
          Accessors
  **************************/
-    public String getUid(){return uid;}
+    public String getUserId(){return user_id;}
+
+    public String getMessageId(){return message_id;}
 
     public String getTitle() {
         return this.title;

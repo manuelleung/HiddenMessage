@@ -17,26 +17,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.hiddenmessageteam.database.HandleMessagePost;
 import com.hiddenmessageteam.database.MessageRequest;
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by Manuel on 10/29/2015.
@@ -294,7 +289,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                messagePost.setUid(data.getExtras().get("uid").toString());
+                messagePost.setMessageId(data.getExtras().get("message_id").toString());
+                messagePost.setUserId(data.getExtras().get("user_id").toString());
                 messagePost.setTitle(data.getExtras().get("title").toString());
                 messagePost.setMessage(data.getExtras().get("content").toString());
                 messagePost.setLocation(data.getExtras().get("latitude").toString(), data.getExtras().get("longitude").toString());
@@ -358,7 +354,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else if (id == R.id.nav_friends) {
 
         } else if (id == R.id.nav_my_messages) {
-
+            Intent myMessagesIntent = new Intent(getApplicationContext(), MyMessagesActivity.class);
+            startActivity(myMessagesIntent);
+            finish();
         } else if (id == R.id.nav_settings) {
             Intent settingIntent = new Intent(getApplicationContext(), SettingActivity.class);
             startActivity(settingIntent);
@@ -380,19 +378,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for(int i=0; i<json.length()-3; i++) {
             try {
                 JSONObject object = json.getJSONObject("" + i);
-                String uid = object.getString("uid");
+                String message_id = object.getString("message_id");
+                String user_id = object.getString("user_id");
                 String title = object.getString("title");
                 String content = object.getString("content");
                 String latitude = object.getString("latitude");
                 String longitude = object.getString("longitude");
                 final int currentIndex = i;
-                messagePost.setUid(uid);
+                messagePost.setMessageId(message_id);
+                messagePost.setUserId(user_id);
                 messagePost.setTitle(title);
                 messagePost.setMessage(content);
                 messagePost.setLocation(latitude, longitude);
                 messagePost.insertMark();
-
-
                 //Log.e("title ", title);
             }catch (Exception e) {
                 e.printStackTrace();

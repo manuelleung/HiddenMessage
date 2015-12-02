@@ -64,8 +64,8 @@ class DB_Functions {
         // check for successful store
         if ($result) {
             // get user details
-            $uid = mysql_insert_id(); // last inserted id
-            $result = mysql_query("SELECT * FROM users WHERE user_id = $uid");
+            $user_id = mysql_insert_id(); // last inserted id
+            $result = mysql_query("SELECT * FROM users WHERE user_id = $user_id");
             // return user details
             return mysql_fetch_array($result);
         } else {
@@ -84,8 +84,8 @@ class DB_Functions {
         // check for successful store
         if($result) {
             //get message details
-            $uid = mysql_insert_id(); //last inserted id
-            $result = mysql_query("SELECT * FROM messages WHERE message_id = $uid");
+            $user_id = mysql_insert_id(); //last inserted id
+            $result = mysql_query("SELECT * FROM messages WHERE message_id = $user_id");
             //return details
             return mysql_fetch_array($result);
         } else {

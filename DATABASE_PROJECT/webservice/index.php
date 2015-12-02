@@ -28,7 +28,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
                 $response["user"]["lname"] = $user["lastname"];
                 $response["user"]["email"] = $user["email"];
                 $response["user"]["uname"] = $user["username"];
-                $response["user"]["uid"] = $user["unique_id"];
+                $response["user"]["user_id"] = $user["unique_id"];
                 $response["user"]["created_at"] = $user["created_at"];
 
                 echo json_encode($response);
@@ -186,7 +186,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
                 $response["user"]["lname"] = $user["lastname"];
                 $response["user"]["email"] = $user["email"];
                 $response["user"]["uname"] = $user["username"];
-                $response["user"]["uid"] = $user["unique_id"];
+                $response["user"]["user_id"] = $user["unique_id"];
                 $response["user"]["created_at"] = $user["created_at"];
                 mail($email,$subject,$message,$headers);
                 echo json_encode($response);

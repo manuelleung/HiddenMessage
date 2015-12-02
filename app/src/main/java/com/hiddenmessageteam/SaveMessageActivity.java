@@ -4,14 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +17,8 @@ import com.hiddenmessageteam.database.UserFunctions;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 public class SaveMessageActivity extends AppCompatActivity implements NetworkCheck.OnTaskCompleted {
 
     private static final String KEY_SUCCESS = "success";
@@ -32,7 +28,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
     private EditText inputTitle;
     private EditText inputContent;
 
-    private String uid;
+    private String user_id;
     private String title;
     private String content;
 
@@ -40,7 +36,6 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
     private String longitude="";
 
     private HandleMessagePost messagePost;
-    private DatabaseHandler databaseHandler;
 
 
     @Override
@@ -51,6 +46,11 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         inputTitle = (EditText) findViewById(R.id.edit_title);
         inputContent = (EditText) findViewById(R.id.edit_content);
 
+        DatabaseHandler db = new DatabaseHandler(this);
+        //HashMap user = new HashMap();
+        //user = db.getUserDetails();
+        //user_id = user.get("user_id").toString();
+        user_id = db.getUserId();
 
         latitude = getIntent().getExtras().getString("latitude");
         longitude = getIntent().getExtras().getString("longitude");
@@ -63,12 +63,12 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
             @Override
             public void onClick(View v) {
                 /* do your stuff here issac */
-                uid = databaseHandler.getUid();
                 title = inputTitle.getText().toString();
                 content = inputContent.getText().toString();
 
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), SaveMessageActivity.this);
-                if ((!uid.equals("")) && (!title.equals("")) && (!content.equals(""))) {
+                if ((!user_id.equals("")) && (!title.equals("")) && (!content.equals(""))) {
+                    //Toast.makeText(getApplicationContext(), "user_id" + user_id, Toast.LENGTH_SHORT).show();
                     postButton.setEnabled(false);
                     checkConnection.netAsync(v);
                 } else {
@@ -98,7 +98,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         @Override
         protected JSONObject doInBackground(String... params) {
             UserFunctions userFunctions = new UserFunctions();
-            JSONObject json = userFunctions.postMessage(uid, title, content, latitude, longitude);
+            JSONObject json = userFunctions.postMessage(user_id, title, content, latitude, longitude);
             return json;
         }
 
@@ -108,8 +108,10 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
                 if(json.getString(KEY_SUCCESS) !=null ) {
                     if(Integer.parseInt(json.getString(KEY_SUCCESS))==1) {
                         Toast.makeText(getApplicationContext(), "Message Posted", Toast.LENGTH_SHORT).show();
+                        String message_id = json.getJSONObject("message").getString("message_id");
                         Bundle bundle = new Bundle();
-                        bundle.putString("uid", uid);
+                        bundle.putString("message_id", message_id);
+                        bundle.putString("user_id", user_id);
                         bundle.putString("title", title);
                         bundle.putString("content", content);
                         bundle.putString("latitude", latitude);

@@ -15,7 +15,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME = "admin_webservice";
+    private static final String DATABASE_NAME = "local_admin_webservice";
 
     private static final String TABLE_LOGIN = "login";
 
@@ -24,10 +24,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_LASTNAME = "lname";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_USERNAME = "uname";
-    private static final String KEY_UID = "uid";
+    private static final String KEY_UID = "user_id";
     private static final String KEY_CREATED_AT = "created_at";
-
-    private String uid;
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -56,8 +54,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addUser(String fname, String lname, String email, String username, String uid, String created_at) {
-        this.uid = uid;
+    public void addUser(String fname, String lname, String email, String username, String user_id, String created_at) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -67,15 +64,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_LASTNAME, lname);
         values.put(KEY_EMAIL, email);
         values.put(KEY_USERNAME, username);
-        values.put(KEY_UID, uid);
+        values.put(KEY_UID, user_id);
         values.put(KEY_CREATED_AT, created_at);
 
         db.insert(TABLE_LOGIN, null, values);
         db.close();
     }
 
-    public String getUid(){
-        return uid;
+    public String getUserId() {
+        String user_id = "SELECT user_id FROM " + TABLE_LOGIN;
+        return user_id;
     }
 
     // get data from db
@@ -93,7 +91,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             user.put("lname", cursor.getString(2));
             user.put("email", cursor.getString(3));
             user.put("uname", cursor.getString(4));
-            user.put("uid", cursor.getString(5));
+            user.put("user_id", cursor.getString(5));
             user.put("created_at", cursor.getString(6));
         }
         cursor.close();
