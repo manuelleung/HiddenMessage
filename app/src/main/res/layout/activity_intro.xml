@@ -13,7 +13,7 @@
         android:id="@+id/hmlogo"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/hiddenmessageicon" />
+        android:src="@drawable/big_log_v2" />
     <ImageView
         android:layout_width="270dp"
         android:layout_height="270dp"

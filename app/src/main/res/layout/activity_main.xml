@@ -113,7 +113,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/imageView"
-        android:src="@drawable/small_logo"
+        android:src="@drawable/logo_v2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
