@@ -37,6 +37,7 @@ public class UserFunctions {
     private static String TAG_NEWMESSAGE = "newmessage";
     private static String TAG_RETRIEVE_ALL_MESSAGES = "allmessages";
     private static String TAG_RETRIEVE_MY_MESSAGES = "mymessages";
+    private static String TAG_DELETE_MESSAGE = "deletemessage";
 
     public UserFunctions() {
         jsonParser = new JSONParser();
@@ -109,6 +110,15 @@ public class UserFunctions {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_RETRIEVE_MY_MESSAGES);
         params.put("user_id", user_id);
+        JSONObject json = jsonParser.makeHttpRequest(URL_RETRIEVE_MESSAGE, "POST", params);
+        return json;
+    }
+
+    public JSONObject deleteMessage(String user_id, String message_id) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("tag", TAG_DELETE_MESSAGE);
+        params.put("user_id", user_id);
+        params.put("message_id", message_id);
         JSONObject json = jsonParser.makeHttpRequest(URL_RETRIEVE_MESSAGE, "POST", params);
         return json;
     }
