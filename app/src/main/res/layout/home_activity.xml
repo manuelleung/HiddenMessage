@@ -21,7 +21,7 @@
     <ImageView
         android:layout_width="300dp"
         android:layout_height="200dp"
-        android:src="@drawable/hiddenmessageicon"
+        android:src="@drawable/big_log_v2"
         android:id="@+id/imageView"
         android:layout_centerHorizontal="true" />
 

@@ -1,12 +1,17 @@
 package com.hiddenmessageteam;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
@@ -62,6 +67,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private Boolean paused;
+    private Intent locationIntent;
 
 
 
@@ -82,6 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -94,22 +101,56 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         refreshButton = (FloatingActionButton) findViewById(R.id.button_refresh);
 
+        LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch(Exception ex) {}
+
+        if(!gps_enabled && !network_enabled) {
+            startLocationDialog("In order to get to your location,  you need to enable your location");
+        }
+
+
 
 
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+                boolean gps_enabled = false;
+                boolean network_enabled = false;
 
-                if ((!lati.equals("")) && (!longi.equals(""))) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("latitude", "" + loc.latitude);
-                    bundle.putString("longitude", "" + loc.longitude);
+                try {
+                    gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                } catch(Exception ex) {}
 
-                    postMessageIntent.putExtras(bundle);
-                    startActivityForResult(postMessageIntent, 1);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Please wait a few seconds to find your location", Toast.LENGTH_SHORT).show();
+                try {
+                    network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                } catch(Exception ex) {}
+
+                if(!gps_enabled && !network_enabled) {
+                  startLocationDialog("In order to post a message,  you need to enable your location");
                 }
+                else {
+                    if ((!lati.equals("")) && (!longi.equals(""))) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("latitude", "" + loc.latitude);
+                        bundle.putString("longitude", "" + loc.longitude);
+
+                        postMessageIntent.putExtras(bundle);
+                        startActivityForResult(postMessageIntent, 1);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Please wait a few seconds to find your location", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
         });
 
@@ -137,7 +178,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (isFirstRun)
         {
             target_fab = new ViewTarget(R.id.fab,this);
-            target_mood=new ViewTarget(R.id.mood,this);
+            //target_mood=new ViewTarget(R.id.mood,this);
             target_refresh=new ViewTarget(R.id.button_refresh,this);
             showcase=new ShowcaseView.Builder(this)
                     .setTarget(Target.NONE)
@@ -251,7 +292,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
-                goingToMyLocation = true;
+                LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+                boolean gps_enabled = false;
+                boolean network_enabled = false;
+
+                try {
+                    gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                } catch(Exception ex) {}
+
+                try {
+                    network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                } catch(Exception ex) {}
+
+                if(!gps_enabled && !network_enabled) {
+                    startLocationDialog("In order to see your location,  you need to enable your location");
+                }
+                else {
+                    goingToMyLocation = true;
+                }
                 return false;
             }
         });
@@ -398,5 +456,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+
+    public void startLocationDialog(String message) {
+        // notify user
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle("Location");
+        dialog.setMessage(message);
+        dialog.setPositiveButton("Activate", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                // TODO Auto-generated method stub
+                Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                context.startActivity(myIntent);
+
+
+            }
+        });
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+        dialog.show();
+    }
+
+
 
 }
