@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
         inputConfirmPassword = (EditText) findViewById(R.id.edit_confirm_password);
 
         RelativeLayout backgroundLayout = (RelativeLayout) findViewById(R.id.register_layout);
-        new BackgroundAnimation(backgroundLayout);
+       // new BackgroundAnimation(backgroundLayout);
 
         Button registerButton = (Button) findViewById(R.id.button_register);
 

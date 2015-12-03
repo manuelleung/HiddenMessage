@@ -55,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
         onProgressInterface = new Intent(this, MainActivity.class);
 
         RelativeLayout backgroundLayout = (RelativeLayout) findViewById(R.id.home_activity_layout);
-        new BackgroundAnimation(backgroundLayout);
+        //new BackgroundAnimation(backgroundLayout);
 
         // Initialize the views:
         createAccountText = (TextView) findViewById(R.id.createAccountText);

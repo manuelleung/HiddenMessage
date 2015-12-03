@@ -17,11 +17,13 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -68,6 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private Boolean paused;
     private Intent locationIntent;
+    private TextView mD;
 
 
 
@@ -93,6 +96,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
         //initialize
         plusButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -171,6 +175,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         navView = (NavigationView) findViewById(R.id.nav_view);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navView.setNavigationItemSelectedListener(this);
+
+
+
+
+
 
         // SetUp User Tutorial -- Will run only once.
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
@@ -418,7 +427,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else if (id == R.id.nav_settings) {
             Intent settingIntent = new Intent(getApplicationContext(), SettingActivity.class);
             startActivity(settingIntent);
-            finish();
+
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
