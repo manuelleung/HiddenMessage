@@ -1,37 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="@dimen/nav_header_height"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="80dp"
     android:background="@drawable/side_nav_bar"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
+
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+
     android:theme="@style/ThemeOverlay.AppCompat.Dark" android:orientation="vertical"
     android:gravity="bottom">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/small_logo"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal" />
 
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:id="@+id/profilepic"
+        android:src="@drawable/default_avatar"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:paddingRight="4dp"
-        android:paddingLeft="4dp"
-        android:layout_marginTop="5dp"
-        android:textSize="16sp"
-        android:text="Hidden Message"
-        android:textColor="#ffffff"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="0dp"
-        android:background="@drawable/rounded_rect"
-        android:textStyle="bold" />
-
-</LinearLayout>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Rashed Alam"
+        android:id="@+id/nav_name"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/profilepic"
+        android:layout_toEndOf="@+id/profilepic"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp" />
+</RelativeLayout>
