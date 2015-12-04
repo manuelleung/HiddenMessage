@@ -2,31 +2,27 @@ package com.hiddenmessageteam;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,6 +79,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ShowcaseView showcase;
     Target target_fab,target_refresh ;
     int count=0;
+    ImageView setPic;
+
+    private static final int CAM_REQUEST=1313;
+
+
+    //---------------------------------------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +180,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         navView = (NavigationView) findViewById(R.id.nav_view);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navView.setNavigationItemSelectedListener(this);
+        View header= navView.getHeaderView(0);
+        setPic =(ImageView) header.findViewById(R.id.profilepic);
+        setPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent camerinter = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(camerinter, CAM_REQUEST);
+            }
+        });
 
 
 
@@ -352,6 +363,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode== CAM_REQUEST)
+        {
+            Bitmap thumbnail=(Bitmap) data.getExtras().get("data");
+            setPic.setImageBitmap(thumbnail);
+        }
+
 
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
