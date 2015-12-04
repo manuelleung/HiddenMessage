@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +44,8 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
     private String password;
     private String confirmPassword;
 
+    private Button registerButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,20 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
         RelativeLayout backgroundLayout = (RelativeLayout) findViewById(R.id.register_layout);
        // new BackgroundAnimation(backgroundLayout);
 
-        Button registerButton = (Button) findViewById(R.id.button_register);
+        registerButton = (Button) findViewById(R.id.button_register);
+        registerButton.setEnabled(false);
+        //registerButton.setAlpha(1);
+
+        checkifpasswordwritten();
+
+        inputEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus && inputEmail.getText().length() != 0 && !isEmailValid(inputEmail.getText())) {
+                    inputEmail.setError("Invalid Email Address");
+                }
+            }
+        });
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,12 +106,49 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
             }
         });
 
+        /*
         Button cancelButton = (Button) findViewById(R.id.button_cancel);
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        */
+    }
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void checkifpasswordwritten() {
+        inputConfirmPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                firstname = inputFirstName.getText().toString();
+                lastname = inputLastName.getText().toString();
+                email = inputEmail.getText().toString();
+                password = inputPassword.getText().toString();
+                confirmPassword = inputConfirmPassword.getText().toString();
+                if (s.length() > 0 && (!firstname.equals("")) && (!lastname.equals(""))
+                        && (!email.equals("")) && (!password.equals(""))
+                        && (!confirmPassword.equals(""))) {
+                    registerButton.setEnabled(true);
+                    registerButton.setAlpha(1);
+                }
+                if (s.length() == 0) {
+                    registerButton.setAlpha((float) 0.3);
+                    registerButton.setEnabled(false);
+                }
             }
         });
     }
@@ -134,10 +188,10 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
                     if(Integer.parseInt(result)==1) {
                         Toast.makeText(getApplicationContext(), "Successfuly Registered", Toast.LENGTH_SHORT).show();
 
-                        //Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                        //loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        //startActivity(loginIntent);
-                        //finish();
+                        Intent loginIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(loginIntent);
+                        finish();
                     }
                     else if(Integer.parseInt(error)==2) {
                         //pDialog.dismiss();

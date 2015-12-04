@@ -16,7 +16,7 @@ public class intro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
         //Initialize intent
-        goHome=new Intent(this,HomeActivity.class);
+        goHome=new Intent(this,MainActivity.class);
         // Initialize id
         final ImageView hm= (ImageView) findViewById(R.id.hmlogo);
         final ImageView wc= (ImageView) findViewById(R.id.wclogo);

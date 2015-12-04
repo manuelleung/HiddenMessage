@@ -47,6 +47,14 @@ public class MainActivity extends AppCompatActivity implements NetworkCheck.OnTa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*CHECK IF AN USER ALREADY LOGGED IN*/
+        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+        if(db.getRowCount()>0) {
+            Intent loggedin = new Intent(getApplicationContext(), MapsActivity.class);
+            loggedin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(loggedin);
+        }
+
         // Set the Title to the want typeface.
         //TextView title = (TextView) findViewById(R.id.title);
         //Typeface changetitle = Typeface.createFromAsset(getAssets(), "fonts/LucidaCalligraphyItalic.ttf");
