@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true" tools:openDrawer="start">
 
-
-
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -23,14 +21,14 @@
             android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
             android:src="@android:drawable/ic_input_add"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentLeft="true"/>
 
-        <android.support.design.widget.FloatingActionButton android:id="@+id/button_refresh"
+        <!--android.support.design.widget.FloatingActionButton android:id="@+id/button_refresh"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
             android:src="@android:drawable/stat_notify_sync_noanim"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"/-->
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"

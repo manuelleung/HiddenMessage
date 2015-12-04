@@ -2,6 +2,7 @@ package com.hiddenmessageteam;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +48,7 @@ import org.json.JSONObject;
 /**
  * Created by Manuel on 10/29/2015.
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener, MessageRequest.onMessageRequestCompleted, View.OnClickListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener, MessageRequest.onMessageRequestCompleted, View.OnClickListener {
 
 
     private GoogleApiClient mGoogleApiClient;
@@ -76,7 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //----------------------------------------------------------------------------------------------
     ShowcaseView showcase;
-    Target target_fab, target_mood,target_refresh ;
+    Target target_fab,target_refresh ;
     int count=0;
 
     @Override
@@ -86,10 +91,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         goingToMyLocation = true;
         mapIntent = new Intent(this, MapsActivity.class);
-
-
-
-
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -103,7 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         postMessageIntent = new Intent(this, SaveMessageActivity.class);
         messagePost = new HandleMessagePost();
 
-        refreshButton = (FloatingActionButton) findViewById(R.id.button_refresh);
+        //refreshButton = (FloatingActionButton) findViewById(R.id.button_refresh);
 
         LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         boolean gps_enabled = false;
@@ -158,6 +159,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        /*
         // sync on user request
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,6 +172,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         });
+        */
 
 
         navView = (NavigationView) findViewById(R.id.nav_view);
@@ -188,7 +191,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             target_fab = new ViewTarget(R.id.fab,this);
             //target_mood=new ViewTarget(R.id.mood,this);
-            target_refresh=new ViewTarget(R.id.button_refresh,this);
+            //target_refresh=new ViewTarget(R.id.button_refresh,this);
             showcase=new ShowcaseView.Builder(this)
                     .setTarget(Target.NONE)
                     .setContentTitle("Welcome to Hidden Message")
@@ -221,18 +224,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 showcase.setContentTitle("Add Message");
                 showcase.setContentText("TAPPING the PLUS ICON will allow you add a message to your current location");
                 break;
+            /*
             case 1:
                 showcase.setTarget(target_refresh);
                 showcase.setContentTitle("Refresh");
                 showcase.setContentText("Refresh (IDK)");
                 break;
-            case 2:
-                showcase.setTarget(target_mood);
-                showcase.setContentTitle("Changing Mood");
-                showcase.setContentText("Hold on to the mood will allow you to change your current mood");
-                showcase.setButtonText("Enjoy!!");
-                break;
-            case 3:
+            */
+            case 1:
                 showcase.hide();
                 break;
         }
@@ -417,9 +416,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
+            Toast.makeText(getApplicationContext(), "Home clicked", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_friends) {
-
+            Toast.makeText(getApplicationContext(), "Friends clicked", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_my_messages) {
             Intent myMessagesIntent = new Intent(getApplicationContext(), MyMessagesActivity.class);
             startActivity(myMessagesIntent);
@@ -427,11 +426,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else if (id == R.id.nav_settings) {
             Intent settingIntent = new Intent(getApplicationContext(), SettingActivity.class);
             startActivity(settingIntent);
-
+            finish();
         } else if (id == R.id.nav_share) {
-
+            Toast.makeText(getApplicationContext(), "Share clicked", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_send) {
-
+            Toast.makeText(getApplicationContext(), "Send clicked", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
