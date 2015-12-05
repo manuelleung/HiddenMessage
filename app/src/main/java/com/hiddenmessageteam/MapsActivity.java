@@ -81,7 +81,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     int count=0;
     ImageView setPic;
 
-    private static final int CAM_REQUEST=1313;
+
 
 
     //---------------------------------------------------------------------------------------------
@@ -182,11 +182,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         navView.setNavigationItemSelectedListener(this);
         View header= navView.getHeaderView(0);
         setPic =(ImageView) header.findViewById(R.id.profilepic);
+        final Intent goProfile= new Intent(this,profile.class);
         setPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent camerinter = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(camerinter, CAM_REQUEST);
+                 startActivity(goProfile);
+
             }
         });
 
@@ -363,12 +364,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode== CAM_REQUEST)
-        {
-            Bitmap thumbnail=(Bitmap) data.getExtras().get("data");
-            setPic.setImageBitmap(thumbnail);
-        }
+
 
 
         if (requestCode == 1) {
