@@ -17,27 +17,52 @@ import java.net.URL;
  */
 public class NetworkCheck extends ContextWrapper {
 
+    /**
+     * Network check interface
+     * */
     public interface OnTaskCompleted {
         void onConnCompleted(boolean conn);
     }
 
     private OnTaskCompleted listener;
 
+    /**
+     * Constructor
+     * Initializes listener
+     * gets context from the calling class
+     * */
     public NetworkCheck(Context base, OnTaskCompleted listener) {
         super(base);
         this.listener = listener;
     }
 
+    /**
+     * Method to check for connection
+     * (will remove view since its not used) later
+     * */
     public void netAsync(View view){
         new NetCheck().execute();
     }
 
+    /**
+     * Async class that processes network check
+     * */
     private class NetCheck extends AsyncTask<String, String, Boolean> {
+
+        /**
+         * Executes before do doInBackground
+         * used for initialization
+         * */
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
         }
 
+        /**
+         * Works in the background
+         * try to connect to www.google.com
+         * returns the boolean to onPostExecute
+         * */
         @Override
         protected Boolean doInBackground(String... params) {
             ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -65,6 +90,12 @@ public class NetworkCheck extends ContextWrapper {
             return false;
         }
 
+        /**
+         * Executes after doInBackground has finished
+         * parameter is boolean from doInBackground
+         * if true then there is internet connection
+         * else no internet connection
+         * */
         @Override
         protected void onPostExecute(Boolean result){
             if(result == true){

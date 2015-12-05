@@ -17,6 +17,9 @@ import java.util.Iterator;
 
 public class MessageDeletion implements NetworkCheck.OnTaskCompleted {
 
+    /**
+     * Message deletion interface
+     * */
     public interface onMessageDeletionCompleted {
         void onRequestCompleted(JSONObject jsonObject);
     }
@@ -31,6 +34,11 @@ public class MessageDeletion implements NetworkCheck.OnTaskCompleted {
     private HashMap<String, String> user_id_array;
     private HashMap<String, String> message_id_array;
 
+    /**
+     * Constructor
+     * Initializes interface listener, view, context
+     * Checks internet connection
+     * */
     public  MessageDeletion(Context context, View view, onMessageDeletionCompleted listener) {
         this.listener = listener;
         this.context = context;
@@ -39,12 +47,19 @@ public class MessageDeletion implements NetworkCheck.OnTaskCompleted {
         checkConnection.netAsync(view);
     }
 
+    /**
+     * Sets the user and message ID to be deleted
+     * */
     public void setUserMessageId(HashMap<String, String> user_id_array, HashMap<String, String> message_id_array) {
         this.user_id_array=user_id_array;
         this.message_id_array=message_id_array;
 
     }
 
+    /**
+     * Connection interface response
+     * if connected try to delete message
+     * */
     @Override
     public void onConnCompleted(boolean conn) {
         if(conn) {
@@ -55,11 +70,27 @@ public class MessageDeletion implements NetworkCheck.OnTaskCompleted {
         }
     }
 
+    /**
+     * Async class that processes message deletion
+     * */
     private class ProcessMessageDeletion extends AsyncTask<String, String, JSONObject> {
+
+        /**
+         * Executes before do doInBackground
+         * used for initialization
+         * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
+
+        /**
+         * Works in the background
+         * try to delete an array of messages from the database
+         * Calls userFunctions.deleteMessage
+         * passes user_id and message_id
+         * returns the JSONObject to onPostExecute
+         * */
         @Override
         protected JSONObject doInBackground(String... params) {
             UserFunctions userFunctions = new UserFunctions();
@@ -88,6 +119,14 @@ public class MessageDeletion implements NetworkCheck.OnTaskCompleted {
             //JSONObject json = userFunctions.deleteMessage();
             return json;
         }
+
+        /**
+         * Executes after doInBackground has finished
+         * parameter is JSONObject from doInBackground
+         * will check if json was successful or error
+         * if success then pass boolean true to listener
+         * else pass false to listener
+         * */
         @Override
         protected void onPostExecute(JSONObject json) {
             try {

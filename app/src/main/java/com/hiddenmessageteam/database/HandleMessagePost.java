@@ -126,6 +126,9 @@ public class HandleMessagePost {
 
     }
 
+    /**
+     * Clears all the marks from map
+     * */
     public static void clearAll() {
         for(int i = 0; i < HandleMessagePost.markerList.size(); i++) {
             HandleMessagePost.markerList.get(i).remove();

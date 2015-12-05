@@ -50,6 +50,10 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Network
         });
     }
 
+    /**
+     * Connection check method from interface
+     * if connected we will execute reset
+     * */
     @Override
     public void onConnCompleted(boolean conn) {
         if(conn) {
@@ -61,13 +65,27 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Network
         }
     }
 
+    /**
+     * Async class that processes account reset password
+     * */
     private class ProcessReset extends AsyncTask<String, String, JSONObject> {
 
+        /**
+         * Executes before do doInBackground
+         * used for initialization
+         * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+        /**
+         * Works in the background
+         * try to request password reset
+         * Calls userFunctions.forgotPassword
+         * passes email address
+         * returns the JSONObject to onPostExecute
+         * */
         @Override
         protected JSONObject doInBackground(String... args) {
             UserFunctions userFunctions = new UserFunctions();
@@ -75,6 +93,13 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Network
             return json;
         }
 
+        /**
+         * Executes after doInBackground has finished
+         * parameter is JSONObject from doInBackground
+         * will check if json was successful or error
+         * if success then password resetted
+         * else error
+         * */
         @Override
         protected void onPostExecute(JSONObject json) {
             try {

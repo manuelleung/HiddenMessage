@@ -27,11 +27,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_UID = "user_id";
     private static final String KEY_CREATED_AT = "created_at";
 
+    /**
+     * Constructor
+     * */
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    //Create table
+    /**
+     * Create table
+     * */
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_LOGIN_TABLE = "CREATE TABLE " + TABLE_LOGIN + "("
@@ -45,7 +50,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_LOGIN_TABLE);
     }
 
-
+    /**
+     * Drop table and Re Create it
+     * */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //drop old
@@ -54,6 +61,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Add user row to table
+     * */
     public void addUser(String fname, String lname, String email, String username, String user_id, String created_at) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -71,12 +81,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public String getUserId() {
-        String user_id = "SELECT user_id FROM " + TABLE_LOGIN;
-        return user_id;
-    }
-
-    // get data from db
+    /**
+     * Get user data
+     * return hashmap of each column
+     * */
     public HashMap getUserDetails() {
         HashMap user = new HashMap();
         String selectQuery = "SELECT * FROM " + TABLE_LOGIN;
@@ -101,7 +109,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     /**
      * Getting user login status
-     * return true if rows are there in table
+     * return true if there is a user row in table
      * */
     public int getRowCount() {
         String countQuery = "SELECT * FROM " + TABLE_LOGIN;
@@ -113,6 +121,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return rowCount;
     }
+
 
     public void resetTables() {
         SQLiteDatabase db = this.getWritableDatabase();

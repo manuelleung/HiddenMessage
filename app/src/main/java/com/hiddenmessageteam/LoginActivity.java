@@ -59,6 +59,10 @@ public class LoginActivity extends AppCompatActivity implements NetworkCheck.OnT
         });
     }
 
+    /**
+     * Connection check method from interface
+     * if connected we will execute login
+     * */
     @Override
     public void onConnCompleted(boolean conn) {
         if(conn == true) {
@@ -69,13 +73,27 @@ public class LoginActivity extends AppCompatActivity implements NetworkCheck.OnT
         }
     }
 
+    /**
+     * Async class that processes user login
+     * */
     private class ProcessLogin extends AsyncTask<String, String, JSONObject> {
 
+        /**
+         * Executes before do doInBackground
+         * used for initialization
+         * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+        /**
+         * Works in the background
+         * try to request user login
+         * Calls userFunctions.userLogin
+         * passes email address and password
+         * returns the JSONObject to onPostExecute
+         * */
         @Override
         protected JSONObject doInBackground(String... args) {
             UserFunctions userFunctions = new UserFunctions();
@@ -83,6 +101,14 @@ public class LoginActivity extends AppCompatActivity implements NetworkCheck.OnT
             return json;
         }
 
+        /**
+         * Executes after doInBackground has finished
+         * parameter is JSONObject from doInBackground
+         * will check if json was successful or error
+         * if success then we add user row to local database
+         * and go to map activity
+         * else error
+         * */
         @Override
         protected void onPostExecute(JSONObject json) {
             try {

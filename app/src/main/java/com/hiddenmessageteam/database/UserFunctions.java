@@ -39,10 +39,18 @@ public class UserFunctions {
     private static String TAG_RETRIEVE_MY_MESSAGES = "mymessages";
     private static String TAG_DELETE_MESSAGE = "deletemessage";
 
+    /**
+     * Constructor
+     * */
     public UserFunctions() {
         jsonParser = new JSONParser();
     }
 
+    /**
+     * Makes a request to login
+     * passes tag, email, password to php
+     * returns JSONObject from php
+     * */
     public JSONObject userLogin(String email, String password) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_LOGIN);
@@ -52,6 +60,11 @@ public class UserFunctions {
         return json;
     }
 
+    /**
+     * Makes a request to change password
+     * passes tag, email, new password to php
+     * returns JSONObject from php
+     * */
     public JSONObject changePassword(String newpas, String email) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_CHANGE);
@@ -61,6 +74,11 @@ public class UserFunctions {
         return json;
     }
 
+    /**
+     * Makes a request to forgot password
+     * passes tag, email to php
+     * returns JSONObject from php
+     * */
     public JSONObject forgotPassword(String email) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_FORGOT);
@@ -69,6 +87,11 @@ public class UserFunctions {
         return json;
     }
 
+    /**
+     * Makes a request to register
+     * passes tag, first name, last name, email, username, password to php
+     * returns JSONObject from php
+     * */
     public JSONObject userRegister(String fname, String lname, String email, String uname, String password) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_REGISTER);
@@ -81,12 +104,21 @@ public class UserFunctions {
         return json;
     }
 
+    /**
+     * Clears the user row from local db
+     * returns boolean
+     * */
     public boolean userLogout(Context context) {
         DatabaseHandler db = new DatabaseHandler(context);
         db.resetTables();
         return true;
     }
 
+    /**
+     * Makes a request to post message
+     * passes tag, userid, title, content, lat, long to php
+     * returns JSONObject from php
+     * */
     public JSONObject postMessage(String user_id, String title, String content, String latitude, String longitude){
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_NEWMESSAGE);
@@ -99,6 +131,11 @@ public class UserFunctions {
         return json;
     }
 
+    /**
+     * Makes a request to retrieve all messages
+     * passes tag to php
+     * returns JSONObject from php
+     * */
     public JSONObject retrieveAllMessages() {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_RETRIEVE_ALL_MESSAGES);
@@ -106,6 +143,11 @@ public class UserFunctions {
         return json;
     }
 
+    /**
+     * Makes a request to retrieve only my messages
+     * passes tag, userid to php
+     * returns JSONObject from php
+     * */
     public JSONObject retrieveMyMessages(String user_id) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_RETRIEVE_MY_MESSAGES);
@@ -114,6 +156,11 @@ public class UserFunctions {
         return json;
     }
 
+    /**
+     * Makes a request to delete
+     * passes tag, userid, messageid to php
+     * returns JSONObject from php
+     * */
     public JSONObject deleteMessage(String user_id, String message_id) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_DELETE_MESSAGE);

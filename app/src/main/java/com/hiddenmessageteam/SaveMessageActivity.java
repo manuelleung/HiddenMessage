@@ -79,6 +79,10 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         });
     }
 
+    /**
+     * Connection check method from interface
+     * if connected we will execute save messages
+     * */
     @Override
     public void onConnCompleted(boolean conn) {
         if(conn) {
@@ -89,12 +93,27 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         }
     }
 
+    /**
+     * Async class that processes message save
+     * */
     private class ProcessSaveMessage extends AsyncTask<String, String, JSONObject> {
+
+        /**
+         * Executes before do doInBackground
+         * used for initialization
+         * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+        /**
+         * Works in the background
+         * try to request message posting
+         * Calls userFunctions.postMyMessages
+         * passes userid, title, content, lat, long
+         * returns the JSONObject to onPostExecute
+         * */
         @Override
         protected JSONObject doInBackground(String... params) {
             UserFunctions userFunctions = new UserFunctions();
@@ -102,6 +121,16 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
             return json;
         }
 
+        /**
+         * Executes after doInBackground has finished
+         * parameter is JSONObject from doInBackground
+         * will check if json was successful or error
+         * if success then we put the data from the message input
+         * into the bundle to be passed to the maps activity to create a
+         * mark on the map for this newly posted message
+         * go to map activity
+         * else error
+         * */
         @Override
         protected void onPostExecute(JSONObject json) {
             try {

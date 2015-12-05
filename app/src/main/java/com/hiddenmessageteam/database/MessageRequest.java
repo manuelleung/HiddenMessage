@@ -20,6 +20,9 @@ import java.util.Iterator;
  */
 public class MessageRequest implements NetworkCheck.OnTaskCompleted {
 
+    /**
+     * Message request interface
+     * */
     public interface onMessageRequestCompleted {
         void onRequestCompleted(JSONObject jsonObject);
     }
@@ -32,6 +35,11 @@ public class MessageRequest implements NetworkCheck.OnTaskCompleted {
     private View view;
     private JSONObject allMessagesJson;
 
+    /**
+     * Constructor
+     * Initializes interface listener, view, context
+     * Checks internet connection
+     * */
     public  MessageRequest(Context context, View view, onMessageRequestCompleted listener) {
         this.listener = listener;
         this.context = context;
@@ -40,6 +48,10 @@ public class MessageRequest implements NetworkCheck.OnTaskCompleted {
         checkConnection.netAsync(view);
     }
 
+    /**
+     * Connection interface response
+     * if connected try to retrieve messages
+     * */
     @Override
     public void onConnCompleted(boolean conn) {
         if(conn) {
@@ -51,21 +63,40 @@ public class MessageRequest implements NetworkCheck.OnTaskCompleted {
         }
     }
 
-    public JSONObject getAllMessages() {
-        return allMessagesJson;
-    }
-
+    /**
+     * Async class that processes message request for retrieving all messages
+     * */
     private class ProcessRetrieveAllMessages extends AsyncTask<String, String, JSONObject> {
+
+        /**
+         * Executes before do doInBackground
+         * used for initialization
+         * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
+
+        /**
+         * Works in the background
+         * try to request all messages from db
+         * Calls userFunctions.retrieveAllMessages
+         * returns the JSONObject to onPostExecute
+         * */
         @Override
         protected JSONObject doInBackground(String... params) {
             UserFunctions userFunctions = new UserFunctions();
             JSONObject json = userFunctions.retrieveAllMessages();
             return json;
         }
+
+        /**
+         * Executes after doInBackground has finished
+         * parameter is JSONObject from doInBackground
+         * will check if json was successful or error
+         * if success then pass object to listener
+         * else error
+         * */
         @Override
         protected void onPostExecute(JSONObject json) {
             try {
@@ -75,7 +106,7 @@ public class MessageRequest implements NetworkCheck.OnTaskCompleted {
                         listener.onRequestCompleted(json);
                     }
                     else {
-                        //Toast.makeText(context, "Error occured in retrieving all messages", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Error occured in retrieving all messages", Toast.LENGTH_SHORT).show();
                     }
                 }
 

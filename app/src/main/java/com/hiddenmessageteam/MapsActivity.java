@@ -361,6 +361,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     };
 
+    /**
+     * Executes when a user finishes posting a new message from SaveMessageActivity
+     * Will user the data that the user inputed
+     * set all data to a messagePost and display it onto the map
+     * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
@@ -456,6 +461,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return true;
     }
 
+    /**
+     * Method from request all messages interface
+     * if request worked then it will set all data requried to message post
+     * for each message in db. and insert the mark onto the map
+     * */
     @Override
     public void onRequestCompleted(JSONObject json) {
 
@@ -482,6 +492,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
     }
+
 
     public void startLocationDialog(String message) {
         // notify user

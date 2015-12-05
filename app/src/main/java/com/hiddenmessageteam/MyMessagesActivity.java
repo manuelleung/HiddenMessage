@@ -85,6 +85,11 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         });
     }
 
+    /**
+     * Remove messages method from interface
+     * if remove was successful then it will clear the messages from the list
+     * and reload only the messages left in db
+     * */
     @Override
     public void onRequestCompleted(JSONObject jsonObject) {
         // change to remove only deleted ones later //////
@@ -98,6 +103,10 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         checkConnection.netAsync(findViewById(R.id.list_my_messages));
     }
 
+    /**
+     * Connection check method from interface
+     * if connected we will execute retrieve my messages
+     * */
     @Override
     public void onConnCompleted(boolean conn) {
         if(conn) {
@@ -108,6 +117,11 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         }
     }
 
+    /**
+     * Checks when a checkbox has been clicked
+     * if its checked then it will add that to the array of messages to be deleted
+     * else it will remove it from array
+     * */
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked) {
@@ -131,18 +145,43 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
     }
 
 
-
+    /**
+     * (WILL CHANGE THIS TO MESSAGE REQUEST CLASS LATER)
+     * Async class that processes retrieving of only my messages
+     * */
     private class ProcessRetrieveMyMessages extends AsyncTask<String, String, JSONObject> {
+
+        /**
+         * Executes before do doInBackground
+         * used for initialization
+         * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
+
+        /**
+         * Works in the background
+         * try to request my messages
+         * Calls userFunctions.retrieveMyMessages
+         * passes userid
+         * returns the JSONObject to onPostExecute
+         * */
         @Override
         protected JSONObject doInBackground(String... params) {
             userFunctions = new UserFunctions();
             JSONObject json = userFunctions.retrieveMyMessages(user_id);
             return json;
         }
+
+        /**
+         * Executes after doInBackground has finished
+         * parameter is JSONObject from doInBackground
+         * will check if json was successful or error
+         * if success then we display each of the messages onto the interface
+         * by creating views and setting them on layout
+         * else error
+         * */
         @Override
         protected void onPostExecute(final JSONObject json) {
             try {

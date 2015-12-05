@@ -92,6 +92,10 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
         navView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * Connection check method from interface
+     * if connected we will execute password change
+     * */
     @Override
     public void onConnCompleted(boolean conn) {
         if(conn) {
@@ -165,9 +169,17 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
         return true;
     }
 
+
+    /**
+     * Async class that processes password change
+     * */
     private class ProcessPasswordChange extends AsyncTask<String, String, JSONObject> {
         String newpass, email;
 
+        /**
+         * Executes before do doInBackground
+         * used for initialization
+         * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -178,6 +190,13 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
             email = user.get("email").toString();
         }
 
+        /**
+         * Works in the background
+         * try to request password change
+         * Calls userFunctions.changePassword
+         * passes email address and new password
+         * returns the JSONObject to onPostExecute
+         * */
         @Override
         protected JSONObject doInBackground(String... args) {
             UserFunctions userFunctions = new UserFunctions();
@@ -185,6 +204,13 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
             return json;
         }
 
+        /**
+         * Executes after doInBackground has finished
+         * parameter is JSONObject from doInBackground
+         * will check if json was successful or error
+         * if success then password was changed
+         * else error
+         * */
         @Override
         protected void onPostExecute(JSONObject json) {
             try {

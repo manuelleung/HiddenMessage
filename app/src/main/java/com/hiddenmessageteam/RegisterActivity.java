@@ -118,10 +118,19 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
         */
     }
 
-    boolean isEmailValid(CharSequence email) {
+    /**
+     * Checks if an email is valid from input
+     * returns boolean
+     * */
+    public boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    /**
+     * FIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIX this later
+     * Check if all input has been written on all boxes before allowing user
+     * to click on the button to create account
+     * */
     private void checkifpasswordwritten() {
         inputConfirmPassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -153,6 +162,10 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
         });
     }
 
+    /**
+     * Connection check method from interface
+     * if connected we will execute register
+     * */
     @Override
     public void onConnCompleted(boolean conn) {
         if(conn) {
@@ -163,12 +176,27 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
         }
     }
 
+    /**
+     * Async class that processes user registration
+     * */
     private class ProcessRegister extends AsyncTask<String, String, JSONObject> {
+
+        /**
+         * Executes before do doInBackground
+         * used for initialization
+         * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+        /**
+         * Works in the background
+         * try to request user registration
+         * Calls userFunctions.Register
+         * passes email, firstname, lastname, username, password
+         * returns the JSONObject to onPostExecute
+         * */
         @Override
         protected JSONObject doInBackground(String... args) {
             UserFunctions userFunctions = new UserFunctions();
@@ -177,6 +205,14 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
             return json;
         }
 
+        /**
+         * Executes after doInBackground has finished
+         * parameter is JSONObject from doInBackground
+         * will check if json was successful or error
+         * if success then user has been added to db
+         * ( WILL FIX THIS SO USER IS ADDED TO LOCAL DB AND SKIPS LOGIN LATER )
+         * else error if user exists, invalid email, etc
+         * */
         @Override
         protected void onPostExecute(JSONObject json) {
             try {
