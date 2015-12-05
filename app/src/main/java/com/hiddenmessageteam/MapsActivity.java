@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -36,10 +37,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.hiddenmessageteam.database.DatabaseHandler;
 import com.hiddenmessageteam.database.HandleMessagePost;
 import com.hiddenmessageteam.database.MessageRequest;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by Manuel on 10/29/2015.
@@ -79,10 +83,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ShowcaseView showcase;
     Target target_fab,target_refresh ;
     int count=0;
+
+
     ImageView setPic;
 
 
-
+    DatabaseHandler db;
+    HashMap userDetails;
 
     //---------------------------------------------------------------------------------------------
 
@@ -94,6 +101,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         goingToMyLocation = true;
         mapIntent = new Intent(this, MapsActivity.class);
 
+        db = new DatabaseHandler(this);
+        userDetails = db.getUserDetails();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -124,43 +133,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             startLocationDialog("In order to get to your location,  you need to enable your location");
         }
 
-
-
-
-        plusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-                boolean gps_enabled = false;
-                boolean network_enabled = false;
-
-                try {
-                    gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                } catch(Exception ex) {}
-
-                try {
-                    network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                } catch(Exception ex) {}
-
-                if(!gps_enabled && !network_enabled) {
-                  startLocationDialog("In order to post a message,  you need to enable your location");
-                }
-                else {
-                    if ((!lati.equals("")) && (!longi.equals(""))) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("latitude", "" + loc.latitude);
-                        bundle.putString("longitude", "" + loc.longitude);
-
-                        postMessageIntent.putExtras(bundle);
-                        startActivityForResult(postMessageIntent, 1);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Please wait a few seconds to find your location", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-        });
-
         /*
         // sync on user request
         refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -177,25 +149,82 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         */
 
 
+        plusButtonListener();
+
+        initNavigationBar();
+
+        initTutorial();
+    }
+
+    public void plusButtonListener() {
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+                boolean gps_enabled = false;
+                boolean network_enabled = false;
+
+                try {
+                    gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                } catch(Exception ex) {}
+
+                try {
+                    network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                } catch(Exception ex) {}
+
+                if(!gps_enabled && !network_enabled) {
+                    startLocationDialog("In order to post a message,  you need to enable your location");
+                }
+                else {
+                    if ((!lati.equals("")) && (!longi.equals(""))) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("latitude", "" + loc.latitude);
+                        bundle.putString("longitude", "" + loc.longitude);
+
+                        postMessageIntent.putExtras(bundle);
+                        startActivityForResult(postMessageIntent, 1);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Please wait a few seconds to find your location", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+    }
+
+    /**
+     * Initializes the nav side bar
+     * */
+    public void initNavigationBar() {
+        String firstName = userDetails.get("fname").toString();
+        String lastName = userDetails.get("lname").toString();
+        String email = userDetails.get("email").toString();
+
         navView = (NavigationView) findViewById(R.id.nav_view);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navView.setNavigationItemSelectedListener(this);
         View header= navView.getHeaderView(0);
         setPic =(ImageView) header.findViewById(R.id.profilepic);
+        TextView navName = (TextView) header.findViewById(R.id.nav_name);
+        TextView navEmail = (TextView) header.findViewById(R.id.nav_email);
+        navName.setText(firstName);
+        navEmail.setText(email);
+
         final Intent goProfile= new Intent(this,profile.class);
         setPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 startActivity(goProfile);
+                startActivity(goProfile);
 
             }
         });
 
+    }
 
-
-
-
-
+    /**
+     * Initializes the tutorial
+     * */
+    public void initTutorial() {
         // SetUp User Tutorial -- Will run only once.
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
@@ -227,6 +256,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    /**
+     * Listener for tutorial clicks
+     * */
     @Override
     public void onClick (View v){
 
@@ -234,7 +266,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case 0:
                 showcase.setTarget(target_fab);
                 showcase.setContentTitle("Add Message");
-                showcase.setContentText("TAPPING the PLUS ICON will allow you add a message to your current location");
+                showcase.setContentText("TAPPING the PLUS ICON will allow you post a message to your current location");
                 break;
             /*
             case 1:
@@ -432,28 +464,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            Toast.makeText(getApplicationContext(), "Home clicked", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_friends) {
-            Toast.makeText(getApplicationContext(), "Friends clicked", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_my_messages) {
-            Intent myMessagesIntent = new Intent(getApplicationContext(), MyMessagesActivity.class);
-            startActivity(myMessagesIntent);
-            finish();
-        } else if (id == R.id.nav_settings) {
-            Intent settingIntent = new Intent(getApplicationContext(), SettingActivity.class);
-            startActivity(settingIntent);
-            finish();
-        } else if (id == R.id.nav_share) {
-            Toast.makeText(getApplicationContext(), "Share clicked", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_send) {
-            Toast.makeText(getApplicationContext(), "Send clicked", Toast.LENGTH_SHORT).show();
-        }
+        final int id = item.getItemId();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (id == R.id.nav_home) {
+                    Toast.makeText(getApplicationContext(), "Home clicked", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_friends) {
+                    Toast.makeText(getApplicationContext(), "Friends clicked", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_my_messages) {
+                    Intent myMessagesIntent = new Intent(getApplicationContext(), MyMessagesActivity.class);
+                    startActivity(myMessagesIntent);
+                    finish();
+                } else if (id == R.id.nav_settings) {
+                    Intent settingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+                    startActivity(settingIntent);
+                    finish();
+                } else if (id == R.id.nav_share) {
+                    Toast.makeText(getApplicationContext(), "Share clicked", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_send) {
+                    Toast.makeText(getApplicationContext(), "Send clicked", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, 250);
+
+
         return true;
     }
 

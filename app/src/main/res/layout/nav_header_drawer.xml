@@ -7,7 +7,7 @@
 
     android:theme="@style/ThemeOverlay.AppCompat.Dark" android:orientation="vertical"
     android:gravity="bottom"
-    android:id="@+id/nav_RL">
+    android:id="@+id/nav_layout">
 
 
     <ImageView
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Rashed Alam"
+        android:text=""
         android:id="@+id/nav_name"
         android:layout_marginLeft="17dp"
         android:layout_marginStart="17dp"
@@ -32,8 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Rashedalamny@gmail.com"
-        android:id="@+id/textView4"
+        android:text=""
+        android:id="@+id/nav_email"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/nav_name"
         android:layout_alignStart="@+id/nav_name" />

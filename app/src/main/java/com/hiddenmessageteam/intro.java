@@ -7,6 +7,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.hiddenmessageteam.database.DatabaseHandler;
+
 public class intro extends AppCompatActivity {
 
     private Intent goHome;
@@ -38,8 +40,20 @@ public class intro extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 wc.setAlpha(1);
                 finish();
-                startActivity(goHome);
-                overridePendingTransition(0, 0); //Smoother transition between activity.
+
+                /*CHECK IF AN USER ALREADY LOGGED IN*/
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                if(db.getRowCount()>0) {
+                    Intent loggedin = new Intent(getApplicationContext(), MapsActivity.class);
+                    loggedin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(loggedin);
+                    overridePendingTransition(0, 0);
+                } else {
+                    startActivity(goHome);
+                    overridePendingTransition(0, 0); //Smoother transition between activity.
+                }
+
+
             }
             @Override
             public void onAnimationRepeat(Animation animation) {}

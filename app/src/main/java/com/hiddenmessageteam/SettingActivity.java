@@ -3,6 +3,7 @@ package com.hiddenmessageteam;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,8 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
     private NavigationView navView;
     private DrawerLayout drawer;
 
+    HashMap userDetails;
+
     @Override
     public void onCreate(Bundle savedInstaceState) {
         super.onCreate(savedInstaceState);
@@ -51,9 +55,7 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
         button_logout = (Button) findViewById(R.id.button_logout);
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-
-        HashMap user = new HashMap();
-        user = db.getUserDetails();
+        userDetails = db.getUserDetails();
 
         button_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,9 +89,35 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
             }
         });
 
+        initNavigationBar();
+    }
+
+    /**
+     * Initializes the nav side bar
+     * */
+    public void initNavigationBar() {
+        String firstName = userDetails.get("fname").toString();
+        String lastName = userDetails.get("lname").toString();
+        String email = userDetails.get("email").toString();
+
         navView = (NavigationView) findViewById(R.id.nav_view);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navView.setNavigationItemSelectedListener(this);
+        View header= navView.getHeaderView(0);
+        ImageView setPic =(ImageView) header.findViewById(R.id.profilepic);
+        TextView navName = (TextView) header.findViewById(R.id.nav_name);
+        TextView navEmail = (TextView) header.findViewById(R.id.nav_email);
+        navName.setText(firstName);
+        navEmail.setText(email);
+
+        final Intent goProfile= new Intent(this,profile.class);
+        setPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(goProfile);
+
+            }
+        });
     }
 
     /**
@@ -138,34 +166,40 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
 
         return super.onOptionsItemSelected(item);
     }
-
-
+    
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            Intent myMapIntent = new Intent(getApplicationContext(), MapsActivity.class);
-            startActivity(myMapIntent);
-            finish();
-        } else if (id == R.id.nav_friends) {
-            Toast.makeText(getApplicationContext(), "Friends clicked", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_my_messages) {
-            Intent myMessagesIntent = new Intent(getApplicationContext(), MyMessagesActivity.class);
-            startActivity(myMessagesIntent);
-            finish();
-        } else if (id == R.id.nav_settings) {
-            Toast.makeText(getApplicationContext(), "Settings clicked", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_share) {
-            Toast.makeText(getApplicationContext(), "Share clicked", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_send) {
-            Toast.makeText(getApplicationContext(), "Send clicked", Toast.LENGTH_SHORT).show();
-        }
+        final int id = item.getItemId();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (id == R.id.nav_home) {
+                    Intent myMapIntent = new Intent(getApplicationContext(), MapsActivity.class);
+                    startActivity(myMapIntent);
+                    finish();
+                } else if (id == R.id.nav_friends) {
+                    Toast.makeText(getApplicationContext(), "Friends clicked", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_my_messages) {
+                    Intent myMessagesIntent = new Intent(getApplicationContext(), MyMessagesActivity.class);
+                    startActivity(myMessagesIntent);
+                    finish();
+                } else if (id == R.id.nav_settings) {
+                    Toast.makeText(getApplicationContext(), "Settings clicked", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_share) {
+                    Toast.makeText(getApplicationContext(), "Share clicked", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_send) {
+                    Toast.makeText(getApplicationContext(), "Send clicked", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, 250);
+
+
         return true;
     }
 

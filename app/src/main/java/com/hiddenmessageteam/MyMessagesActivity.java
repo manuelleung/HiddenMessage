@@ -1,13 +1,20 @@
 package com.hiddenmessageteam;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +33,7 @@ import java.util.Iterator;
 /**
  * Created by Manuel on 12/2/2015.
  */
-public class MyMessagesActivity extends AppCompatActivity implements NetworkCheck.OnTaskCompleted, CompoundButton.OnCheckedChangeListener, MessageDeletion.onMessageDeletionCompleted {
+public class MyMessagesActivity extends AppCompatActivity implements NetworkCheck.OnTaskCompleted, CompoundButton.OnCheckedChangeListener, MessageDeletion.onMessageDeletionCompleted, NavigationView.OnNavigationItemSelectedListener {
     private static final String KEY_SUCCESS = "success";
     private final static String KEY_ERROR = "error";
 
@@ -42,6 +49,11 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
     private HashMap<String, String> user_id_array;
     private HashMap<String, String> message_id_array;
 
+    private HashMap userDetails;
+
+    NavigationView navView;
+    DrawerLayout drawer;
+
     private int viewid;
 
     @Override
@@ -53,9 +65,8 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         message_id_array = new HashMap<String, String>();
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        HashMap user = new HashMap();
-        user = db.getUserDetails();
-        user_id = user.get("user_id").toString();
+        userDetails = db.getUserDetails();
+        user_id = userDetails.get("user_id").toString();
         //user_id = db.getUserId();
 
         linearLayout = (LinearLayout) findViewById(R.id.list_my_messages);
@@ -83,8 +94,73 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
                 messageDeletion.setUserMessageId(user_id_array, message_id_array);
             }
         });
+
+        initNavigationBar();
     }
 
+    /**
+     * Initializes the nav side bar
+     * */
+    public void initNavigationBar() {
+        String firstName = userDetails.get("fname").toString();
+        String lastName = userDetails.get("lname").toString();
+        String email = userDetails.get("email").toString();
+
+        navView = (NavigationView) findViewById(R.id.nav_view);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navView.setNavigationItemSelectedListener(this);
+        View header= navView.getHeaderView(0);
+        ImageView setPic =(ImageView) header.findViewById(R.id.profilepic);
+        TextView navName = (TextView) header.findViewById(R.id.nav_name);
+        TextView navEmail = (TextView) header.findViewById(R.id.nav_email);
+        navName.setText(firstName);
+        navEmail.setText(email);
+
+        final Intent goProfile= new Intent(this,profile.class);
+        setPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(goProfile);
+
+            }
+        });
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        final int id = item.getItemId();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (id == R.id.nav_home) {
+                    Intent myMapIntent = new Intent(getApplicationContext(), MapsActivity.class);
+                    startActivity(myMapIntent);
+                    finish();
+                } else if (id == R.id.nav_friends) {
+                    Toast.makeText(getApplicationContext(), "Friends clicked", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_my_messages) {
+                    Toast.makeText(getApplicationContext(), "My messages clicked", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_settings) {
+                    Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else if (id == R.id.nav_share) {
+                    Toast.makeText(getApplicationContext(), "Share clicked", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_send) {
+                    Toast.makeText(getApplicationContext(), "Send clicked", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, 250);
+
+
+        return true;
+    }
     /**
      * Remove messages method from interface
      * if remove was successful then it will clear the messages from the list
