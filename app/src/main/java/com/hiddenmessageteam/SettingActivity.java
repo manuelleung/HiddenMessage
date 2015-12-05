@@ -24,7 +24,6 @@ import com.hiddenmessageteam.database.UserFunctions;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Manuel on 11/24/2015.
@@ -62,7 +61,7 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
             public void onClick(View v) {
                 UserFunctions logout = new UserFunctions();
                 logout.userLogout(getApplicationContext());
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
@@ -79,10 +78,9 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
             public void onClick(View v) {
                 newPassword = inputNewPassword.getText().toString();
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), SettingActivity.this);
-                if( !(newPassword.equals("")) ) {
+                if (!(newPassword.equals(""))) {
                     checkConnection.netAsync(v);
-                }
-                else {
+                } else {
 
                     Toast.makeText(getApplicationContext(), "New password field is empty " + newPassword, Toast.LENGTH_SHORT).show();
                 }
@@ -110,7 +108,7 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
         navName.setText(firstName);
         navEmail.setText(email);
 
-        final Intent goProfile= new Intent(this,profile.class);
+        final Intent goProfile= new Intent(this,EditProfileActivity.class);
         setPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +164,7 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
 
         return super.onOptionsItemSelected(item);
     }
-    
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

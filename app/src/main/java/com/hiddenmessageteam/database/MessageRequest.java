@@ -1,19 +1,11 @@
 package com.hiddenmessageteam.database;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hiddenmessageteam.BackgroundAnimation;
-import com.hiddenmessageteam.R;
-
 import org.json.JSONObject;
-
-import java.util.Iterator;
 
 /**
  * Created by Manuel on 11/19/2015.

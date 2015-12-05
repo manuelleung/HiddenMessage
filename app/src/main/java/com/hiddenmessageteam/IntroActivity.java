@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.hiddenmessageteam.database.DatabaseHandler;
 
-public class intro extends AppCompatActivity {
+public class IntroActivity extends AppCompatActivity {
 
     private Intent goHome;
 

@@ -13,7 +13,7 @@ import com.hiddenmessageteam.database.DatabaseHandler;
 
 import java.util.HashMap;
 
-public class profile extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
     ImageView setprofilepic;
     private static final int CAM_REQUEST=1313;
     Bitmap thumbnail;
@@ -21,7 +21,7 @@ public class profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_edit_profile);
         setprofilepic=(ImageView) findViewById(R.id.profilepic);
 
         DatabaseHandler db = new DatabaseHandler(this);

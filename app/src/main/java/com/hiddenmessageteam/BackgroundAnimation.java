@@ -2,10 +2,7 @@ package com.hiddenmessageteam;
 
 import android.animation.ValueAnimator;
 import android.graphics.Color;
-import android.support.design.widget.Snackbar;
 import android.widget.RelativeLayout;
-
-import javax.xml.datatype.Duration;
 
 /**
  * Created by Leibniz H. Berihuete on 11/19/2015.

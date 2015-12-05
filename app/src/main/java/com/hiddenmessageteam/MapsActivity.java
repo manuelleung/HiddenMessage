@@ -6,13 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -210,7 +208,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         navName.setText(firstName);
         navEmail.setText(email);
 
-        final Intent goProfile= new Intent(this,profile.class);
+        final Intent goProfile= new Intent(this,EditProfileActivity.class);
         setPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

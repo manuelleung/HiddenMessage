@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -26,9 +25,7 @@ import com.hiddenmessageteam.database.UserFunctions;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Created by Manuel on 12/2/2015.
@@ -116,7 +113,7 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         navName.setText(firstName);
         navEmail.setText(email);
 
-        final Intent goProfile= new Intent(this,profile.class);
+        final Intent goProfile= new Intent(this,EditProfileActivity.class);
         setPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
