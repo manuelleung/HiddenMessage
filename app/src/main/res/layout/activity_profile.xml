@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ebebe6"
+        android:id="@+id/top_layout">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/profilepic"
+            android:src="@drawable/default_avatar"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:text="Manuel Leung"
+            android:textSize="30sp"
+            android:layout_below="@+id/profilepic"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_layout"
+        android:layout_below="@id/top_layout">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:textSize="26sp"
+            android:layout_margin="10sp"
+            android:layout_alignParentLeft="true"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gender"
+            android:text="Male"
+            android:textSize="26sp"
+            android:layout_margin="10sp"
+            android:layout_alignParentRight="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@id/gender"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Birthday"
+            android:textSize="26sp"
+            android:layout_margin="10sp"
+            android:layout_alignParentLeft="true"
+            android:textColor="#000000"
+            android:layout_below="@id/gender"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/birthday"
+            android:text="February 6"
+            android:textSize="26sp"
+            android:layout_margin="10sp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/gender"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@id/birthday"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="City"
+            android:textSize="26sp"
+            android:layout_margin="10sp"
+            android:layout_alignParentLeft="true"
+            android:textColor="#000000"
+            android:layout_below="@id/birthday"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/city"
+            android:text="Brooklyn, NY"
+            android:textSize="26sp"
+            android:layout_margin="10sp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/birthday"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@id/city"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About Me"
+            android:id="@+id/about_title"
+            android:textSize="26sp"
+            android:layout_margin="10sp"
+            android:layout_alignParentLeft="true"
+            android:textColor="#000000"
+            android:layout_below="@id/city"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/interest"
+            android:text="Fuck rashed, he is my arch enemy. Please unfollow, unsubscribe, and unfriend him. If you are his friend I pity you."
+            android:textSize="26sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginBottom="10sp"
+            android:layout_below="@id/about_title"/>
+
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
