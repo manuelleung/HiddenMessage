@@ -31,7 +31,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String email = userDetails.get("email").toString();
 
         TextView profileName = (TextView) findViewById(R.id.profile_name);
-        profileName.setText(firstName+" "+lastName);
+        profileName.setText(firstName.substring(0,1).toUpperCase()+firstName.substring(1)+" "+lastName.substring(0,1).toUpperCase()+lastName.substring(1));
 
         TextView profileEmail = (TextView) findViewById(R.id.profile_email);
         profileEmail.setText(email);

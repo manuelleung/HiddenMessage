@@ -205,7 +205,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setPic =(ImageView) header.findViewById(R.id.profilepic);
         TextView navName = (TextView) header.findViewById(R.id.nav_name);
         TextView navEmail = (TextView) header.findViewById(R.id.nav_email);
-        navName.setText(firstName);
+        navName.setText("Hi, " +firstName.substring(0,1).toUpperCase()+firstName.substring(1));
         navEmail.setText(email);
 
         final Intent goProfile= new Intent(this,EditProfileActivity.class);
