@@ -208,12 +208,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         navName.setText("Hi, " +firstName.substring(0,1).toUpperCase()+firstName.substring(1));
         navEmail.setText(email);
 
-        final Intent goProfile= new Intent(this,EditProfileActivity.class);
+        final Intent goProfile= new Intent(this, ProfileActivity.class);
         setPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(goProfile);
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
 
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(goProfile);
+                    }
+                }, 250);
             }
         });
 

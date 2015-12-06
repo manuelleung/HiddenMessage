@@ -190,8 +190,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:text=" Tell us a little about yourself."
-            android:textIsSelectable="true"
+            android:hint="Tell us about yourself"
             android:textSize="28dp"
             android:layout_above="@+id/button4" />
 
