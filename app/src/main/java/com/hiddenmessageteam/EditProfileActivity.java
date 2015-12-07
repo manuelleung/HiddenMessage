@@ -54,15 +54,14 @@ public class EditProfileActivity extends AppCompatActivity implements NetworkChe
             getSupportActionBar().show();
         }
 
-        setprofilepic=(ImageView) findViewById(R.id.profilepic);
-
         db = new DatabaseHandler(this);
         HashMap userDetails = db.getUserDetails();
         String firstName = userDetails.get("fname").toString();
         String lastName = userDetails.get("lname").toString();
         email = userDetails.get("email").toString();
 
-
+        setprofilepic=(ImageView) findViewById(R.id.profilepic);
+        setProfilePic();
 
 
         TextView profileName = (TextView) findViewById(R.id.profile_name);
@@ -85,9 +84,16 @@ public class EditProfileActivity extends AppCompatActivity implements NetworkChe
     }
 
     public void setProfilePic() {
-        byte[] b = db.getProfilePic();
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(b, 0, b.length);
-        setprofilepic.setImageBitmap(decodedByte);
+        if(db.getProfilePic()!=null) {
+            byte[] b = db.getProfilePic();
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(b, 0, b.length);
+            //android.view.ViewGroup.LayoutParams layoutParams = profilePic.getLayoutParams();
+            //layoutParams.width = 250;
+            //layoutParams.height = 250;
+            //profilePic.setLayoutParams(layoutParams);
+            setprofilepic.setImageBitmap(decodedByte);
+
+        }
     }
 
 

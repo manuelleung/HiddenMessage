@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -208,8 +210,42 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         navName.setText("Hi, " +firstName.substring(0,1).toUpperCase()+firstName.substring(1));
         navEmail.setText(email);
 
+        if(db.getProfilePic()!=null) {
+            byte[] b = db.getProfilePic();
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(b, 0, b.length);
+            setPic.setImageBitmap(decodedByte);
+        }
+
         final Intent goProfile= new Intent(this, ProfileActivity.class);
         setPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(goProfile);
+                    }
+                }, 250);
+            }
+        });
+        navName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(goProfile);
+                    }
+                }, 250);
+            }
+        });
+        navEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

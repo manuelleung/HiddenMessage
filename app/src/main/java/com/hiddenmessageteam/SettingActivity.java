@@ -1,6 +1,8 @@
 package com.hiddenmessageteam;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,7 +42,7 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
 
     private NavigationView navView;
     private DrawerLayout drawer;
-
+    DatabaseHandler db;
     HashMap userDetails;
 
     @Override
@@ -53,7 +55,7 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
         button_changepassword = (Button) findViewById(R.id.button_changepassword);
         button_logout = (Button) findViewById(R.id.button_logout);
 
-        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+        db = new DatabaseHandler(getApplicationContext());
         userDetails = db.getUserDetails();
 
         button_logout.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +110,13 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
         navName.setText(firstName);
         navEmail.setText(email);
 
+
+        if(db.getProfilePic()!=null) {
+            byte[] b = db.getProfilePic();
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(b, 0, b.length);
+            setPic.setImageBitmap(decodedByte);
+        }
+
         final Intent goProfile= new Intent(this,EditProfileActivity.class);
         setPic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +125,35 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
 
             }
         });
+        navName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(goProfile);
+                    }
+                }, 250);
+            }
+        });
+        navEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(goProfile);
+                    }
+                }, 250);
+            }
+        });
+
     }
 
     /**

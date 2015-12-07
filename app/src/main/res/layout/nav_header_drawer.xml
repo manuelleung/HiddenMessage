@@ -22,6 +22,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=""
         android:id="@+id/nav_name"
+        android:onClick="onClick"
         android:layout_marginLeft="17dp"
         android:layout_marginStart="17dp"
         android:layout_centerVertical="true"
@@ -34,6 +35,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text=""
         android:id="@+id/nav_email"
+        android:onClick="onClick"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/nav_name"
         android:layout_alignStart="@+id/nav_name" />
