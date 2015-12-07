@@ -180,39 +180,23 @@
             android:layout_alignParentStart="true" />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="230dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:ems="10"
             android:id="@+id/editText"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
             android:hint="Tell us about yourself"
-            android:textSize="28dp"
-            android:layout_above="@+id/button4" />
-
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/button3"
-            android:background="@drawable/back"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/editText" />
+            android:textSize="28dp" />
 
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:id="@+id/button4"
+            android:id="@+id/button_save"
             android:background="@drawable/back"
             android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/button3"
-            android:layout_toEndOf="@+id/button3" />
+            android:layout_centerHorizontal="true"/>
+
     </RelativeLayout>
 </RelativeLayout>

@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements NetworkCheck.OnTa
 
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MainActivity.this);
                 if ((!userEmail.equals("")) && (!userPassword.equals(""))) {
-                    checkConnection.netAsync(v);
+                    checkConnection.netAsync();
                 } else {
                     Toast.makeText(getApplicationContext(), "Some fields are empty", Toast.LENGTH_SHORT).show();
                 }

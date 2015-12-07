@@ -52,9 +52,13 @@
         <activity
             android:name=".SettingActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".MyMessagesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="My Messages"
+            />
+
         <activity
             android:name=".ForgotPasswordActivity"
             android:screenOrientation="portrait" />

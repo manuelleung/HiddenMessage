@@ -58,6 +58,7 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_messages);
 
+        
         user_id_array = new HashMap<String, String>();
         message_id_array = new HashMap<String, String>();
 
@@ -76,12 +77,12 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
             @Override
             public void onClick(View v) {
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MyMessagesActivity.this);
-                checkConnection.netAsync(v);
+                checkConnection.netAsync();
             }
         });
 
         NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MyMessagesActivity.this);
-        checkConnection.netAsync(findViewById(R.id.list_my_messages));
+        checkConnection.netAsync();
 
         Button delBtn = (Button)findViewById(R.id.button_delete);
         delBtn.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +174,7 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         linearLayout.removeAllViews();
         ///////////////////////////////////////////////
         NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MyMessagesActivity.this);
-        checkConnection.netAsync(findViewById(R.id.list_my_messages));
+        checkConnection.netAsync();
     }
 
     /**

@@ -41,7 +41,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Network
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), ForgotPasswordActivity.this);
                 if( email.equals("") == false ) {
 
-                    checkConnection.netAsync(v);
+                    checkConnection.netAsync();
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Email field is empty", Toast.LENGTH_SHORT).show();

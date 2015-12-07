@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
                     if (password.equals(confirmPassword)) {
                         String[] tokens = email.split("@");
                         username = tokens[0];
-                        checkConnection.netAsync(v);
+                        checkConnection.netAsync();
                     } else {
                     Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
                     }

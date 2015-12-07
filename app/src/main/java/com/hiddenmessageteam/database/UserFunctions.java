@@ -38,7 +38,8 @@ public class UserFunctions {
     private static String TAG_RETRIEVE_ALL_MESSAGES = "allmessages";
     private static String TAG_RETRIEVE_MY_MESSAGES = "mymessages";
     private static String TAG_DELETE_MESSAGE = "deletemessage";
-
+    private static String TAG_UPLOAD_PROFILE_PIC = "uploadprofilepic";
+    private static String TAG_RETRIEVE_PROFILE_PIC = "retrieveprofilepic";
     /**
      * Constructor
      * */
@@ -169,4 +170,32 @@ public class UserFunctions {
         JSONObject json = jsonParser.makeHttpRequest(URL_RETRIEVE_MESSAGE, "POST", params);
         return json;
     }
+
+    /**
+     * Makes a request to upload image
+     * passes string base64 image to php
+     * returns JSONObject from php
+     * */
+    public JSONObject uploadProfilePic(String image, String email) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("tag", TAG_UPLOAD_PROFILE_PIC);
+        params.put("image", image);
+        params.put("email", email);
+        JSONObject json = jsonParser.makeHttpRequest(URL_RETRIEVE_MESSAGE, "POST", params);
+        return json;
+    }
+
+    /**
+     * Makes a request to retrieve image
+     * passes to php
+     * returns JSONObject from php
+     * */
+    public JSONObject retrieveProfilePic(String email) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("tag", TAG_RETRIEVE_PROFILE_PIC);
+        params.put("email", email);
+        JSONObject json = jsonParser.makeHttpRequest(URL_RETRIEVE_MESSAGE, "POST", params);
+        return json;
+    }
+
 }

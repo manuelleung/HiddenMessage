@@ -1,16 +1,36 @@
 package com.hiddenmessageteam;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
+import com.hiddenmessageteam.database.DatabaseHandler;
 
 /**
  * Created by Manuel on 12/5/2015.
  */
 public class ProfileActivity extends AppCompatActivity {
+
+
+    ImageView profilePic;
+    DatabaseHandler db;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +39,11 @@ public class ProfileActivity extends AppCompatActivity {
         if(getSupportActionBar()!=null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        db = new DatabaseHandler(this);
+
+        profilePic = (ImageView) findViewById(R.id.profilepic);
+        setProfilePic();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,5 +69,18 @@ public class ProfileActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    public void setProfilePic() {
+        if(db.getProfilePic()!=null) {
+            byte[] b = db.getProfilePic();
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(b, 0, b.length);
+            //android.view.ViewGroup.LayoutParams layoutParams = profilePic.getLayoutParams();
+            //layoutParams.width = 250;
+            //layoutParams.height = 250;
+            //profilePic.setLayoutParams(layoutParams);
+            profilePic.setImageBitmap(decodedByte);
+
+        }
     }
 }

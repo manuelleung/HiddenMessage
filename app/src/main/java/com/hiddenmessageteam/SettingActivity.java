@@ -79,7 +79,7 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
                 newPassword = inputNewPassword.getText().toString();
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), SettingActivity.this);
                 if (!(newPassword.equals(""))) {
-                    checkConnection.netAsync(v);
+                    checkConnection.netAsync();
                 } else {
 
                     Toast.makeText(getApplicationContext(), "New password field is empty " + newPassword, Toast.LENGTH_SHORT).show();

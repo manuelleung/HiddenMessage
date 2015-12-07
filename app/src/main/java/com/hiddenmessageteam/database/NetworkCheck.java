@@ -40,7 +40,7 @@ public class NetworkCheck extends ContextWrapper {
      * Method to check for connection
      * (will remove view since its not used) later
      * */
-    public void netAsync(View view){
+    public void netAsync(){
         new NetCheck().execute();
     }
 
