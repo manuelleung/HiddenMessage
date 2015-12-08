@@ -44,7 +44,7 @@ public class MessageDeletion implements NetworkCheck.OnTaskCompleted {
         this.context = context;
         this.view = view;
         NetworkCheck checkConnection = new NetworkCheck(context, this);
-        checkConnection.netAsync(view);
+        checkConnection.netAsync();
     }
 
     /**

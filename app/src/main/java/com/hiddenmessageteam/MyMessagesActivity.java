@@ -1,6 +1,8 @@
 package com.hiddenmessageteam;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,7 +52,7 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
 
     NavigationView navView;
     DrawerLayout drawer;
-
+    DatabaseHandler db;
     private int viewid;
 
     @Override
@@ -58,10 +60,11 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_messages);
 
+        
         user_id_array = new HashMap<String, String>();
         message_id_array = new HashMap<String, String>();
 
-        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+        db = new DatabaseHandler(getApplicationContext());
         userDetails = db.getUserDetails();
         user_id = userDetails.get("user_id").toString();
         //user_id = db.getUserId();
@@ -76,12 +79,12 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
             @Override
             public void onClick(View v) {
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MyMessagesActivity.this);
-                checkConnection.netAsync(v);
+                checkConnection.netAsync();
             }
         });
 
         NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MyMessagesActivity.this);
-        checkConnection.netAsync(findViewById(R.id.list_my_messages));
+        checkConnection.netAsync();
 
         Button delBtn = (Button)findViewById(R.id.button_delete);
         delBtn.setOnClickListener(new View.OnClickListener() {
@@ -113,12 +116,46 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         navName.setText(firstName);
         navEmail.setText(email);
 
+        if(db.getProfilePic()!=null) {
+            byte[] b = db.getProfilePic();
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(b, 0, b.length);
+            setPic.setImageBitmap(decodedByte);
+        }
+
         final Intent goProfile= new Intent(this,EditProfileActivity.class);
         setPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(goProfile);
 
+            }
+        });
+        navName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(goProfile);
+                    }
+                }, 250);
+            }
+        });
+        navEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(goProfile);
+                    }
+                }, 250);
             }
         });
     }
@@ -173,7 +210,7 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         linearLayout.removeAllViews();
         ///////////////////////////////////////////////
         NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MyMessagesActivity.this);
-        checkConnection.netAsync(findViewById(R.id.list_my_messages));
+        checkConnection.netAsync();
     }
 
     /**

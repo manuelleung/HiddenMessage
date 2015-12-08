@@ -4,8 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.Blob;
 import java.util.HashMap;
 
 /**
@@ -26,6 +28,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_USERNAME = "uname";
     private static final String KEY_UID = "user_id";
     private static final String KEY_CREATED_AT = "created_at";
+    private static final String KEY_PROFILE_PIC = "profile_pic";
 
     /**
      * Constructor
@@ -46,7 +49,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_EMAIL + " TEXT UNIQUE,"
                 + KEY_USERNAME + " TEXT,"
                 + KEY_UID + " TEXT,"
-                + KEY_CREATED_AT + " TEXT" + ")";
+                + KEY_CREATED_AT + " TEXT,"
+                + KEY_PROFILE_PIC + " BLOB" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
     }
 
@@ -76,9 +80,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_USERNAME, username);
         values.put(KEY_UID, user_id);
         values.put(KEY_CREATED_AT, created_at);
-
         db.insert(TABLE_LOGIN, null, values);
         db.close();
+    }
+
+    public void addProfilePic(byte[] profile_pic) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_PROFILE_PIC, profile_pic);
+        db.update(TABLE_LOGIN, values, null, null);
+        //db.insert(TABLE_LOGIN, null, values);
+        db.close();
+    }
+
+    public byte[] getProfilePic() {
+        String selectQuery = "SELECT "+KEY_PROFILE_PIC+" FROM " + TABLE_LOGIN;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        byte[] result = cursor.getBlob(cursor.getColumnIndexOrThrow(KEY_PROFILE_PIC));
+        cursor.close();
+        db.close();
+        return result;
     }
 
     /**

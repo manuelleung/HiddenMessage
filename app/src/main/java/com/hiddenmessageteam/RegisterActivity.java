@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +51,12 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivty_register);
+/*
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().show();
+        }
+*/
 
         inputFirstName = (EditText) findViewById(R.id.edit_first_name);
         inputLastName = (EditText) findViewById(R.id.edit_last_name);
@@ -94,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
                     if (password.equals(confirmPassword)) {
                         String[] tokens = email.split("@");
                         username = tokens[0];
-                        checkConnection.netAsync(v);
+                        checkConnection.netAsync();
                     } else {
                     Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
                     }
@@ -118,6 +125,21 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
         */
     }
 
+/*
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+*/
     /**
      * Checks if an email is valid from input
      * returns boolean

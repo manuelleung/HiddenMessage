@@ -70,7 +70,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
                 if ((!user_id.equals("")) && (!title.equals("")) && (!content.equals(""))) {
                     //Toast.makeText(getApplicationContext(), "user_id" + user_id, Toast.LENGTH_SHORT).show();
                     postButton.setEnabled(false);
-                    checkConnection.netAsync(v);
+                    checkConnection.netAsync();
                 } else {
                     Toast.makeText(getApplicationContext(), "One of the fields is empty", Toast.LENGTH_SHORT).show();
 

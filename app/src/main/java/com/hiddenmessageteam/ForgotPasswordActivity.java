@@ -3,6 +3,7 @@ package com.hiddenmessageteam;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +32,13 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Network
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
+        /*
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().show();
+        }
+        */
+
         input_email = (EditText) findViewById(R.id.useremail);
 
         Button reset = (Button) findViewById(R.id.button_reset);
@@ -41,7 +49,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Network
                 NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), ForgotPasswordActivity.this);
                 if( email.equals("") == false ) {
 
-                    checkConnection.netAsync(v);
+                    checkConnection.netAsync();
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Email field is empty", Toast.LENGTH_SHORT).show();
@@ -50,6 +58,21 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Network
         });
     }
 
+/*
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+    */
     /**
      * Connection check method from interface
      * if connected we will execute reset

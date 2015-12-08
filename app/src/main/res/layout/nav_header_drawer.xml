@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="80dp"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
     android:background="#000000"
 
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -22,6 +23,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=""
         android:id="@+id/nav_name"
+        android:onClick="onClick"
         android:layout_marginLeft="17dp"
         android:layout_marginStart="17dp"
         android:layout_centerVertical="true"
@@ -34,6 +36,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text=""
         android:id="@+id/nav_email"
+        android:onClick="onClick"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/nav_name"
         android:layout_alignStart="@+id/nav_name" />

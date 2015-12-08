@@ -2,9 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-
-    tools:context="com.hiddenmessageteam.Firstonly"
     android:id="@+id/main_activity_layout"
     android:background="#000000"
     >
@@ -54,7 +51,7 @@
         android:textSize="16dp"
         android:background="@drawable/back"
         android:alpha=".3"
-        android:onClick="buttonclick" />
+        android:onClick="onClick" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,7 +64,7 @@
         android:layout_below="@+id/signinbutton"
         android:layout_centerHorizontal="true"
         android:textColor="#BF4040"
-        android:onClick="buttonclick" />
+        android:onClick="onClick" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -84,7 +81,6 @@
         android:layout_toLeftOf="@+id/skipbutton"
         android:background="@drawable/backthree"
         android:allowUndo="false"
-        android:onClick="buttonclick"
         android:textColor="#f3efef" />
 
     <Button
@@ -95,7 +91,6 @@
 
         android:singleLine="false"
         android:background="@drawable/backthree"
-        android:onClick="buttonclick"
         android:layout_marginRight="20sp"
         android:textColor="#d1efd2"
         android:layout_alignParentBottom="true"

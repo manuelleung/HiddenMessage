@@ -45,6 +45,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".RegisterActivity"
+            android:label="Register"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
@@ -52,11 +53,16 @@
         <activity
             android:name=".SettingActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".MyMessagesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="My Messages"
+            />
+
         <activity
             android:name=".ForgotPasswordActivity"
+            android:label="Forgot Password"
             android:screenOrientation="portrait" />
 
 
