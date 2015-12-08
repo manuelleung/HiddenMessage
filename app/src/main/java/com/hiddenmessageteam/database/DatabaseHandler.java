@@ -49,8 +49,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_EMAIL + " TEXT UNIQUE,"
                 + KEY_USERNAME + " TEXT,"
                 + KEY_UID + " TEXT,"
-                + KEY_PROFILE_PIC + " BLOB,"
-                + KEY_CREATED_AT + " TEXT" + ")";
+                + KEY_CREATED_AT + " TEXT,"
+                + KEY_PROFILE_PIC + " BLOB" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
     }
 
@@ -124,7 +124,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             user.put("email", cursor.getString(3));
             user.put("uname", cursor.getString(4));
             user.put("user_id", cursor.getString(5));
-            user.put("created_at", cursor.getString(7));
+            user.put("created_at", cursor.getString(6));
         }
         cursor.close();
         db.close();
