@@ -39,13 +39,12 @@ public class UserFunctions {
     private static String TAG_RETRIEVE_ALL_MESSAGES = "allmessages";
     private static String TAG_RETRIEVE_MY_MESSAGES = "mymessages";
     private static String TAG_DELETE_MESSAGE = "deletemessage";
-<<<<<<< HEAD
+
     private static String TAG_ADD_FRIEND = "addfriend";
 
-=======
     private static String TAG_UPLOAD_PROFILE_PIC = "uploadprofilepic";
     private static String TAG_RETRIEVE_PROFILE_PIC = "retrieveprofilepic";
->>>>>>> df9ec9dd3128b4811c562a14c7d2d247ed0576de
+
     /**
      * Constructor
      * */
@@ -177,7 +176,7 @@ public class UserFunctions {
         return json;
     }
 
-<<<<<<< HEAD
+
     public JSONObject addFriend(String user_id, String target_id){
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("tag", TAG_ADD_FRIEND);
@@ -186,7 +185,7 @@ public class UserFunctions {
         JSONObject json = jsonParser.makeHttpRequest(URL_ADD_FRIEND, "POST", params);
         return json;
     }
-=======
+
     /**
      * Makes a request to upload image
      * passes string base64 image to php
@@ -214,5 +213,4 @@ public class UserFunctions {
         return json;
     }
 
->>>>>>> df9ec9dd3128b4811c562a14c7d2d247ed0576de
 }
