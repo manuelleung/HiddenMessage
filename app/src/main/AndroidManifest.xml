@@ -79,6 +79,16 @@
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".FriendsActivity"
+            android:label="Friends"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".SearchFriendActivity"
+            android:label="Search Friends"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:screenOrientation="portrait"
+            />
 
     </application>
 

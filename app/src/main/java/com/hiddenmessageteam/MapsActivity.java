@@ -501,6 +501,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return super.onOptionsItemSelected(item);
     }
 
+    // NAV BAR OPTIONS
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -516,15 +517,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (id == R.id.nav_home) {
                     Toast.makeText(getApplicationContext(), "Home clicked", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.nav_friends) {
-                    Toast.makeText(getApplicationContext(), "Friends clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), FriendsActivity.class);
+                    startActivity(intent);
                 } else if (id == R.id.nav_my_messages) {
                     Intent myMessagesIntent = new Intent(getApplicationContext(), MyMessagesActivity.class);
                     startActivity(myMessagesIntent);
-                    finish();
                 } else if (id == R.id.nav_settings) {
                     Intent settingIntent = new Intent(getApplicationContext(), SettingActivity.class);
                     startActivity(settingIntent);
-                    finish();
                 } else if (id == R.id.nav_share) {
                     Toast.makeText(getApplicationContext(), "Share clicked", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.nav_send) {

@@ -29,7 +29,7 @@ public class UserFunctions {
     private static String URL_CHANGE = "http://hidden-message.me/webservice/index.php";
     private static String URL_POST = "http://hidden-message.me/webservice/index.php";
     private static String URL_RETRIEVE_MESSAGE = "http://hidden-message.me/webservice/index.php";
-    private static String URL_ADD_FRIEND = "";
+    private static String URL_ADD_FRIEND = "http://hidden-message.me/webservice/index.php";
 
     private static String TAG_LOGIN = "login";
     private static String TAG_REGISTER = "register";
@@ -42,8 +42,11 @@ public class UserFunctions {
 
     private static String TAG_ADD_FRIEND = "addfriend";
 
+    private static String TAG_SEARCH_FRIEND = "searchfriend";
+
     private static String TAG_UPLOAD_PROFILE_PIC = "uploadprofilepic";
     private static String TAG_RETRIEVE_PROFILE_PIC = "retrieveprofilepic";
+
 
     /**
      * Constructor
@@ -213,4 +216,11 @@ public class UserFunctions {
         return json;
     }
 
+    public JSONObject searchFriend(String username) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("tag", TAG_SEARCH_FRIEND);
+        params.put("uname", username);
+        JSONObject json = jsonParser.makeHttpRequest(URL_RETRIEVE_MESSAGE, "POST", params);
+        return json;
+    }
 }
