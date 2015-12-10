@@ -208,7 +208,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         TextView navName = (TextView) header.findViewById(R.id.nav_name);
         TextView navEmail = (TextView) header.findViewById(R.id.nav_email);
         navName.setText("Hi, " +firstName.substring(0,1).toUpperCase()+firstName.substring(1));
-        navEmail.setText(email);
+        //navEmail.setText(email);
 
         if(db.getProfilePic()!=null) {
             byte[] b = db.getProfilePic();

@@ -168,7 +168,7 @@ public class EditProfileActivity extends AppCompatActivity implements NetworkChe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAM_REQUEST) {
+        if (requestCode == CAM_REQUEST && resultCode!=0) {
             thumbnail = (Bitmap) data.getExtras().get("data");
             thumbnail = getRoundedShape(thumbnail);
             setprofilepic.setImageBitmap(thumbnail);

@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".EditProfileActivity"
-    android:onClick="changeProfile">
+    tools:context=".EditProfileActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +17,8 @@
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:id="@+id/profilepic"
-            android:src="@drawable/default_avatar" />
+            android:src="@drawable/default_avatar"
+            android:onClick="changeProfile" />
 
         <TextView
             android:layout_width="wrap_content"
