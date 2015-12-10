@@ -70,12 +70,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private  int countToDelete = 2;
     private int countToDeleteRefresh = 2;
 
-    private final Context context = this;
+   private final Context context = this;
 
 
     private Boolean paused;
     private Intent locationIntent;
     private TextView mD;
+
+
 
 
 
@@ -114,6 +116,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         plusButton = (FloatingActionButton) findViewById(R.id.fab);
         postMessageIntent = new Intent(this, SaveMessageActivity.class);
         messagePost = new HandleMessagePost();
+        messagePost.setContext(context);
 
         //refreshButton = (FloatingActionButton) findViewById(R.id.button_refresh);
 
@@ -208,13 +211,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         TextView navName = (TextView) header.findViewById(R.id.nav_name);
         TextView navEmail = (TextView) header.findViewById(R.id.nav_email);
         navName.setText("Hi, " +firstName.substring(0,1).toUpperCase()+firstName.substring(1));
-        //navEmail.setText(email);
+        navEmail.setText(email);
 
-        if(db.getProfilePic()!=null) {
-            byte[] b = db.getProfilePic();
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(b, 0, b.length);
-            setPic.setImageBitmap(decodedByte);
-        }
+//        if(db.getProfilePic()!=null) {
+//            byte[] b = db.getProfilePic();
+//            Bitmap decodedByte = BitmapFactory.decodeByteArray(b, 0, b.length);
+//            setPic.setImageBitmap(decodedByte);
+//        }
 
         final Intent goProfile= new Intent(this, ProfileActivity.class);
         setPic.setOnClickListener(new View.OnClickListener() {
@@ -525,10 +528,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Intent settingIntent = new Intent(getApplicationContext(), SettingActivity.class);
                     startActivity(settingIntent);
                     finish();
-                } else if (id == R.id.nav_share) {
-                    Toast.makeText(getApplicationContext(), "Share clicked", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.nav_send) {
-                    Toast.makeText(getApplicationContext(), "Send clicked", Toast.LENGTH_SHORT).show();
                 }
             }
         }, 250);

@@ -227,10 +227,6 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
                     finish();
                 } else if (id == R.id.nav_settings) {
                     Toast.makeText(getApplicationContext(), "Settings clicked", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.nav_share) {
-                    Toast.makeText(getApplicationContext(), "Share clicked", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.nav_send) {
-                    Toast.makeText(getApplicationContext(), "Send clicked", Toast.LENGTH_SHORT).show();
                 }
             }
         }, 250);

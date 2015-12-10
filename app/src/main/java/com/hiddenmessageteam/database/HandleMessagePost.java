@@ -1,10 +1,18 @@
 package com.hiddenmessageteam.database;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.hiddenmessageteam.MapsActivity;
 import com.hiddenmessageteam.R;
 
 import java.util.ArrayList;
@@ -27,13 +35,15 @@ public class HandleMessagePost {
     private String message_id;
 
     private Marker marker;
-
+    private Context context;
+    MapsActivity mapsActivity;
 
 
 /**************************
      Default Constructor
  **************************/
     public HandleMessagePost() {
+        this.context = context;
         ID = -1;
         setTitle("");
         setMessage("");
@@ -62,6 +72,10 @@ public class HandleMessagePost {
 
     public void setLocation(String latitude, String longitude) {
         location = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
 
@@ -103,6 +117,10 @@ public class HandleMessagePost {
         return marker;
     }
 
+    public Context getContext() {
+        return this.context;
+    }
+
 
 
 /**************************
@@ -115,12 +133,60 @@ public class HandleMessagePost {
             ID = markerList.size()+1;
             Marker marker = googleMap.addMarker(new MarkerOptions().position(location).title(title  + "ID: " + ID).snippet(message).icon(BitmapDescriptorFactory.fromResource(R.drawable.message_icon2)));
             markerList.add(marker);
-        }
-        else {*/
+//        }
+//        else {*/
             ID = markerList.size()+1;
             marker = googleMap.addMarker(new MarkerOptions().position(location).title(title).snippet(message).icon(BitmapDescriptorFactory.fromResource(R.drawable.message_icon)));
             markerList.add(marker);
-        /*}*/
+
+            final Marker myMarker = marker;
+
+
+            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    /****************************
+                     *  Marker DIalog Box pop up
+                     ****************************/
+                    for(int i = 0; i < HandleMessagePost.markerList.size(); i++) {
+                        if(marker.equals(HandleMessagePost.markerList.get(i))) {
+                            final Dialog readmessage_Dialog = new Dialog(context);
+                            readmessage_Dialog.setContentView(R.layout.message_reading_dialog);
+                            //readmessage_Dialog.setTitle("Title...");
+                            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+                            layoutParams.copyFrom(readmessage_Dialog.getWindow().getAttributes());
+                            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                            readmessage_Dialog.show();
+                            readmessage_Dialog.getWindow().setAttributes(layoutParams);
+                            TextView settitle=(TextView) readmessage_Dialog.findViewById(R.id.readmessagedialog_title);
+                            TextView setname=(TextView) readmessage_Dialog.findViewById(R.id.readmessagedialog_name);
+                            TextView setbody=(TextView) readmessage_Dialog.findViewById(R.id.readmessagedialog_showmessage);
+
+                            setname.setText("Unknown");
+                            settitle.setText(HandleMessagePost.markerList.get(i).getTitle());
+                            setbody.setText(HandleMessagePost.markerList.get(i).getSnippet());
+                            Button cancelButton = (Button)readmessage_Dialog.findViewById(R.id.readmessagedialog_CancelButton);
+                            readmessage_Dialog.setCanceledOnTouchOutside(false);
+                            cancelButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    readmessage_Dialog.dismiss();
+                                }
+                            });
+                        }
+                    }
+
+
+
+
+                    return false;
+                }
+            });
+//        /*}*/
+
+
+
 
 
 
