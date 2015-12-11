@@ -74,12 +74,10 @@
 
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-<<<<<<< HEAD
-=======
+
         <activity android:name=".IntroActivity" >
         </activity>
 
->>>>>>> 7fff90faf1e62bbd0d948ef3c834d4d4565dbee5
 
         <activity android:name=".FriendsActivity"
             android:label="Friends"
@@ -92,10 +90,6 @@
             android:screenOrientation="portrait"
             />
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 7fff90faf1e62bbd0d948ef3c834d4d4565dbee5
     </application>
 
 </manifest>

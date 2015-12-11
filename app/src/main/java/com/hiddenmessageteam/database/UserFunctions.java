@@ -223,4 +223,13 @@ public class UserFunctions {
         JSONObject json = jsonParser.makeHttpRequest(URL_RETRIEVE_MESSAGE, "POST", params);
         return json;
     }
+
+
+    public JSONObject listFriends(String user_id) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("tag", "listfriend");
+        params.put("user_id", user_id);
+        JSONObject json = jsonParser.makeHttpRequest(URL_ADD_FRIEND, "POST", params);
+        return json;
+    }
 }
