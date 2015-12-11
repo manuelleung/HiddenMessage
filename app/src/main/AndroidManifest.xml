@@ -71,14 +71,9 @@
         <activity
             android:name=".EditProfileActivity"
             android:label="Edit Profile"
-<<<<<<< HEAD
+
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-        <activity android:name=".IntroActivity" >
-        </activity>
-=======
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:screenOrientation="portrait" />
 
         <activity android:name=".FriendsActivity"
             android:label="Friends"
@@ -91,7 +86,6 @@
             android:screenOrientation="portrait"
             />
 
->>>>>>> origin/master
     </application>
 
 </manifest>
