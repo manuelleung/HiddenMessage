@@ -232,4 +232,13 @@ public class UserFunctions {
         JSONObject json = jsonParser.makeHttpRequest(URL_ADD_FRIEND, "POST", params);
         return json;
     }
+
+    public JSONObject acceptFriend(String user_id, String target_id){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("tag", "acceptfriend");
+        params.put("user_id", user_id);
+        params.put("target_id", target_id);
+        JSONObject json = jsonParser.makeHttpRequest(URL_ADD_FRIEND, "POST", params);
+        return json;
+    }
 }

@@ -6,7 +6,8 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/search_friend"
-        android:hint="Search Friend"/>
+        android:hint="Search Friend"
+        android:singleLine="true"/>
 
     <Button
         android:layout_width="wrap_content"

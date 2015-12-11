@@ -13,15 +13,45 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/search_button">
+        android:layout_below="@+id/search_button"
+        android:id="@+id/view_pending_friends">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_pending_friends">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pending Requests"
+                android:textSize="30dp"
+                android:padding="10dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_pending_friends"
+        android:background="@android:color/darker_gray">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list_my_friends">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Friends List"
+                android:textSize="30dp"
+                android:padding="10dp"/>
+
         </LinearLayout>
     </ScrollView>
-
 
 
 </RelativeLayout>

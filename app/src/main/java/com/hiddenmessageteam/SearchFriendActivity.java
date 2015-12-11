@@ -179,7 +179,7 @@ public class SearchFriendActivity extends AppCompatActivity implements NetworkCh
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Pressed", Toast.LENGTH_SHORT).show();
                 FriendRequest friendRequest = new FriendRequest(getApplicationContext());
-                friendRequest.addFriend(user_id);
+                friendRequest.addFriend(user_id, true);
             }
         });
     }

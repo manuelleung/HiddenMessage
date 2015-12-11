@@ -23,13 +23,24 @@ public class FriendRequest implements NetworkCheck.OnTaskCompleted {
 
     private String target_id;
 
+    private boolean add = false;
+    private boolean accept = false;
+
     public FriendRequest(Context context) {//, View view){
         this.context = context;
         //this.view = view;
     }
 
-    public void addFriend(String target_id) {
+    public void addFriend(String target_id, boolean add) {
         this.target_id = target_id;
+        this.add = add;
+        NetworkCheck checkConn = new NetworkCheck(context, FriendRequest.this);
+        checkConn.netAsync();
+    }
+
+    public void acceptFriend(String target_id, boolean accept) {
+        this.target_id = target_id;
+        this.accept = accept;
         NetworkCheck checkConn = new NetworkCheck(context, FriendRequest.this);
         checkConn.netAsync();
     }
@@ -37,7 +48,12 @@ public class FriendRequest implements NetworkCheck.OnTaskCompleted {
     @Override
     public void onConnCompleted(boolean conn) {
         if(conn){
-            new ProcessFriendRequest().execute();
+            //if(add) {
+                new ProcessFriendRequest().execute();
+           // }
+            //else if(accept) {
+            //    new ProcessAcceptRequest().execute();
+            //}
         }
         else{
             Toast.makeText(context, "No internet connection.", Toast.LENGTH_SHORT).show();
@@ -53,12 +69,17 @@ public class FriendRequest implements NetworkCheck.OnTaskCompleted {
         //need to get target_id
         @Override
         protected JSONObject doInBackground(String... params) {
+            JSONObject json=null;
             DatabaseHandler databaseHandler = new DatabaseHandler(context);
-            HashMap localUserInfo;
-            localUserInfo = databaseHandler.getUserDetails();
+            HashMap localUserInfo = databaseHandler.getUserDetails();
             user_id = localUserInfo.get("user_id").toString();
             UserFunctions userFunctions = new UserFunctions();
-            JSONObject json = userFunctions.addFriend(user_id, target_id);
+            if(add) {
+                json = userFunctions.addFriend(user_id, target_id);
+            }
+            else if(accept) {
+                json = userFunctions.acceptFriend(user_id, target_id);
+            }
             return json;
         }
 
@@ -67,10 +88,15 @@ public class FriendRequest implements NetworkCheck.OnTaskCompleted {
             try {
                 if(json.getString(KEY_SUCCESS)!=null) {
                     if(Integer.parseInt(json.getString(KEY_SUCCESS))==1) {
-                        Toast.makeText(context, "Friend Request Sent", Toast.LENGTH_SHORT).show();
+                        if(add) {
+                            Toast.makeText(context, "Friend Request Sent", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(accept) {
+                            Toast.makeText(context, "Friend accepted", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else {
-                        Toast.makeText(context, "Error occures in adding friend", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Error occures in friend functions", Toast.LENGTH_SHORT).show();
                     }
                 }
 

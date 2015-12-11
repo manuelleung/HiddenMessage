@@ -1,6 +1,5 @@
 package com.hiddenmessageteam;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,10 +31,16 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
 
     private Button searchButton;
 
-    private LinearLayout linearLayout;
-    private LinearLayout.LayoutParams lparams;
+    private LinearLayout linearLayoutPending;
+    private LinearLayout.LayoutParams lparamsPending;
+
+    private LinearLayout linearLayoutFriends;
+    private LinearLayout.LayoutParams lparamsFriends;
+
 
     private Button rowButton;
+
+    String target_id;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +52,12 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
             getSupportActionBar().show();
         }
 
-        linearLayout = (LinearLayout) findViewById(R.id.list_my_friends);
-        lparams = new LinearLayout.LayoutParams(
+        linearLayoutPending = (LinearLayout) findViewById(R.id.list_pending_friends);
+        lparamsPending = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        linearLayoutFriends = (LinearLayout) findViewById(R.id.list_my_friends);
+        lparamsFriends = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 
@@ -128,18 +136,35 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
                             }
                             if(value != null) {
                                 //viewid[i] = i;
-                                TextView rowTextView = new TextView(FriendsActivity.this);
-                                rowTextView.setLayoutParams(lparams);
-                                rowTextView.setText(value);
+                                JSONObject user = json.getJSONObject(i+"");
+                                target_id = user.getString("user_id");
 
-                                rowButton = new Button(FriendsActivity.this);
-                                rowButton.setText("Accept");
-                                rowButton.setLayoutParams(lparams);
-                                //setAcceptListener();
+                                //pending users
+                                if(user.getString("status").equals("0")) {
+                                    TextView rowTextView = new TextView(FriendsActivity.this);
+                                    rowTextView.setLayoutParams(lparamsPending);
+                                    rowTextView.setText(value);
+
+                                    linearLayoutPending.addView(rowTextView);
 
 
-                                linearLayout.addView(rowTextView);
-                                linearLayout.addView(rowButton);
+                                    rowButton = new Button(FriendsActivity.this);
+                                    rowButton.setText("Accept");
+                                    rowButton.setLayoutParams(lparamsPending);
+                                    rowButton.setId(Integer.parseInt(target_id));
+                                    linearLayoutPending.addView(rowButton);
+                                    setAcceptListener();
+                                }//added users
+                                else if(user.getString("status").equals("1")) {
+                                    TextView friendsRowTextView = new TextView(FriendsActivity.this);
+                                    friendsRowTextView.setLayoutParams(lparamsFriends);
+                                    friendsRowTextView.setText(value);
+                                    linearLayoutFriends.addView(friendsRowTextView);
+                                }
+
+
+
+
 
                             }
                         }
@@ -154,5 +179,16 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setAcceptListener() {
+        rowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Pressed "+v.getId(), Toast.LENGTH_SHORT).show();
+                FriendRequest friendRequest = new FriendRequest(getApplicationContext());
+                friendRequest.acceptFriend(v.getId()+"", true);
+            }
+        });
     }
 }
