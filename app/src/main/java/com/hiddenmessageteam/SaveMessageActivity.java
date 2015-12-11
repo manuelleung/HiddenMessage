@@ -50,12 +50,14 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         HashMap user = new HashMap();
         user = db.getUserDetails();
         user_id = user.get("user_id").toString();
+
         //user_id = db.getUserId();
 
         latitude = getIntent().getExtras().getString("latitude");
         longitude = getIntent().getExtras().getString("longitude");
 
         messagePost = new HandleMessagePost();
+
 
         final Button postButton = (Button) findViewById(R.id.button_post);
 

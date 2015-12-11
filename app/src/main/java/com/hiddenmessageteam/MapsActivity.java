@@ -159,6 +159,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         initTutorial();
     }
 
+    /******************************
+     *  P L U S   B U T T O N
+     *******************************/
+
     public void plusButtonListener() {
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,6 +3,7 @@ package com.hiddenmessageteam.database;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,6 +30,8 @@ public class HandleMessagePost {
     private GoogleMap googleMap;
     private LatLng location;
     private static ArrayList<Marker> markerList = new ArrayList<>();
+    private static ArrayList<String> messageList = new ArrayList<>();
+    private static ArrayList<String> titleList = new ArrayList<>();
     private int ID;
 
     private String user_id;
@@ -136,8 +139,10 @@ public class HandleMessagePost {
 //        }
 //        else {*/
             ID = markerList.size()+1;
-            marker = googleMap.addMarker(new MarkerOptions().position(location).title(title).snippet(message).icon(BitmapDescriptorFactory.fromResource(R.drawable.message_icon)));
+            marker = googleMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.message_icon)));
             markerList.add(marker);
+            titleList.add(title);
+            messageList.add(message);
 
             final Marker myMarker = marker;
 
@@ -151,8 +156,10 @@ public class HandleMessagePost {
                     for(int i = 0; i < HandleMessagePost.markerList.size(); i++) {
                         if(marker.equals(HandleMessagePost.markerList.get(i))) {
                             final Dialog readmessage_Dialog = new Dialog(context);
+                            readmessage_Dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_box);
+                            readmessage_Dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             readmessage_Dialog.setContentView(R.layout.message_reading_dialog);
-                            //readmessage_Dialog.setTitle("Title...");
+                            readmessage_Dialog.setTitle("Rashed: " + HandleMessagePost.markerList.get(i).getTitle());
                             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
                             layoutParams.copyFrom(readmessage_Dialog.getWindow().getAttributes());
                             layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -162,9 +169,9 @@ public class HandleMessagePost {
                             TextView setname=(TextView) readmessage_Dialog.findViewById(R.id.readmessagedialog_name);
                             TextView setbody=(TextView) readmessage_Dialog.findViewById(R.id.readmessagedialog_showmessage);
 
-                            setname.setText("Unknown");
-                            settitle.setText(HandleMessagePost.markerList.get(i).getTitle());
-                            setbody.setText(HandleMessagePost.markerList.get(i).getSnippet());
+                            setname.setText("<Name Coming Soon!!>");
+                            settitle.setText(HandleMessagePost.titleList.get(i));
+                            setbody.setText(HandleMessagePost.messageList.get(i));
                             Button cancelButton = (Button)readmessage_Dialog.findViewById(R.id.readmessagedialog_CancelButton);
                             readmessage_Dialog.setCanceledOnTouchOutside(false);
                             cancelButton.setOnClickListener(new View.OnClickListener() {
