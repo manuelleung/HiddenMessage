@@ -37,7 +37,9 @@
         android:layout_below="@+id/text_header"
         android:background="#64bbc0ff"
         android:padding="5dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:inputType="textNoSuggestions|textVisiblePassword"
+        android:maxLength="30"/>
 
     <EditText
         android:layout_width="match_parent"
