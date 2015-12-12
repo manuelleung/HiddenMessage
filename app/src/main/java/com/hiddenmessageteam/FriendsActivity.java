@@ -40,6 +40,8 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
 
     private Button rowButton;
 
+    //boolean friendsListedBool = true;
+
     String target_id;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -71,8 +73,18 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
             }
         });
 
+        //setFriendListener();
+    }
+
+    public void setFriendListener() {
         NetworkCheck n = new NetworkCheck(getApplicationContext(), this);
         n.netAsync();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setFriendListener();
     }
 
     @Override
@@ -102,6 +114,7 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
 
 
     private class ProcessListFriends extends AsyncTask<String, String, JSONObject> {
+        String user_id;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -112,7 +125,7 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
             DatabaseHandler databaseHandler = new DatabaseHandler(getApplicationContext());
             HashMap userInfo;
             userInfo = databaseHandler.getUserDetails();
-            String user_id = userInfo.get("user_id").toString();
+            user_id = userInfo.get("user_id").toString();
             UserFunctions userFunctions = new UserFunctions();
             JSONObject json = userFunctions.listFriends(user_id);
             return json;
@@ -147,13 +160,20 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
 
                                     linearLayoutPending.addView(rowTextView);
 
-
                                     rowButton = new Button(FriendsActivity.this);
-                                    rowButton.setText("Accept");
                                     rowButton.setLayoutParams(lparamsPending);
                                     rowButton.setId(Integer.parseInt(target_id));
-                                    linearLayoutPending.addView(rowButton);
-                                    setAcceptListener();
+
+                                    if(user.getString("action_user_id").equals(user_id)) {
+                                        rowButton.setText("Waiting for Reply");
+                                        linearLayoutPending.addView(rowButton);
+                                    }
+                                    else {
+                                        rowButton.setText("Accept");
+                                        linearLayoutPending.addView(rowButton);
+                                        setAcceptListener();
+                                    }
+
                                 }//added users
                                 else if(user.getString("status").equals("1")) {
                                     TextView friendsRowTextView = new TextView(FriendsActivity.this);
