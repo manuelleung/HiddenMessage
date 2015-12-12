@@ -456,6 +456,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if(resultCode == Activity.RESULT_OK){
                 messagePost.setMessageId(data.getExtras().get("message_id").toString());
                 messagePost.setUserId(data.getExtras().get("user_id").toString());
+                messagePost.setUsername(data.getExtras().get("username").toString());
                 messagePost.setTitle(data.getExtras().get("title").toString());
                 messagePost.setMessage(data.getExtras().get("content").toString());
                 messagePost.setLocation(data.getExtras().get("latitude").toString(), data.getExtras().get("longitude").toString());
@@ -553,6 +554,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 JSONObject object = json.getJSONObject("" + i);
                 String message_id = object.getString("message_id");
                 String user_id = object.getString("user_id");
+                String username = object.getString("username");
                 String title = object.getString("title");
                 String content = object.getString("content");
                 String latitude = object.getString("latitude");
@@ -560,6 +562,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 final int currentIndex = i;
                 messagePost.setMessageId(message_id);
                 messagePost.setUserId(user_id);
+                messagePost.setUsername(username)g;
                 messagePost.setTitle(title);
                 messagePost.setMessage(content);
                 messagePost.setLocation(latitude, longitude);

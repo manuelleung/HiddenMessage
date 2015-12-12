@@ -38,6 +38,8 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
     private HandleMessagePost messagePost;
 
 
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         HashMap user = new HashMap();
         user = db.getUserDetails();
         user_id = user.get("user_id").toString();
+        username = user.get("username").toString();
 
         //user_id = db.getUserId();
 
@@ -143,6 +146,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
                         Bundle bundle = new Bundle();
                         bundle.putString("message_id", message_id);
                         bundle.putString("user_id", user_id);
+                        bundle.putString("username", username);
                         bundle.putString("title", title);
                         bundle.putString("content", content);
                         bundle.putString("latitude", latitude);

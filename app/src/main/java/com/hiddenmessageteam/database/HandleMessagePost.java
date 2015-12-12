@@ -37,6 +37,8 @@ public class HandleMessagePost {
     private String user_id;
     private String message_id;
 
+    private String username;
+
     private Marker marker;
     private Context context;
     MapsActivity mapsActivity;
@@ -60,6 +62,9 @@ public class HandleMessagePost {
     }
     public void setMessageId(String message_id) {
         this.message_id = message_id;
+    }
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setTitle(String title) {
