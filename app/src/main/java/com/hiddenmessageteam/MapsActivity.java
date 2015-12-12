@@ -562,7 +562,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 final int currentIndex = i;
                 messagePost.setMessageId(message_id);
                 messagePost.setUserId(user_id);
-                messagePost.setUsername(username)g;
+                messagePost.setUsername(username);
                 messagePost.setTitle(title);
                 messagePost.setMessage(content);
                 messagePost.setLocation(latitude, longitude);
