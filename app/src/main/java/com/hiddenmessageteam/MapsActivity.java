@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -222,6 +224,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //            Bitmap decodedByte = BitmapFactory.decodeByteArray(b, 0, b.length);
 //            setPic.setImageBitmap(decodedByte);
 //        }
+
+
+        if(db.getProfilePic()!=null) {
+            byte[] b = db.getProfilePic();
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(b, 0, b.length);
+            setPic.setImageBitmap(decodedByte);
+        }
 
         final Intent goProfile= new Intent(this, ProfileActivity.class);
         setPic.setOnClickListener(new View.OnClickListener() {
@@ -523,7 +532,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void run() {
                 if (id == R.id.nav_home) {
-                    Toast.makeText(getApplicationContext(), "Home clicked", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.nav_friends) {
                     Intent intent = new Intent(getApplicationContext(), FriendsActivity.class);
                     startActivity(intent);

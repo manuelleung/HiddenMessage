@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.hiddenmessageteam.database.DatabaseHandler;
 import com.hiddenmessageteam.database.NetworkCheck;
 import com.hiddenmessageteam.database.UserFunctions;
+import com.hiddenmessageteam.friendlist.FriendsActivity;
 import com.hiddenmessageteam.messagecard.MyMessagesActivity;
 
 import org.json.JSONObject;
@@ -221,13 +222,14 @@ public class SettingActivity extends AppCompatActivity implements NetworkCheck.O
                     startActivity(myMapIntent);
                     finish();
                 } else if (id == R.id.nav_friends) {
-                    Toast.makeText(getApplicationContext(), "Friends clicked", Toast.LENGTH_SHORT).show();
+                    Intent myMapIntent = new Intent(getApplicationContext(), FriendsActivity.class);
+                    startActivity(myMapIntent);
+                    finish();
                 } else if (id == R.id.nav_my_messages) {
                     Intent myMessagesIntent = new Intent(getApplicationContext(), MyMessagesActivity.class);
                     startActivity(myMessagesIntent);
                     finish();
                 } else if (id == R.id.nav_settings) {
-                    Toast.makeText(getApplicationContext(), "Settings clicked", Toast.LENGTH_SHORT).show();
                 }
             }
         }, 250);

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -89,15 +90,6 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 */
-        searchButton = (Button) findViewById(R.id.search_button);
-
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SearchFriendActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //setFriendListener();
     }
@@ -114,6 +106,13 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_friend_list, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -122,6 +121,10 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                break;
+            case R.id.search:
+                Intent intent = new Intent(getApplicationContext(), SearchFriendActivity.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);

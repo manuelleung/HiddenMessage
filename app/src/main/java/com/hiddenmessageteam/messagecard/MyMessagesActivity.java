@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,11 +28,13 @@ import android.widget.Toast;
 import com.hiddenmessageteam.EditProfileActivity;
 import com.hiddenmessageteam.MapsActivity;
 import com.hiddenmessageteam.R;
+import com.hiddenmessageteam.SearchFriendActivity;
 import com.hiddenmessageteam.SettingActivity;
 import com.hiddenmessageteam.database.DatabaseHandler;
 import com.hiddenmessageteam.database.MessageDeletion;
 import com.hiddenmessageteam.database.NetworkCheck;
 import com.hiddenmessageteam.database.UserFunctions;
+import com.hiddenmessageteam.friendlist.FriendsActivity;
 
 import org.json.JSONObject;
 
@@ -78,6 +81,11 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_messages);
 
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().show();
+        }
+
         ///
         recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
@@ -97,6 +105,7 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MyMessagesActivity.this);
         checkConnection.netAsync();
 
+        /*
         Button delBtn = (Button)findViewById(R.id.button_delete);
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,9 +114,39 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
                 messageDeletion.setUserMessageId(ca.getUserIdArray(), ca.getMessageIdArray());
             }
         });
+        */
 
         initNavigationBar();
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_message_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.delete:
+                MessageDeletion messageDeletion = new MessageDeletion(getApplicationContext(), MyMessagesActivity.this);
+                messageDeletion.setUserMessageId(ca.getUserIdArray(), ca.getMessageIdArray());
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+
 
     /**
      * Initializes the nav side bar
@@ -188,9 +227,10 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
                     startActivity(myMapIntent);
                     finish();
                 } else if (id == R.id.nav_friends) {
-                    Toast.makeText(getApplicationContext(), "Friends clicked", Toast.LENGTH_SHORT).show();
+                    Intent myMapIntent = new Intent(getApplicationContext(), FriendsActivity.class);
+                    startActivity(myMapIntent);
+                    finish();
                 } else if (id == R.id.nav_my_messages) {
-                    Toast.makeText(getApplicationContext(), "My messages clicked", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.nav_settings) {
                     Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                     startActivity(intent);
@@ -324,7 +364,7 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
 
 
                                 MessageInfo ci = new MessageInfo();
-                                ci.title = messageTitle +" "+ i;
+                                ci.title = messageTitle;
                                 ci.address = messageAddress;
                                 ci.content = messageContent;
                                 ci.setId(i);

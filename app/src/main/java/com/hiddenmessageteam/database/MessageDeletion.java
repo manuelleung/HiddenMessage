@@ -39,10 +39,9 @@ public class MessageDeletion implements NetworkCheck.OnTaskCompleted {
      * Initializes interface listener, view, context
      * Checks internet connection
      * */
-    public  MessageDeletion(Context context, View view, onMessageDeletionCompleted listener) {
+    public  MessageDeletion(Context context, onMessageDeletionCompleted listener) {
         this.listener = listener;
         this.context = context;
-        this.view = view;
         NetworkCheck checkConnection = new NetworkCheck(context, this);
         checkConnection.netAsync();
     }

@@ -174,9 +174,9 @@ public class HandleMessagePost {
                             TextView setname=(TextView) readmessage_Dialog.findViewById(R.id.readmessagedialog_name);
                             TextView setbody=(TextView) readmessage_Dialog.findViewById(R.id.readmessagedialog_showmessage);
 
-                            setname.setText("<Name Coming Soon!!>");
-                            settitle.setText(HandleMessagePost.titleList.get(i));
-                            setbody.setText(HandleMessagePost.messageList.get(i));
+                            setname.setText(""+username);
+                            settitle.setText(HandleMessagePost.markerList.get(i).getTitle());
+                            setbody.setText(HandleMessagePost.markerList.get(i).getSnippet());
                             Button cancelButton = (Button)readmessage_Dialog.findViewById(R.id.readmessagedialog_CancelButton);
                             readmessage_Dialog.setCanceledOnTouchOutside(false);
                             cancelButton.setOnClickListener(new View.OnClickListener() {
