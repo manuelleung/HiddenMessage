@@ -1,8 +1,10 @@
-package com.hiddenmessageteam;
+package com.hiddenmessageteam.messagecard;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +12,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +24,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hiddenmessageteam.EditProfileActivity;
+import com.hiddenmessageteam.MapsActivity;
+import com.hiddenmessageteam.R;
+import com.hiddenmessageteam.SettingActivity;
 import com.hiddenmessageteam.database.DatabaseHandler;
 import com.hiddenmessageteam.database.MessageDeletion;
 import com.hiddenmessageteam.database.NetworkCheck;
@@ -27,21 +35,23 @@ import com.hiddenmessageteam.database.UserFunctions;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Manuel on 12/2/2015.
  */
-public class MyMessagesActivity extends AppCompatActivity implements NetworkCheck.OnTaskCompleted, CompoundButton.OnCheckedChangeListener, MessageDeletion.onMessageDeletionCompleted, NavigationView.OnNavigationItemSelectedListener {
+public class MyMessagesActivity extends AppCompatActivity implements NetworkCheck.OnTaskCompleted, MessageDeletion.onMessageDeletionCompleted, NavigationView.OnNavigationItemSelectedListener {
     private static final String KEY_SUCCESS = "success";
     private final static String KEY_ERROR = "error";
-
-    private LinearLayout linearLayout;
-    private LinearLayout.LayoutParams lparams;
 
     private String user_id;
 
     private JSONObject messagesObj;
+
+    List<MessageInfo> result;
 
     private UserFunctions userFunctions;
 
@@ -55,33 +65,34 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
     DatabaseHandler db;
     private int viewid;
 
+
+    private RecyclerView recList;
+    private LinearLayoutManager llm;
+
+    MessageListAdapter ca;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_messages);
 
-        
+        ///
+        recList = (RecyclerView) findViewById(R.id.cardList);
+        recList.setHasFixedSize(true);
+        llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+
+
+
         user_id_array = new HashMap<String, String>();
         message_id_array = new HashMap<String, String>();
 
         db = new DatabaseHandler(getApplicationContext());
         userDetails = db.getUserDetails();
         user_id = userDetails.get("user_id").toString();
-        //user_id = db.getUserId();
-
-        linearLayout = (LinearLayout) findViewById(R.id.list_my_messages);
-        lparams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        Button retrieveAllButton = (Button) findViewById(R.id.button_my_message);
-
-        retrieveAllButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MyMessagesActivity.this);
-                checkConnection.netAsync();
-            }
-        });
 
         NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MyMessagesActivity.this);
         checkConnection.netAsync();
@@ -90,8 +101,8 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MessageDeletion messageDeletion = new MessageDeletion(getApplicationContext(), findViewById(R.id.list_my_messages), MyMessagesActivity.this);
-                messageDeletion.setUserMessageId(user_id_array, message_id_array);
+                MessageDeletion messageDeletion = new MessageDeletion(getApplicationContext(), v, MyMessagesActivity.this);
+                messageDeletion.setUserMessageId(ca.getUserIdArray(), ca.getMessageIdArray());
             }
         });
 
@@ -198,13 +209,12 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
      * */
     @Override
     public void onRequestCompleted(JSONObject jsonObject) {
-        // change to remove only deleted ones later //////
-        //View myView = findViewById(viewid);
-        //ViewGroup parent = (ViewGroup) myView.getParent();
-        //parent.removeView(myView);
+        //ca.notifyDataSetChanged();
 
-        linearLayout.removeAllViews();
-        ///////////////////////////////////////////////
+        // update the list accordingly and remove views from the adapter update adapter
+        // so it updates locally
+
+        // instead of doing this... because this forces another conenction to db
         NetworkCheck checkConnection = new NetworkCheck(getApplicationContext(), MyMessagesActivity.this);
         checkConnection.netAsync();
     }
@@ -224,34 +234,6 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
     }
 
     /**
-     * Checks when a checkbox has been clicked
-     * if its checked then it will add that to the array of messages to be deleted
-     * else it will remove it from array
-     * */
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if(isChecked) {
-            try {
-                //title = messagesObj.getJSONObject(buttonView.getId()+"").getString("title");
-                user_id_array.put(buttonView.getId()+"", messagesObj.getJSONObject(buttonView.getId()+"").getString("user_id"));
-                message_id_array.put(buttonView.getId()+"", messagesObj.getJSONObject(buttonView.getId() + "").getString("message_id"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            //viewid = buttonView.getId();
-            //Toast.makeText(getApplicationContext(), "Checked " + buttonView.getId(), Toast.LENGTH_SHORT).show();
-
-        }
-        else {
-            user_id_array.remove(buttonView.getId()+"");
-            message_id_array.remove(buttonView.getId()+"");
-            //Toast.makeText(getApplicationContext(), "NOT Checked " + buttonView.getId(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    /**
      * (WILL CHANGE THIS TO MESSAGE REQUEST CLASS LATER)
      * Async class that processes retrieving of only my messages
      * */
@@ -261,9 +243,15 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
          * Executes before do doInBackground
          * used for initialization
          * */
+        List<Address> addresses;
+        Geocoder geocoder;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+
+            geocoder = new Geocoder(MyMessagesActivity.this, Locale.getDefault());
         }
 
         /**
@@ -294,15 +282,31 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
                 if(json.getString(KEY_SUCCESS)!=null) {
                     if(Integer.parseInt(json.getString(KEY_SUCCESS))==1) {
                         int i;
+
+                        result = new ArrayList<MessageInfo>();
+                        //String message_id = json.getJSONObject("message").getString("message_id");
                         for(i=0; i<json.names().length()-3; i++) {
                             String value = null;
+                            String messageTitle = null;
+                            String messageContent = null;
+                            String latitude = null;
+                            String longitude = null;
+                            String messageAddress = null;
                             try {
-                                value = json.getString(i+"");
+                                value = json.getString(i + "");
+                                messageTitle = json.getJSONObject(i+"").getString("title");
+                                messageContent = json.getJSONObject(i+"").getString("content");
+                                latitude = json.getJSONObject(i+"").getString("latitude");
+                                longitude = json.getJSONObject(i+"").getString("longitude");
+                                addresses = geocoder.getFromLocation(Double.parseDouble(latitude), Double.parseDouble(longitude), 1);
+                                messageAddress = addresses.get(0).getAddressLine(0);
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             if(value != null) {
                                 //viewid[i] = i;
+                                /*
                                 TextView rowTextView = new TextView(MyMessagesActivity.this);
                                 rowTextView.setLayoutParams(lparams);
                                 rowTextView.setText(value);
@@ -316,9 +320,23 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
 
                                 linearLayout.addView(checkBox);
 
+                                */
+
+
+                                MessageInfo ci = new MessageInfo();
+                                ci.title = messageTitle +" "+ i;
+                                ci.address = messageAddress;
+                                ci.content = messageContent;
+                                ci.setId(i);
+                                result.add(ci);
+
 
                             }
                         }
+
+                        ca = new MessageListAdapter(result, json, getApplicationContext());
+                        recList.setAdapter(ca);
+
                         messagesObj = json;
                     }
                     else {

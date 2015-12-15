@@ -56,7 +56,7 @@
             android:name=".SettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MyMessagesActivity"
+            android:name=".messagecard.MyMessagesActivity"
             android:label="My Messages"
             android:screenOrientation="portrait" />
         <activity
@@ -79,7 +79,7 @@
         </activity>
 
 
-        <activity android:name=".FriendsActivity"
+        <activity android:name=".friendlist.FriendsActivity"
             android:label="Friends"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:screenOrientation="portrait"

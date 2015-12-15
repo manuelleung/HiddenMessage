@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.hiddenmessageteam.database.DatabaseHandler;
 import com.hiddenmessageteam.database.NetworkCheck;
 import com.hiddenmessageteam.database.UserFunctions;
+import com.hiddenmessageteam.messagecard.MyMessagesActivity;
 
 import org.json.JSONObject;
 

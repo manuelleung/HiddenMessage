@@ -10,7 +10,7 @@
         android:id="@+id/search_button"
         android:text="Search Friends"/>
 
-    <ScrollView
+    <!--ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_button"
@@ -51,7 +51,28 @@
                 android:padding="10dp"/>
 
         </LinearLayout>
-    </ScrollView>
+    </ScrollView-->
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Friends"
+        android:id="@+id/friends_header"
+        android:textColor="#ffffff"
+        android:gravity="center_horizontal"
+        android:textSize="24dp"
+        android:background="@color/cardview_dark_background"
+        android:layout_below="@+id/search_button"/>
+
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/cardList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/friends_header"
+            />
+
 
 
 </RelativeLayout>

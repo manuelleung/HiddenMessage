@@ -41,6 +41,8 @@ public class EditProfileActivity extends AppCompatActivity implements NetworkChe
     private static final int CAM_REQUEST=1313;
     Bitmap thumbnail;
 
+    Bitmap tempRoundedImage;
+
     String email;
     DatabaseHandler db;
 
@@ -171,7 +173,8 @@ public class EditProfileActivity extends AppCompatActivity implements NetworkChe
         if (requestCode == CAM_REQUEST && resultCode!=0) {
             thumbnail = (Bitmap) data.getExtras().get("data");
             thumbnail = getRoundedShape(thumbnail);
-            setprofilepic.setImageBitmap(thumbnail);
+            //tempRoundedImage = getRoundedShape(thumbnail);
+            setprofilepic.setImageBitmap(tempRoundedImage);
         }
     }
 
@@ -253,6 +256,8 @@ public class EditProfileActivity extends AppCompatActivity implements NetworkChe
 
                     // GOOD
                     if(Integer.parseInt(result)==1) {
+                        //probably not a good idea.. maybe better to round the image whenever we need to
+                        //imageString = getStringImage(tempRoundedImage);
                         byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
                         db.addProfilePic(decodedString);
                         //

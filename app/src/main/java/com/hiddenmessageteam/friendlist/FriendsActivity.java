@@ -1,24 +1,30 @@
-package com.hiddenmessageteam;
+package com.hiddenmessageteam.friendlist;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hiddenmessageteam.R;
+import com.hiddenmessageteam.SearchFriendActivity;
 import com.hiddenmessageteam.database.DatabaseHandler;
-import com.hiddenmessageteam.database.FriendRequest;
 import com.hiddenmessageteam.database.NetworkCheck;
 import com.hiddenmessageteam.database.UserFunctions;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Manuel on 12/9/2015.
@@ -31,16 +37,25 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
 
     private Button searchButton;
 
+    /*
     private LinearLayout linearLayoutPending;
     private LinearLayout.LayoutParams lparamsPending;
 
     private LinearLayout linearLayoutFriends;
     private LinearLayout.LayoutParams lparamsFriends;
+*/
 
-
-    private Button rowButton;
+    //private Button rowButton;
 
     //boolean friendsListedBool = true;
+
+    List<FriendInfo> result;
+
+    private RecyclerView recList;
+
+    private LinearLayoutManager llm;
+
+    private FriendsAdapter ca;
 
     String target_id;
 
@@ -54,6 +69,17 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
             getSupportActionBar().show();
         }
 
+        recList = (RecyclerView) findViewById(R.id.cardList);
+        recList.setHasFixedSize(true);
+
+        llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+
+        recList.setLayoutManager(llm);
+
+
+
+        /*
         linearLayoutPending = (LinearLayout) findViewById(R.id.list_pending_friends);
         lparamsPending = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -62,7 +88,7 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
         lparamsFriends = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-
+*/
         searchButton = (Button) findViewById(R.id.search_button);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -115,17 +141,18 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
 
     private class ProcessListFriends extends AsyncTask<String, String, JSONObject> {
         String user_id;
+        HashMap myDetails;
+        DatabaseHandler databaseHandler;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            databaseHandler = new DatabaseHandler(getApplicationContext());
+            myDetails = databaseHandler.getUserDetails();
         }
 
         @Override
         protected JSONObject doInBackground(String... params) {
-            DatabaseHandler databaseHandler = new DatabaseHandler(getApplicationContext());
-            HashMap userInfo;
-            userInfo = databaseHandler.getUserDetails();
-            user_id = userInfo.get("user_id").toString();
+            user_id = myDetails.get("user_id").toString();
             UserFunctions userFunctions = new UserFunctions();
             JSONObject json = userFunctions.listFriends(user_id);
             return json;
@@ -136,8 +163,9 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
             try {
                 if (json.getString(KEY_SUCCESS) != null) {
                     if (Integer.parseInt(json.getString(KEY_SUCCESS)) == 1) {
-                        Toast.makeText(getApplicationContext(), "Friends listed", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Friends listed", Toast.LENGTH_SHORT).show();
 
+                        result = new ArrayList<FriendInfo>();
 
                         int i;
                         for(i=0; i<json.names().length()-3; i++) {
@@ -149,11 +177,27 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
                             }
                             if(value != null) {
                                 //viewid[i] = i;
-                                JSONObject user = json.getJSONObject(i+"");
+                                JSONObject user = json.getJSONObject(i + "");
                                 target_id = user.getString("user_id");
 
+                                String status = user.getString("status");
+                                String action_user_id = user.getString("action_user_id");
+
+
+                                String friendEmail = user.getString("email");
+                                String friendName = user.getString("firstname") +" "+ user.getString("lastname");
+
+                                String encodedImage = user.getString("profile_pic");
+                                byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                                BitmapFactory.Options options = new BitmapFactory.Options();
+                                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length, options);
+
+                                //setprofilepic.setImageBitmap(decodedByte);
+                                /*
                                 //pending users
                                 if(user.getString("status").equals("0")) {
+
                                     TextView rowTextView = new TextView(FriendsActivity.this);
                                     rowTextView.setLayoutParams(lparamsPending);
                                     rowTextView.setText(value);
@@ -183,11 +227,33 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
                                 }
 
 
+                                */
+
+
+
+                                FriendInfo ci = new FriendInfo();
+                                ci.email = friendEmail;
+                                ci.name = friendName;
+                                if(!encodedImage.equals("null")) {
+                                    ci.profilePicture = decodedByte;
+                                }
+
+                                if(user_id.equals(action_user_id) && status.equals("0")) {
+                                    ci.status = "pending";
+                                } else if(!user_id.equals(action_user_id) && status.equals("0")) {
+                                    ci.status = "accept";
+                                } else if(status.equals("1")) {
+                                    ci.status = "friend";
+                                }
+
+                                result.add(ci);
 
 
 
                             }
                         }
+                        ca = new FriendsAdapter(result, getApplicationContext());
+                        recList.setAdapter(ca);
 
 
                     } else {
@@ -201,6 +267,7 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
         }
     }
 
+    /*
     public void setAcceptListener() {
         rowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,4 +278,6 @@ public class FriendsActivity extends AppCompatActivity implements NetworkCheck.O
             }
         });
     }
+    */
+
 }

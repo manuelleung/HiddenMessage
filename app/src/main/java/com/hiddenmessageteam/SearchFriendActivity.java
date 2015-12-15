@@ -1,12 +1,16 @@
 package com.hiddenmessageteam;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +43,11 @@ public class SearchFriendActivity extends AppCompatActivity implements NetworkCh
 
     private Button rowButton;
 
+    private  TextView vEmail;
+    private TextView vName;
+    private ImageView vPic;
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_friend);
@@ -49,10 +58,17 @@ public class SearchFriendActivity extends AppCompatActivity implements NetworkCh
             getSupportActionBar().show();
         }
 
+        /*
         linearLayout = (LinearLayout) findViewById(R.id.list_search_friend);
         lparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        */
 
+        vEmail = (TextView) findViewById(R.id.email);
+        vName = (TextView) findViewById(R.id.name);
+        vPic = (ImageView) findViewById(R.id.profile_pic);
+
+        rowButton = (Button) findViewById(R.id.add_friend_button);
 
         searchFriendInput = (EditText) findViewById(R.id.search_friend);
         searchFriendButton = (Button) findViewById(R.id.search_friend_button);
@@ -65,6 +81,7 @@ public class SearchFriendActivity extends AppCompatActivity implements NetworkCh
                 checkConnection.netAsync();
             }
         });
+
 
 
     }
@@ -147,6 +164,14 @@ public class SearchFriendActivity extends AppCompatActivity implements NetworkCh
                         lastname = user.getString("lastname");
                         email = user.getString("email");
 
+                        String encodedImage = user.getString("profile_pic");
+                        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length, options);
+
+
+                        /*
                         String value = json.getString("user");
                         TextView rowTextView = new TextView(SearchFriendActivity.this);
                         rowTextView.setLayoutParams(lparams);
@@ -160,6 +185,16 @@ public class SearchFriendActivity extends AppCompatActivity implements NetworkCh
 
                         linearLayout.addView(rowTextView);
                         linearLayout.addView(rowButton);
+                        */
+
+                        vPic.setImageBitmap(decodedByte);
+                        vEmail.setText(email);
+                        vName.setText(firstname + " " + lastname);
+                        vPic.setVisibility(View.VISIBLE);
+                        vEmail.setVisibility(View.VISIBLE);
+                        vName.setVisibility(View.VISIBLE);
+                        rowButton.setVisibility(View.VISIBLE);
+                        setAddListener();
 
                     }
                     else {

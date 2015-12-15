@@ -7,7 +7,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:fitsSystemWindows="true" tools:openDrawer="start">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <!--LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/list_my_messagesssss">
@@ -38,8 +38,25 @@ android:fitsSystemWindows="true" tools:openDrawer="start">
                 android:id="@+id/list_my_messages">
             </LinearLayout>
         </ScrollView>
-    </LinearLayout>
+    </LinearLayout-->
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_delete"
+            android:text="Delete" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cardList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/button_delete"
+            />
+
+    </RelativeLayout>
 
 
 <android.support.design.widget.NavigationView android:id="@+id/nav_view"
