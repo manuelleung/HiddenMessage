@@ -144,10 +144,11 @@ public class HandleMessagePost {
 //        }
 //        else {*/
             ID = markerList.size()+1;
-            marker = googleMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.message_icon)));
+            marker = googleMap.addMarker(new MarkerOptions().position(location).title(title).snippet(message).icon(BitmapDescriptorFactory.fromResource(R.drawable.message_icon)));
             markerList.add(marker);
             titleList.add(title);
             messageList.add(message);
+
 
             final Marker myMarker = marker;
 
@@ -174,7 +175,7 @@ public class HandleMessagePost {
                             TextView setname=(TextView) readmessage_Dialog.findViewById(R.id.readmessagedialog_name);
                             TextView setbody=(TextView) readmessage_Dialog.findViewById(R.id.readmessagedialog_showmessage);
 
-                            setname.setText(""+username);
+                            setname.setText("under construction");
                             settitle.setText(HandleMessagePost.markerList.get(i).getTitle());
                             setbody.setText(HandleMessagePost.markerList.get(i).getSnippet());
                             Button cancelButton = (Button)readmessage_Dialog.findViewById(R.id.readmessagedialog_CancelButton);

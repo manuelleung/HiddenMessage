@@ -162,9 +162,9 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
         View header= navView.getHeaderView(0);
         ImageView setPic =(ImageView) header.findViewById(R.id.profilepic);
         TextView navName = (TextView) header.findViewById(R.id.nav_name);
-        TextView navEmail = (TextView) header.findViewById(R.id.nav_email);
+        //TextView navEmail = (TextView) header.findViewById(R.id.nav_email);
         navName.setText(firstName);
-        navEmail.setText(email);
+        //navEmail.setText(email);
 
         if(db.getProfilePic()!=null) {
             byte[] b = db.getProfilePic();
@@ -194,20 +194,20 @@ public class MyMessagesActivity extends AppCompatActivity implements NetworkChec
                 }, 250);
             }
         });
-        navEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        startActivity(goProfile);
-                    }
-                }, 250);
-            }
-        });
+//        navEmail.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//                drawer.closeDrawer(GravityCompat.START);
+//
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        startActivity(goProfile);
+//                    }
+//                }, 250);
+//            }
+//        });
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

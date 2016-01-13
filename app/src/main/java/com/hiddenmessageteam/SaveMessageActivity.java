@@ -52,7 +52,7 @@ public class SaveMessageActivity extends AppCompatActivity implements NetworkChe
         HashMap user = new HashMap();
         user = db.getUserDetails();
         user_id = user.get("user_id").toString();
-        username = user.get("username").toString();
+        //username = user.get("username").toString();
 
         //user_id = db.getUserId();
 

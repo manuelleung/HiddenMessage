@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="75dp"
         android:textColor="#ffffff"
-        android:textSize="40dp" />
+        android:textSize="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Find! Read! Write!"
+        android:text="Read! Write! Explore!"
         android:id="@+id/intro_slogan"
         android:layout_below="@+id/intro_title"
         android:layout_centerHorizontal="true"
