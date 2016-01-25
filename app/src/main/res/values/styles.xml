@@ -27,5 +27,12 @@
         <item name="sv_titleTextAppearance">@style/svtitlecolor</item>
         <item name="sv_detailTextAppearance">@style/svtextcolor</item>
     </style>
+    <style name="fablabel">
+        <item name="android:background">@drawable/fablabelback</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
 
 </resources>

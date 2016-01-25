@@ -10,25 +10,15 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Home"
         android:clickable="false"
         android:background="#000000">
 
-        <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_input_add"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"/>
 
-        <!--android.support.design.widget.FloatingActionButton android:id="@+id/button_refresh"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/stat_notify_sync_noanim"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"/-->
+
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -36,6 +26,37 @@
             android:layout_height="match_parent" android:id="@+id/map"
             tools:context="hiddenmessage.windcore.com.hiddenmessage.Maps"
             android:name="com.google.android.gms.maps.SupportMapFragment" />
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/multiple_actions"
+            android:layout_margin="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            fab:fab_addButtonColorNormal="#fafafa"
+            fab:fab_addButtonColorPressed="#f1f1f1"
+            fab:fab_addButtonPlusIconColor="#808080"
+            fab:fab_labelStyle="@style/fablabel"
+            fab:fab_labelsPosition="right"
+            >
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addMessage"
+                fab:fab_size="mini"
+                fab:fab_title="Message" />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addScavenger"
+                fab:fab_colorNormal="#e91e63"
+                fab:fab_colorPressed="#ec407a"
+                fab:fab_size="mini"
+                fab:fab_title="Scavenger"
+                />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
     </RelativeLayout>
 

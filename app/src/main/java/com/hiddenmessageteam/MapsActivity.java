@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
@@ -56,7 +56,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleApiClient mGoogleApiClient;
     private boolean goingToMyLocation;
     private GoogleMap mMap;
-    private FloatingActionButton plusButton;
+    private FloatingActionButton plusMessage;
+
     private Intent postMessageIntent;
     private HandleMessagePost messagePost;
     private Intent mapIntent;
@@ -115,7 +116,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         //initialize
-        plusButton = (FloatingActionButton) findViewById(R.id.fab);
+        plusMessage = (FloatingActionButton) findViewById(R.id.addMessage);
         postMessageIntent = new Intent(this, SaveMessageActivity.class);
         messagePost = new HandleMessagePost();
         messagePost.setContext(context);
@@ -154,7 +155,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         */
 
 
-        plusButtonListener();
+        plusMessageListener();
 
         initNavigationBar();
 
@@ -165,8 +166,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      *  P L U S   B U T T O N
      *******************************/
 
-    public void plusButtonListener() {
-        plusButton.setOnClickListener(new View.OnClickListener() {
+    public void plusMessageListener() {
+        plusMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
