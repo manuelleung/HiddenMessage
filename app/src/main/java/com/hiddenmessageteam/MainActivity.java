@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements NetworkCheck.OnTa
         inputPassword = (EditText) findViewById(R.id.password);
         signin=(Button) findViewById(R.id.signinbutton);
         signup=(Button) findViewById(R.id.signupbutton);
+
+
         guest=(Button) findViewById(R.id.skipbutton);
 
         signin.setEnabled(false); //Disabling the signin button - user can not sign in until the requirements have been meet.
