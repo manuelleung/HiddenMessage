@@ -49,20 +49,20 @@ public class MainActivity extends AppCompatActivity implements NetworkCheck.OnTa
 
 
         // Set the Title to the want typeface.
-        //TextView title = (TextView) findViewById(R.id.title);
-        //Typeface changetitle = Typeface.createFromAsset(getAssets(), "fonts/LucidaCalligraphyItalic.ttf");
-        //title.setTypeface(changetitle);
+        TextView title = (TextView) findViewById(R.id.title);
+        Typeface changetitle = Typeface.createFromAsset(getAssets(), "fonts/LucidaCalligraphyItalic.ttf");
+        title.setTypeface(changetitle);
 
         // This allows the TextView to have two different color and bold.
         forgot = (TextView) findViewById(R.id.forgot);
-        forgot.setText(Html.fromHtml("<font color= '#8F8F8F'> Forgot your sign in info? </font> <font color= '#D6D6D6'> <b>GET HELP</b> </font"));
+        forgot.setText(Html.fromHtml("<font color= '#525252'> Forgot your sign in info? </font> <font color= '#525252'> <b>GET HELP</b> </font"));
 
         // Initialize Id
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         signin=(Button) findViewById(R.id.signinbutton);
         signup=(Button) findViewById(R.id.signupbutton);
-        guest=(Button) findViewById(R.id.skipbutton);
+        //guest=(Button) findViewById(R.id.skipbutton);
 
         signin.setEnabled(false); //Disabling the signin button - user can not sign in until the requirements have been meet.
         checkifemailwritten(); // This method will check if the user enter an email.
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NetworkCheck.OnTa
 
         signupButtonListener();
         signinButtonListener();
-        guestButtonListener();
+        //guestButtonListener();
         forgotButtonListener();
     }
 
@@ -112,9 +112,13 @@ public class MainActivity extends AppCompatActivity implements NetworkCheck.OnTa
     private void checkifpasswordwritten() {
         inputPassword.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 passwordcount = s.length();
@@ -141,15 +145,15 @@ public class MainActivity extends AppCompatActivity implements NetworkCheck.OnTa
         });
     }
     /////////////////////////////////////////////////////////////////////////////////
-    public void guestButtonListener() {
-        guest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
+//    public void guestButtonListener() {
+//        guest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//    }
     ////////////////////////////////////////////////////////////////////////////////
     public void signupButtonListener() {
         signup.setOnClickListener(new View.OnClickListener() {
