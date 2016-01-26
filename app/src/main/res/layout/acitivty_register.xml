@@ -2,21 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/register_layout"
-    android:background="#000000"
+    android:id="@+id/Joid"
+    android:background="@drawable/testback"
     tools:context=".RegisterActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create Account"
-        android:id="@+id/text_header"
-        android:textSize="30sp"
-        android:paddingTop="40dp"
-        android:paddingBottom="40dp"
-        android:textColor="#ffffff"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 
 
     <!--EditText
@@ -38,14 +26,16 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/edit_email"
-        android:layout_below="@id/text_header"
         android:hint="Enter Email Address"
         android:paddingLeft="12sp"
         android:textSize="18dp"
         android:background="@drawable/back"
-        android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
-        android:textColorHint="#ffffff"/>
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/registertitle"
+        android:layout_alignLeft="@+id/edit_first_name"
+        android:layout_alignStart="@+id/edit_first_name"
+        android:layout_marginTop="24dp" />
 
     <EditText
         android:layout_width="300dp"
@@ -190,18 +180,65 @@
          /-->
 
     <Button
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="Create"
         android:id="@+id/button_register"
-        android:layout_below="@+id/edit_confirm_password"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:singleLine="false"
         android:textColor="#ffffff"
         android:textSize="16dp"
-        android:background="@drawable/back"
+        android:background="@drawable/backtwo"
         android:alpha=".3"
-        android:onClick="buttonclick" />
+        android:onClick="buttonclick"
+        android:layout_below="@+id/edit_confirm_password"
+        android:layout_alignLeft="@+id/edit_confirm_password"
+        android:layout_alignStart="@+id/edit_confirm_password"
+        android:layout_alignRight="@+id/edit_confirm_password"
+        android:layout_alignEnd="@+id/edit_confirm_password" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/signUplogIN"
+        android:layout_below="@+id/button_register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textColor="#525252" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Terms of Service"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/signUplogIN"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:textColor="#525252"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Join "
+        android:id="@+id/textView3"
+        android:layout_marginTop="33dp"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Hidden Message"
+        android:id="@+id/registertitle"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

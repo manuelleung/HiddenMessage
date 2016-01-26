@@ -1,16 +1,19 @@
 package com.hiddenmessageteam;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hiddenmessageteam.database.NetworkCheck;
@@ -58,12 +61,16 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
         }
 */
 
+        TextView gotologIN=(TextView) findViewById(R.id.signUplogIN);
+        gotologIN.setText(Html.fromHtml("<font color= '#525252'>Have an account? </font> <font color= '#525252'> <b>LOG IN</b> </font"));
         inputFirstName = (EditText) findViewById(R.id.edit_first_name);
         inputLastName = (EditText) findViewById(R.id.edit_last_name);
         inputEmail = (EditText) findViewById(R.id.edit_email);
         inputPassword = (EditText) findViewById(R.id.edit_password);
         inputConfirmPassword = (EditText) findViewById(R.id.edit_confirm_password);
-
+        TextView rtitle= (TextView) findViewById(R.id.registertitle);
+        Typeface changetitle = Typeface.createFromAsset(getAssets(), "fonts/LucidaCalligraphyItalic.ttf");
+        rtitle.setTypeface(changetitle);
         RelativeLayout backgroundLayout = (RelativeLayout) findViewById(R.id.register_layout);
        // new BackgroundAnimation(backgroundLayout);
 
