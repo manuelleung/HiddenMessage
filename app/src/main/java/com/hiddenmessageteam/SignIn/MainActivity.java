@@ -1,4 +1,4 @@
-package com.hiddenmessageteam;
+package com.hiddenmessageteam.SignIn;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hiddenmessageteam.ForgotPasswordActivity;
+import com.hiddenmessageteam.MapsActivity;
+import com.hiddenmessageteam.R;
 import com.hiddenmessageteam.database.DatabaseHandler;
 import com.hiddenmessageteam.database.NetworkCheck;
 import com.hiddenmessageteam.database.UserFunctions;

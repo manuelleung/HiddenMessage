@@ -7,4 +7,9 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="appTitle">Hidden Message</string>
+    <string name="appSlogan">Read! Write! Explore!</string>
+    <string name="companyName">WInd Core</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
 </resources>

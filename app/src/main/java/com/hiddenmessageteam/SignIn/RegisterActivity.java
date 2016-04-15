@@ -1,4 +1,4 @@
-package com.hiddenmessageteam;
+package com.hiddenmessageteam.SignIn;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -8,21 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hiddenmessageteam.R;
 import com.hiddenmessageteam.database.NetworkCheck;
 import com.hiddenmessageteam.database.UserFunctions;
 
 import org.json.JSONObject;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity implements NetworkCheck.OnTaskCompleted {
 
@@ -71,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity implements NetworkCheck.
         TextView rtitle= (TextView) findViewById(R.id.registertitle);
         Typeface changetitle = Typeface.createFromAsset(getAssets(), "fonts/LucidaCalligraphyItalic.ttf");
         rtitle.setTypeface(changetitle);
-        RelativeLayout backgroundLayout = (RelativeLayout) findViewById(R.id.register_layout);
+        //RelativeLayout backgroundLayout = (RelativeLayout) findViewById(R.id.register_layout);
        // new BackgroundAnimation(backgroundLayout);
 
         registerButton = (Button) findViewById(R.id.button_register);

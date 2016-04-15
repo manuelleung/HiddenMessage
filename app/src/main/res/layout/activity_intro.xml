@@ -4,34 +4,44 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="1dp" tools:context=".MainActivity"
-    android:background="#020202">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".SignIn.IntroActivity"
+    android:background="@drawable/introbackground"
+    android:id="@+id/introBack">
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/hmlogo"
-        android:layout_centerVertical="true"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/appTitle"
+        android:id="@+id/introTitle"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/big_log_v2" />
-    <ImageView
-        android:layout_width="270dp"
-        android:layout_height="270dp"
-        android:id="@+id/wclogo"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="75dp"
+        android:textColor="#ffffff"
+        android:textSize="30sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/companyName"
+        android:id="@+id/introCompanyName"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/windcorelogomain" />
+
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="© 2015 Wind Core. Hidden Message is a trademark of Wind Core. All Rights Reserved"
-        android:id="@+id/textView"
-        android:layout_alignParentBottom="true"
+        android:text="@string/appSlogan"
+        android:id="@+id/introSlogan"
+        android:layout_below="@+id/introTitle"
         android:layout_centerHorizontal="true"
-        android:textColor="#cacaca"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"/>
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
 
 </RelativeLayout>
